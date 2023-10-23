@@ -1,7 +1,7 @@
 import { StyleSheet, KeyboardAvoidingView, TextInput } from "react-native";
 import React from "react";
 
-const InputBox = ({ placeholder, width }) => {
+const InputBox = ({ placeholder, width, secureTextEntry }) => {
   return (
     <KeyboardAvoidingView>
       <TextInput
@@ -17,6 +17,7 @@ const InputBox = ({ placeholder, width }) => {
           paddingHorizontal: 16,
           marginBottom: 12,
         }}
+        secureTextEntry={secureTextEntry}
       />
     </KeyboardAvoidingView>
   );

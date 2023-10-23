@@ -4,7 +4,7 @@ import ClickableText from "../components/touchable/clickableText";
 import TextButton from "../components/touchable/textButton";
 import InputBox from "../components/inputBox";
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const handleWelcomeButtonPress = () => {
     navigation.navigate("Welcome");
   };
@@ -14,7 +14,9 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <Text style={styles.appText} onPress={handleWelcomeButtonPress}>NUTRIWISE</Text>
+      <Text style={styles.appText} onPress={handleWelcomeButtonPress}>
+        NUTRIWISE
+      </Text>
 
       <View style={styles.componentsContainer}>
         <View style={styles.headerTextContainer}>
@@ -26,7 +28,11 @@ const LoginScreen = ({navigation}) => {
           <Text style={styles.inputText}>Email</Text>
           <InputBox placeholder="johndoe@email.com" width="100%" />
           <Text style={styles.inputText}>Password</Text>
-          <InputBox placeholder="••••••••••" width="100%" />
+          <InputBox
+            placeholder="••••••••••"
+            width="100%"
+            secureTextEntry={true}
+          />
           <View style={styles.forgotPasswordContainer}>
             <View></View>
             <ClickableText text="Forgot Password?" fontSize={12} />
@@ -40,7 +46,12 @@ const LoginScreen = ({navigation}) => {
           <View style={styles.smallTextContainer}>
             <Text style={styles.smallText}>Don't have an account?</Text>
             <Text> </Text>
-            <ClickableText text="Sign Up" onPress={handleSignUpButtonPress} fontSize={16} maybeFontWeight="800" />
+            <ClickableText
+              text="Sign Up"
+              onPress={handleSignUpButtonPress}
+              fontSize={16}
+              maybeFontWeight="800"
+            />
           </View>
         </View>
       </View>
