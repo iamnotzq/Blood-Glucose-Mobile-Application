@@ -8,7 +8,7 @@ import CreateAccountScreen from "./screens/CreateAccountScreen";
 import UserDiabetesScreen from "./screens/onboarding/UserDiabetesScreen";
 
 export default function App() {
-  return <UserDiabetesScreen />;
+  return <WelcomeScreen />;
 }
 
 const styles = StyleSheet.create({

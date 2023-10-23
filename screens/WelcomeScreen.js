@@ -6,34 +6,36 @@ import {
   View,
 } from "react-native";
 import React from "react";
+import TextButton from "../components/touchable/textButton";
+import ClickableText from "../components/touchable/clickableText";
 
 const WelcomeScreen = () => {
   return (
-    <SafeAreaView
-      style={{
-        height: "100%",
-        width: "100%",
-        backgroundColor: "#3B83D1",
-      }}
-    >
-      <View style={styles.primaryContainer}>
-        <Text style={styles.title}>NUTRIWISE</Text>
-        <Text style={styles.subHeading}>
-          Your Food Diary and Health Partner
-        </Text>
+    <SafeAreaView style={styles.mainContainer}>
+      <View style={styles.componentsContainer}>
+        <View></View>
+
+        <View>
+          <Text style={styles.appText}>NUTRIWISE</Text>
+          <Text style={styles.subHeading}>
+            Your Food Diary and Health Partner
+          </Text>
+        </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity>
-            <View style={styles.letsGetStartedButton}>
-              <Text style={styles.letsGetStartedButtonText}>
-                Let's Get Started
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <TextButton
+            text="Let's Get Started"
+            maybeBackgroundColor="#F8F9FB"
+            maybeTextColor="#3B83D1"
+          />
 
-          <TouchableOpacity style={styles.createAccountTextContainer}>
-            <Text style={styles.createAccountText}>Create Account</Text>
-          </TouchableOpacity>
+          <View style={styles.smallTextContainer}>
+            <ClickableText
+              text="Create Account"
+              fontSize={16}
+              maybeTextColor="#F8F9FB"
+            />
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -43,14 +45,20 @@ const WelcomeScreen = () => {
 export default WelcomeScreen;
 
 const styles = StyleSheet.create({
-  primaryContainer: {
+  mainContainer: {
     height: "100%",
     width: "100%",
-    justifyContent: "center",
-    alignContent: "center",
-    paddingHorizontal: 48,
+    backgroundColor: "#3B83D1",
   },
-  title: {
+  componentsContainer: {
+    marginTop: 90,
+    paddingHorizontal: 48,
+    justifyContent: "space-between",
+    alignContent: "center",
+    flexGrow: 1,
+  },
+  appText: {
+    marginTop: 32,
     color: "#F8F9FB",
     textAlign: "center",
     fontSize: 48,
@@ -62,36 +70,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
   },
-  buttonContainer: {
-    top: 240,
-  },
-  letsGetStartedButton: {
-    height: 48,
-    width: "100%",
-    backgroundColor: "#F8F9FB",
-    borderRadius: 16,
+  smallTextContainer: {
     justifyContent: "center",
-    alignContent: "center",
-    shadowColor: "black",
-    shadowOffset: {
-      height: 4,
-      width: 0,
-    },
-    shadowOpacity: 0.3,
-  },
-  letsGetStartedButtonText: {
-    color: "#3B83D1",
-    textAlign: "center",
-    fontSize: 20,
-    fontWeight: "800",
-  },
-  createAccountText: {
-    color: "#F8F9FB",
-    textAlign: "center",
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  createAccountTextContainer: {
-    marginTop: 24,
+    alignItems: "center",
+    margin: 20,
   },
 });
