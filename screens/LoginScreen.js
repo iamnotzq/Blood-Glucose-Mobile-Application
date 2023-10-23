@@ -1,68 +1,40 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import ClickableText from "../components/touchable/clickableText";
+import TextButton from "../components/touchable/textButton";
+import InputBox from "../components/inputBox";
 
 const LoginScreen = () => {
   return (
-    <SafeAreaView
-      style={{
-        height: "100%",
-        width: "100%",
-        backgroundColor: "#F8F9FB",
-      }}
-    >
-      <Text style={styles.title}>NUTRIWISE</Text>
+    <SafeAreaView style={styles.mainContainer}>
+      <Text style={styles.appText}>NUTRIWISE</Text>
 
-      <View style={styles.primaryContainer}>
-        <View>
-          <Text style={styles.loginText}>Log In,</Text>
-          <Text style={styles.embraceText}>embrace wellness</Text>
+      <View style={styles.componentsContainer}>
+        <View style={styles.headerTextContainer}>
+          <Text style={styles.boldHeader}>Log In,</Text>
+          <Text style={styles.regularHeader}>embrace wellness</Text>
         </View>
 
         <View style={styles.inputContainer}>
-          <View>
-            <Text style={styles.inputText}>Email</Text>
-            <TextInput
-              placeholder="johndoe@email.com"
-              placeholderTextColor="#9CC0E8"
-              style={styles.inputBox}
-            />
+          <Text style={styles.inputText}>Email</Text>
+          <InputBox placeholder="johndoe@email.com" width="100%" />
+          <Text style={styles.inputText}>Password</Text>
+          <InputBox placeholder="••••••••••" width="100%" />
+          <View style={styles.forgotPasswordContainer}>
+            <View></View>
+            <ClickableText text="Forgot Password?" fontSize={12} />
           </View>
-
-          <View>
-            <Text style={styles.inputText}>Password</Text>
-            <TextInput
-              placeholder="••••••••••"
-              placeholderTextColor="#9CC0E8"
-              style={styles.inputBox}
-            />
-          </View>
-
-          <TouchableOpacity style={styles.forgotPasswordContainer}>
-            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-          </TouchableOpacity>
         </View>
 
-        <TouchableOpacity>
-          <View style={styles.loginButtonContainer}>
-            <Text style={styles.loginButtonText}>Log In</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={{ flex: 1 }}></View>
 
-        <View style={styles.signUpContainer}>
-          <Text style={styles.dontHaveAnAccountText}>
-            Don't have an account?
-          </Text>
-          <Text> </Text>
-          <TouchableOpacity>
-            <Text style={styles.signUpText}>Sign Up</Text>
-          </TouchableOpacity>
+        <View>
+          <TextButton text="Log In" />
+          <View style={styles.smallTextContainer}>
+            <Text style={styles.smallText}>Don't have an account?</Text>
+            <Text> </Text>
+            <ClickableText text="Sign Up" fontSize={16} maybeFontWeight="800" />
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -72,26 +44,34 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  title: {
+  mainContainer: {
+    height: "100%",
+    width: "100%",
+    backgroundColor: "#F8F9FB",
+  },
+  appText: {
     marginTop: 32,
     color: "#3B83D1",
     textAlign: "center",
     fontSize: 48,
     fontWeight: "800",
   },
-  primaryContainer: {
-    height: "100%",
-    width: "100%",
+  componentsContainer: {
+    marginTop: 90,
     paddingHorizontal: 48,
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignContent: "center",
+    flexGrow: 1,
   },
-  loginText: {
+  headerTextContainer: {
+    marginTop: 90,
+  },
+  boldHeader: {
     color: "#3B83D1",
     fontSize: 36,
     fontWeight: "700",
   },
-  embraceText: {
+  regularHeader: {
     color: "#3B83D1",
     fontSize: 24,
     fontWeight: "500",
@@ -100,65 +80,26 @@ const styles = StyleSheet.create({
     marginTop: 48,
   },
   inputText: {
-    marginTop: 8,
     color: "#3B83D1",
     fontSize: 16,
     fontWeight: "700",
-    marginLeft: 8,
-  },
-  inputBox: {
-    marginTop: 10,
-    height: 48,
-    width: "100%",
-    borderRadius: 16,
-    borderWidth: 3,
-    borderColor: "#3B83D1",
-    backgroundColor: "F8F9FB",
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
+    marginBottom: 4,
   },
   forgotPasswordContainer: {
-    marginTop: 4,
-    marginLeft: 8,
-  },
-  forgotPasswordText: {
-    color: "#3B83D1",
-    fontSize: 12,
-    fontWeight: "400",
-  },
-  loginButtonContainer: {
-    alignContent: "center",
-    justifyContent: "center",
-    marginTop: 96,
-    height: 48,
+    flexDirection: "row",
     width: "100%",
-    backgroundColor: "#3B83D1",
-    borderRadius: 16,
-    shadowColor: "black",
-    shadowOffset: {
-      height: 4,
-      width: 0,
-    },
-    shadowOpacity: 0.3,
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
   },
-  loginButtonText: {
-    color: "#F8F9FB",
-    fontSize: 20,
-    fontWeight: "800",
-    textAlign: "center",
-  },
-  signUpContainer: {
+  smallTextContainer: {
     justifyContent: "center",
     marginTop: 20,
     flexDirection: "row",
   },
-  dontHaveAnAccountText: {
+  smallText: {
     color: "#3B83D1",
     fontSize: 16,
     fontWeight: "500",
-  },
-  signUpText: {
-    color: "#205188",
-    fontSize: 16,
-    fontWeight: "800",
   },
 });

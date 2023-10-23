@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     height: "100%",
     width: "100%",
-    backgroundColor: "#C4DAF1",
+    backgroundColor: "#F8F9FB",
   },
   appText: {
     marginTop: 32,

@@ -7,7 +7,7 @@ import UserMeasurementsScreen from "./screens/onboarding/UserMeasurementsScreen"
 import CreateAccountScreen from "./screens/CreateAccountScreen";
 
 export default function App() {
-  return <CreateAccountScreen />;
+  return <LoginScreen />;
 }
 
 const styles = StyleSheet.create({
