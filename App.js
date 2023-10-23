@@ -3,9 +3,10 @@ import { StyleSheet, Text, View } from "react-native";
 import LoginScreen from "./screens/LoginScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import UserParticularsScreen from "./screens/onboarding/UserParticularsScreen";
+import UserMeasurementsScreen from "./screens/onboarding/UserMeasurementsScreen";
 
 export default function App() {
-  return <UserParticularsScreen />;
+  return <UserMeasurementsScreen />;
 }
 
 const styles = StyleSheet.create({

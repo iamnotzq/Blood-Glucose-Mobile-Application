@@ -1,25 +1,41 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import React from "react";
 import InputBox from "../../components/inputBox";
 import RightArrowButton from "../../components/touchable/rightArrowButton";
 import TextButton from "../../components/touchable/textButton";
 
-const UserParticularsScreen = () => {
+const UserMeasurementsScreen = () => {
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Text style={styles.appText}>NUTRIWISE</Text>
 
       <View style={styles.componentsContainer}>
         <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Enter Your</Text>
-          <Text style={styles.headerText}>Particulars</Text>
+          <Text style={styles.headerText}>Let's Get Your</Text>
+          <Text style={styles.headerText}>Measurements</Text>
         </View>
 
         <View style={styles.textInputContainer}>
-          <InputBox placeholder="First Name" width="100%" />
-          <InputBox placeholder="Last Name" width="100%" />
-          <InputBox placeholder="Country" width="100%" />
-          <InputBox placeholder="Phone Number" width="100%" />
+          <View style={styles.textInputRow}>
+            <InputBox placeholder="Age" width={150} />
+            <InputBox placeholder="Gender" width={150} />
+          </View>
+
+          <View style={styles.textInputRow}>
+            <InputBox placeholder="Weight" width={275} />
+
+            <View style={styles.sideTextContainer}>
+              <Text style={styles.sideText}>kg</Text>
+            </View>
+          </View>
+
+          <View style={styles.textInputRow}>
+            <InputBox placeholder="Height" width={275} />
+
+            <View style={styles.sideTextContainer}>
+              <Text style={styles.sideText}>cm</Text>
+            </View>
+          </View>
         </View>
 
         <View style={{ flex: 1 }}></View>
@@ -36,7 +52,7 @@ const UserParticularsScreen = () => {
   );
 };
 
-export default UserParticularsScreen;
+export default UserMeasurementsScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -67,6 +83,20 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     marginTop: 48,
+  },
+  textInputRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  sideTextContainer: {
+    paddingHorizontal: 16,
+    justifyContent: "center",
+  },
+  sideText: {
+    color: "#3B83D1",
+    fontSize: 24,
+    fontWeight: "700",
+    textAlign: "center",
   },
   buttonContainer: {
     flexDirection: "row",
