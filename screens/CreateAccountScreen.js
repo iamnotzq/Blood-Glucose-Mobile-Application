@@ -1,39 +1,35 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import InputBox from "../components/inputBox";
 import ClickableText from "../components/touchable/clickableText";
 import TextButton from "../components/touchable/textButton";
-import InputBox from "../components/inputBox";
 
-const LoginScreen = () => {
+const CreateAccountScreen = () => {
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Text style={styles.appText}>NUTRIWISE</Text>
 
       <View style={styles.componentsContainer}>
         <View style={styles.headerTextContainer}>
-          <Text style={styles.boldHeader}>Log In,</Text>
-          <Text style={styles.regularHeader}>embrace wellness</Text>
+          <Text style={styles.boldHeader}>Create an Account,</Text>
+          <Text style={styles.regularHeader}>start your journey</Text>
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.inputText}>Email</Text>
-          <InputBox placeholder="johndoe@email.com" width="100%" />
-          <Text style={styles.inputText}>Password</Text>
-          <InputBox placeholder="••••••••••" width="100%" />
-          <View style={styles.forgotPasswordContainer}>
-            <View></View>
-            <ClickableText text="Forgot Password?" fontSize={12} />
-          </View>
+          <InputBox placeholder="Username" width="100%" />
+          <InputBox placeholder="Email" width="100%" />
+          <InputBox placeholder="Password" width="100%" />
+          <InputBox placeholder="Confirm Password" width="100%" />
         </View>
 
         <View style={{ flex: 1 }}></View>
 
         <View>
-          <TextButton text="Log In" />
+          <TextButton text="Create Account" />
           <View style={styles.smallTextContainer}>
-            <Text style={styles.smallText}>Don't have an account?</Text>
+            <Text style={styles.smallText}>Already have an account?</Text>
             <Text> </Text>
-            <ClickableText text="Sign Up" fontSize={16} maybeFontWeight="800" />
+            <ClickableText text="Log In" fontSize={16} maybeFontWeight="800" />
           </View>
         </View>
       </View>
@@ -41,7 +37,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default CreateAccountScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -57,7 +53,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   componentsContainer: {
-    marginTop: 90,
     paddingHorizontal: 48,
     justifyContent: "space-between",
     alignContent: "center",
@@ -78,19 +73,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: 48,
-  },
-  inputText: {
-    color: "#3B83D1",
-    fontSize: 16,
-    fontWeight: "700",
-    paddingHorizontal: 10,
-    marginBottom: 4,
-  },
-  forgotPasswordContainer: {
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
   },
   smallTextContainer: {
     justifyContent: "center",

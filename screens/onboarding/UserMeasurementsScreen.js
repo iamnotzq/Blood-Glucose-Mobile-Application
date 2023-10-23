@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import React from "react";
 import InputBox from "../../components/inputBox";
 import RightArrowButton from "../../components/touchable/rightArrowButton";
-import TextButton from "../../components/touchable/textButton";
+import ClickableText from "../../components/touchable/clickableText";
 
 const UserMeasurementsScreen = () => {
   return (
@@ -42,7 +42,7 @@ const UserMeasurementsScreen = () => {
 
         <View>
           <View style={styles.buttonContainer}>
-            <TextButton text="Back" fontSize={24} />
+            <ClickableText text="Back" fontSize={24} />
 
             <RightArrowButton size={32} width={48} />
           </View>
