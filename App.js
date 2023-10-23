@@ -2,9 +2,10 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import LoginScreen from "./screens/LoginScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
+import UserParticularsScreen from "./screens/onboarding/UserParticularsScreen";
 
 export default function App() {
-  return <WelcomeScreen />;
+  return <UserParticularsScreen />;
 }
 
 const styles = StyleSheet.create({
