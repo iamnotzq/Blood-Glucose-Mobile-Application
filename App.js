@@ -6,9 +6,10 @@ import UserParticularsScreen from "./screens/onboarding/UserParticularsScreen";
 import UserMeasurementsScreen from "./screens/onboarding/UserMeasurementsScreen";
 import CreateAccountScreen from "./screens/CreateAccountScreen";
 import UserDiabetesScreen from "./screens/onboarding/UserDiabetesScreen";
+import StackNavigator from "./navigation/StackNavigator";
 
 export default function App() {
-  return <WelcomeScreen />;
+  return <StackNavigator />;
 }
 
 const styles = StyleSheet.create({

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 
-const RightArrowButton = ({ size, width }) => {
+const RightArrowButton = ({ size, onPress, width }) => {
   return (
     <TouchableOpacity
       style={{
@@ -13,6 +13,7 @@ const RightArrowButton = ({ size, width }) => {
         justifyContent: "center",
         alignItems: "center",
       }}
+      onPress={onPress}
     >
       <AntDesign name="arrowright" size={size} color="#F8F9FB" />
     </TouchableOpacity>

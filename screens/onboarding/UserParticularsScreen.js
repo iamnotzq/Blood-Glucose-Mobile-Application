@@ -4,7 +4,13 @@ import InputBox from "../../components/inputBox";
 import RightArrowButton from "../../components/touchable/rightArrowButton";
 import ClickableText from "../../components/touchable/clickableText";
 
-const UserParticularsScreen = () => {
+const UserParticularsScreen = ({ navigation }) => {
+  const handleBackButtonPress = () => {
+    navigation.goBack();
+  };
+  const handleNextButtonPress = () => {
+    navigation.navigate("UserMeasurements");
+  };
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Text style={styles.appText}>NUTRIWISE</Text>
@@ -26,9 +32,17 @@ const UserParticularsScreen = () => {
 
         <View>
           <View style={styles.buttonContainer}>
-            <ClickableText text="Back" fontSize={24} />
+            <ClickableText
+              text="Back"
+              onPress={handleBackButtonPress}
+              fontSize={24}
+            />
 
-            <RightArrowButton size={32} width={48} />
+            <RightArrowButton
+              size={32}
+              onPress={handleNextButtonPress}
+              width={48}
+            />
           </View>
         </View>
       </View>
