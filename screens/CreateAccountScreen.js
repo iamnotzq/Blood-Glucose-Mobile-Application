@@ -4,10 +4,21 @@ import InputBox from "../components/inputBox";
 import ClickableText from "../components/touchable/clickableText";
 import TextButton from "../components/touchable/textButton";
 
-const CreateAccountScreen = () => {
+const CreateAccountScreen = ({ navigation }) => {
+  const handleWelcomeButtonPress = () => {
+    navigation.navigate("Welcome");
+  };
+  const handleLoginButtonPress = () => {
+    navigation.navigate("Login");
+  };
+  const handleCreateAccountButtonPress = () => {
+    navigation.navigate("UserParticulars");
+  };
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <Text style={styles.appText}>NUTRIWISE</Text>
+      <Text style={styles.appText} onPress={handleWelcomeButtonPress}>
+        NUTRIWISE
+      </Text>
 
       <View style={styles.componentsContainer}>
         <View style={styles.headerTextContainer}>
@@ -25,11 +36,19 @@ const CreateAccountScreen = () => {
         <View style={{ flex: 1 }}></View>
 
         <View>
-          <TextButton text="Create Account" />
+          <TextButton
+            text="Create Account"
+            onPress={handleCreateAccountButtonPress}
+          />
           <View style={styles.smallTextContainer}>
             <Text style={styles.smallText}>Already have an account?</Text>
             <Text> </Text>
-            <ClickableText text="Log In" fontSize={16} maybeFontWeight="800" />
+            <ClickableText
+              text="Log In"
+              onPress={handleLoginButtonPress}
+              fontSize={16}
+              maybeFontWeight="800"
+            />
           </View>
         </View>
       </View>

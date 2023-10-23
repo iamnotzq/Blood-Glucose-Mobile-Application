@@ -3,13 +3,13 @@ import React from "react";
 
 const TextButton = ({
   text,
+  onPress,
   maybeButtonHeight,
   maybeFontSize,
   maybeFontWeight,
   maybeBackgroundColor,
   maybeTextColor,
   maybeBorderColor,
-  hasShadow,
 }) => {
   const buttonHeight = maybeButtonHeight ? maybeButtonHeight : 48;
   const fontSize = maybeFontSize ? maybeFontSize : 20;
@@ -20,7 +20,7 @@ const TextButton = ({
   const textColor = maybeTextColor ? maybeTextColor : "#F8F9FB";
   const borderColor = maybeBorderColor ? maybeBorderColor : "#3B83D1";
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View
         style={{
           alignContent: "center",

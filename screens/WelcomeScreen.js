@@ -9,7 +9,14 @@ import React from "react";
 import TextButton from "../components/touchable/textButton";
 import ClickableText from "../components/touchable/clickableText";
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }) => {
+  const handleLoginbuttonPress = () => {
+    navigation.navigate("Login");
+  };
+  const handleCreateAccountbuttonPress = () => {
+    navigation.navigate("CreateAccount");
+  };
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View style={styles.componentsContainer}>
@@ -27,6 +34,7 @@ const WelcomeScreen = () => {
             text="Let's Get Started"
             maybeBackgroundColor="#F8F9FB"
             maybeTextColor="#3B83D1"
+            onPress={handleLoginbuttonPress}
           />
 
           <View style={styles.smallTextContainer}>
@@ -34,6 +42,7 @@ const WelcomeScreen = () => {
               text="Create Account"
               fontSize={16}
               maybeTextColor="#F8F9FB"
+              onPress={handleCreateAccountbuttonPress}
             />
           </View>
         </View>
