@@ -4,9 +4,10 @@ import LoginScreen from "./screens/LoginScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import UserParticularsScreen from "./screens/onboarding/UserParticularsScreen";
 import UserMeasurementsScreen from "./screens/onboarding/UserMeasurementsScreen";
+import CreateAccountScreen from "./screens/CreateAccountScreen";
 
 export default function App() {
-  return <UserMeasurementsScreen />;
+  return <CreateAccountScreen />;
 }
 
 const styles = StyleSheet.create({
