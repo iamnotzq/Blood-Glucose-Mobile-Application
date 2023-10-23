@@ -1,14 +1,14 @@
 import {
-  KeyboardAvoidingView,
   SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import React from "react";
-import { AntDesign } from "@expo/vector-icons";
+import InputBox from "../../components/inputBox";
+import RightArrowButton from "../../components/touchable/rightArrowButton";
+import TextButton from "../../components/touchable/textButton";
 
 const UserParticularsScreen = () => {
   return (
@@ -22,42 +22,18 @@ const UserParticularsScreen = () => {
         </View>
 
         <View style={styles.textInputContainer}>
-          <KeyboardAvoidingView>
-            <TextInput
-              placeholder="First Name"
-              placeholderTextColor="#9CC0E8"
-              style={styles.textInput}
-            />
-          </KeyboardAvoidingView>
-
-          <KeyboardAvoidingView>
-            <TextInput
-              placeholder="Last Name"
-              placeholderTextColor="#9CC0E8"
-              style={styles.textInput}
-            />
-          </KeyboardAvoidingView>
-
-          <KeyboardAvoidingView>
-            <TextInput
-              placeholder="Country"
-              placeholderTextColor="#9CC0E8"
-              style={styles.textInput}
-            />
-          </KeyboardAvoidingView>
+          <InputBox placeholder="First Name" />
+          <InputBox placeholder="Last Name" />
+          <InputBox placeholder="Country" />
         </View>
 
         <View style={{ flex: 1 }}></View>
 
-        <View style={styles.navigationContainer}>
+        <View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity>
-              <Text style={styles.backText}>Back</Text>
-            </TouchableOpacity>
+            <TextButton text="Back" fontSize={24} />
 
-            <TouchableOpacity style={styles.arrowButtonContainer}>
-              <AntDesign name="arrowright" size={32} color="#F8F9FB" />
-            </TouchableOpacity>
+            <RightArrowButton size={32} width={48} />
           </View>
         </View>
       </View>
@@ -94,34 +70,12 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "400",
   },
-  textInputContainer: {},
-  textInput: {
-    height: 48,
-    width: "100%",
-    borderRadius: 16,
-    borderWidth: 3,
-    borderColor: "#3B83D1",
-    backgroundColor: "#F8F9FB",
-    paddingHorizontal: 16,
-    marginBottom: 12,
+  textInputContainer: {
+    marginTop: 48,
   },
-  navigationContainer: {},
   buttonContainer: {
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
-  },
-  backText: {
-    color: "#3B83D1",
-    fontSize: 24,
-    fontWeight: "400",
-  },
-  arrowButtonContainer: {
-    height: "auto",
-    width: 48,
-    borderRadius: 16,
-    backgroundColor: "#3B83D1",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
