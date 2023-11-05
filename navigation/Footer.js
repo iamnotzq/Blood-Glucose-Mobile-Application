@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons, Ionicons, Feather } from "@expo/vector-icons";
 
@@ -6,23 +6,23 @@ const Footer = () => {
   return (
     <View>
       <View style={styles.mainContainer}>
-        <View style={styles.iconContainer}>
+        <TouchableOpacity style={styles.iconContainer}>
           <MaterialCommunityIcons
             name="view-dashboard-outline"
             size={50}
             color="#3B83D1"
           />
           <Text style={styles.iconText}>Home</Text>
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.circle}>
+        <TouchableOpacity style={styles.circle}>
           <Feather name="plus" size={40} color="#F8F9FB" />
-        </View>
+        </TouchableOpacity>
 
-        <View>
+        <TouchableOpacity>
           <Ionicons name="person-outline" size={50} color="#3B83D1" />
           <Text style={styles.iconText}>Profile</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
