@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, View, TouchableOpacity } from "react-native";
 import React from "react";
 import CalorieContainer from "../components/calorieContainer";
 import GlucoseContainer from "../components/glucoseContainer";
@@ -9,15 +9,15 @@ const DashboardScreen = () => {
     <SafeAreaView style={styles.mainContainer}>
       <View style={styles.componentsContainer}>
         <View>
-          <View style={styles.component}>
+          <TouchableOpacity style={styles.component}>
             <CalorieContainer />
-          </View>
+          </TouchableOpacity>
 
           <View style={{ margin: 20 }}></View>
 
-          <View style={styles.component}>
+          <TouchableOpacity style={styles.component}>
             <GlucoseContainer />
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
 
