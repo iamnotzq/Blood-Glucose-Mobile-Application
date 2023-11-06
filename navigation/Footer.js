@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     flexDirection: "row",
+    shadowColor: "black",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
   },
   iconContainer: {
     justifyContent: "center",
