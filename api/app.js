@@ -1,10 +1,9 @@
 const express = require("express");
-require("dotenv").config()
+require("dotenv").config();
 require("./models/db");
 
 const app = express();
-
-const User = require("./models/user")
+const userService = require("./services/userService");
 
 const fakeUser = {
   username: "johndoe001",
@@ -26,11 +25,16 @@ const fakeUser = {
   target_upper_mg_dl: 130,
 };
 
-
 app.post("/create-user", async (req, res) => {
-  const user = await User(fakeUser);
-  await user.save();
-  res.json(user);
+  try {
+    // TODO - Replace with dynamic data
+    const user = await userService.createUser(fakeUser);
+    res.json(user);
+  } catch (err) {
+    console.error("Error creating user:", err);
+    // TODO - Add proper status and message
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.get("/", (req, res) => {
