@@ -1,11 +1,3 @@
-const express = require("express");
-require("dotenv").config()
-require("./models/db");
-
-const app = express();
-
-// const User = require("./models/user")
-
 // const fakeUser = {
 //   username: "johndoe001",
 //   email: "johndoe001@email.com",
@@ -25,18 +17,3 @@ const app = express();
 //   target_lower_mg_dl: 80,
 //   target_upper_mg_dl: 130,
 // };
-
-
-// app.post("/create-user", async (req, res) => {
-//   //creates user
-//   const user = await User(fakeUser);
-//   res.json(user);
-// });
-
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
-app.listen(8000, () => {
-  console.log("Port is listening");
-});
