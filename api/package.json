@@ -4,15 +4,22 @@
   "description": "Backend for application",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "test": "jest",
+    "start": "nodemon app.js",
+    "test:unit": "jest",
+    "test:coverage": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "mongodb-memory-server": "^9.0.1",
     "mongoose": "^8.0.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
