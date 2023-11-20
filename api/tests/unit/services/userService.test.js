@@ -1,9 +1,27 @@
+const bcrypt = require("bcrypt");
 const userService = require("../../../services/userService");
 const userRepo = require("../../../repository/userRepository");
 const User = require("../../../models/user");
 const { fakeUser1 } = require("../sharedFakes");
 
+jest.mock("bcrypt");
 jest.mock("../../../repository/userRepository");
+
+describe("hashPassword", () => {
+  it("Should returned a hashed password if the unhashed password is valid", async () => {
+    const unhashedPassword = "fake-password";
+    const saltRounds = 10;
+    const hashedPasswordMock =
+      "$2b$10$N8BwaJVClbzPwnPmon8cbONSG/8Qfg57etVTRxpePXyEMM8A/76E6";
+
+    bcrypt.hash.mockResolvedValue(hashedPasswordMock);
+
+    const result = await userService.hashPassword(unhashedPassword);
+
+    expect(bcrypt.hash).toHaveBeenCalledWith(unhashedPassword, saltRounds);
+    expect(result).toBe(hashedPasswordMock);
+  });
+});
 
 describe("createUser", () => {
   afterAll(() => {

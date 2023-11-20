@@ -1,5 +1,14 @@
+const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const userRepository = require("../repository/userRepository");
+
+const hashPassword = async (password) => {
+  if (!password) throw new Error("Password is invalid or undefined");
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  return hashedPassword;
+};
 
 const createUser = async (userData) => {
   const email = userData.email;
@@ -16,5 +25,6 @@ const createUser = async (userData) => {
 };
 
 module.exports = {
+  hashPassword,
   createUser,
 };
