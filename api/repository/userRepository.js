@@ -15,6 +15,13 @@ const userExists = async (email) => {
   return !!existingUser;
 };
 
+const saveUser = async (newUser) => {
+  await newUser.save();
+
+  return newUser._id;
+};
+
 module.exports = {
   userExists,
+  saveUser,
 };

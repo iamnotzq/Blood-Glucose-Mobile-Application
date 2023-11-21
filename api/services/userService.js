@@ -23,7 +23,7 @@ const createUser = async (userData) => {
   userData.password = hashedPassword;
   const newUser = new User(userData);
 
-  await newUser.save();
+  await userRepository.saveUser(newUser);
 
   return newUser._id;
 };

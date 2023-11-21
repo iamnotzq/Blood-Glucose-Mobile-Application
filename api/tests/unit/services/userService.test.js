@@ -3,6 +3,7 @@ const userService = require("../../../services/userService");
 const userRepo = require("../../../repository/userRepository");
 const User = require("../../../models/user");
 const { fakeUser1 } = require("../sharedFakes");
+const { ObjectId } = require("mongodb");
 
 jest.mock("bcrypt");
 jest.mock("../../../repository/userRepository");
@@ -46,14 +47,13 @@ describe("createUser", () => {
 
     bcrypt.hash.mockResolvedValue(hashedPasswordMock);
 
-    const saveMock = jest.fn();
-    jest.spyOn(User.prototype, "save").mockImplementation(saveMock);
-
     const userId = await userService.createUser(fakeUser1);
+
+    const userObject = new User(fakeUser1);
 
     expect(userRepo.userExists).toHaveBeenCalledWith(fakeUser1.email);
     expect(bcrypt.hash).toHaveBeenCalledWith(fakeInitialPassword, saltRounds);
-    expect(saveMock).toHaveBeenCalled();
+    expect(userRepo.saveUser).toHaveBeenCalled();
     expect(userId).toBeDefined();
   });
 

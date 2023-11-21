@@ -14,7 +14,11 @@ beforeAll(async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-}, 15000);
+}, 20000);
+
+afterEach(async () => {
+  await User.deleteMany({});
+}, 10000);
 
 afterAll(async () => {
   await mongoose.disconnect();
@@ -26,10 +30,6 @@ describe("userExists", () => {
     const user1 = new User(fakeUser1);
     await user1.save();
   });
-
-  afterEach(async () => {
-    await User.deleteMany({});
-  }, 10000);
 
   it("Should return true if the email exists", async () => {
     const existingEmail = fakeUser1.email;
@@ -49,5 +49,15 @@ describe("userExists", () => {
     await expect(userRepository.userExists(invalidEmail)).rejects.toThrow(
       "Invalid Email"
     );
+  });
+});
+
+describe("saveUser", () => {
+  const userObject = new User(fakeUser1);
+
+  it("Should return a userId when the user is created", async () => {
+    const userId = await userRepository.saveUser(userObject);
+
+    expect(userId).toBeDefined();
   });
 });
