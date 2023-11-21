@@ -18,7 +18,11 @@ const createUser = async (userData) => {
     throw new Error(`User with email ${email} already exists`);
   }
 
+  const initialPassword = userData.password;
+  const hashedPassword = await hashPassword(initialPassword);
+  userData.password = hashedPassword;
   const newUser = new User(userData);
+
   await newUser.save();
 
   return newUser._id;

@@ -13,7 +13,7 @@ testApp.use("", userRoutes);
 describe("userRoutes", () => {
   afterAll(async () => {
     await mongoose.disconnect();
-  });
+  }, 20000);
 
   it("POST /api/create-user should create a new user and return user ID", async () => {
     const userService = require("../../../services/userService");

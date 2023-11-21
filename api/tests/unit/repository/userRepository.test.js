@@ -14,7 +14,7 @@ beforeAll(async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-});
+}, 15000);
 
 afterAll(async () => {
   await mongoose.disconnect();
@@ -29,7 +29,7 @@ describe("userExists", () => {
 
   afterEach(async () => {
     await User.deleteMany({});
-  });
+  }, 10000);
 
   it("Should return true if the email exists", async () => {
     const existingEmail = fakeUser1.email;

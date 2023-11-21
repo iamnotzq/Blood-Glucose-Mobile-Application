@@ -21,6 +21,14 @@ describe("hashPassword", () => {
     expect(bcrypt.hash).toHaveBeenCalledWith(unhashedPassword, saltRounds);
     expect(result).toBe(hashedPasswordMock);
   });
+
+  it("Should throw an error if the password is null", async () => {
+    const invalidPassword = null;
+
+    await expect(userService.hashPassword(invalidPassword)).rejects.toThrow(
+      "Password is invalid or undefined"
+    );
+  });
 });
 
 describe("createUser", () => {
@@ -31,12 +39,20 @@ describe("createUser", () => {
   it("Should have a defined userId if the user does not exist", async () => {
     userRepo.userExists.mockResolvedValue(false);
 
+    const fakeInitialPassword = fakeUser1.password;
+    const saltRounds = 10;
+    const hashedPasswordMock =
+      "$2b$10$N8BwaJVClbzPwnPmon8cbONSG/8Qfg57etVTRxpePXyEMM8A/76E6";
+
+    bcrypt.hash.mockResolvedValue(hashedPasswordMock);
+
     const saveMock = jest.fn();
     jest.spyOn(User.prototype, "save").mockImplementation(saveMock);
 
     const userId = await userService.createUser(fakeUser1);
 
     expect(userRepo.userExists).toHaveBeenCalledWith(fakeUser1.email);
+    expect(bcrypt.hash).toHaveBeenCalledWith(fakeInitialPassword, saltRounds);
     expect(saveMock).toHaveBeenCalled();
     expect(userId).toBeDefined();
   });
