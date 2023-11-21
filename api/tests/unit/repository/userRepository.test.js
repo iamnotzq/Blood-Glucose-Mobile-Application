@@ -16,6 +16,11 @@ beforeAll(async () => {
   });
 }, 20000);
 
+beforeEach(async () => {
+  const user1 = new User(fakeUser1);
+  await user1.save();
+});
+
 afterEach(async () => {
   await User.deleteMany({});
 }, 10000);
@@ -26,11 +31,6 @@ afterAll(async () => {
 });
 
 describe("userExists", () => {
-  beforeEach(async () => {
-    const user1 = new User(fakeUser1);
-    await user1.save();
-  });
-
   it("Should return true if the email exists", async () => {
     const existingEmail = fakeUser1.email;
     const result = await userRepository.userExists(existingEmail);
@@ -59,5 +59,17 @@ describe("saveUser", () => {
     const userId = await userRepository.saveUser(userObject);
 
     expect(userId).toBeDefined();
+  });
+});
+
+describe("getUserHashedPassword", () => {
+  it("Should return a hashed password for an existing user", async () => {
+    const email = fakeUser1.email;
+    const user = await User.findOne({ email });
+    const hashedPassword = user.password;
+
+    const result = await userRepository.getUserHashedPassword(email);
+
+    expect(result).toBe(hashedPassword);
   });
 });
