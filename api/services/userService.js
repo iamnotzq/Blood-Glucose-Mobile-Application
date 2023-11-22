@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const userRepository = require("../repository/userRepository");
-const LoginRequestBody = require("../routes/requests/loginUserRequestBody");
+const LoginRequestBody = require("../routes/models/requests/loginUserRequestBody");
 
 // helper functions
 // TODO add error message

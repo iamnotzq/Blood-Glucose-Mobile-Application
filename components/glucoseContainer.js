@@ -2,13 +2,18 @@ import { StyleSheet, Text, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 import React from "react";
 
-const GlucoseContainer = () => {
+const GlucoseContainer = ({ data }) => {
+  const latestMeasurement = data.latestMeasurement;
+  const previousMeasurement = data.previousMeasurement;
+  const averageMeasurement = data.averageMeasurement;
+  const measurementHistory = data.measurementHistory;
+
   const lineData = [
-    { value: 132, label: "Mon" },
-    { value: 120, label: "Tue" },
-    { value: 150, label: "Wed" },
-    { value: 127, label: "Thu" },
-    { value: 126, label: "Today" },
+    { value: measurementHistory[0], label: "Mon" },
+    { value: measurementHistory[1], label: "Tue" },
+    { value: measurementHistory[2], label: "Wed" },
+    { value: measurementHistory[3], label: "Thu" },
+    { value: measurementHistory[4], label: "Today" },
   ];
 
   return (
@@ -22,7 +27,7 @@ const GlucoseContainer = () => {
 
           <View>
             <View style={styles.numberAndUnitsContainer}>
-              <Text style={styles.glucoseNumber}>126</Text>
+              <Text style={styles.glucoseNumber}>{latestMeasurement}</Text>
               <Text> </Text>
               <Text style={styles.glucoseUnitsText}>mg/dL</Text>
             </View>
@@ -39,7 +44,7 @@ const GlucoseContainer = () => {
           <View style={styles.textAndCirlceContainer}>
             <Text style={styles.topCircleText}>Last Scan</Text>
             <View style={styles.lastScanContainer}>
-              <Text style={styles.circleNumberText}>140</Text>
+              <Text style={styles.circleNumberText}>{previousMeasurement}</Text>
               <Text style={styles.circleUnitText}>mg/dL</Text>
             </View>
           </View>
@@ -47,7 +52,7 @@ const GlucoseContainer = () => {
           <View style={styles.textAndCirlceContainer}>
             <Text style={styles.topCircleText}>Average</Text>
             <View style={styles.averageContainer}>
-              <Text style={styles.circleNumberText}>132</Text>
+              <Text style={styles.circleNumberText}>{averageMeasurement}</Text>
               <Text style={styles.circleUnitText}>mg/dL</Text>
             </View>
           </View>

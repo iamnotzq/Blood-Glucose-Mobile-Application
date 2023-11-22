@@ -3,7 +3,12 @@ require("dotenv").config();
 require("../models/db");
 const router = express.Router();
 const userService = require("../services/userService");
-const LoginRequestBody = require("./requests/loginUserRequestBody");
+const LoginRequestBody = require("./models/requests/loginUserRequestBody");
+const {
+  CalorieDisplay,
+  BloodGlucoseDisplay,
+  DashboardAssets,
+} = require("./models/responses/dashboardAssets");
 
 router.post("/api/create-user", async (req, res) => {
   try {
@@ -18,15 +23,37 @@ router.post("/api/create-user", async (req, res) => {
 router.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const loginRequestBody = new LoginRequestBody(email, password);
 
     const str = await userService.loginUser(loginRequestBody);
+
+    //if successful, get dashboard assets
+
     res.status(200).json(str);
   } catch (err) {
     console.error(err.message);
     res.status(500).json("Login failed");
   }
+});
+
+router.get("/api/dashboard", async (req, res) => {
+  // await userService.getDashboardAssets(userId, currentDate);
+  const calorieDisplay = new CalorieDisplay(
+    2000,
+    200,
+    1800,
+    10,
+    [1500, 1600, 1700, 1800, 1900]
+  );
+  const bloodGlucoseDisplay = new BloodGlucoseDisplay(
+    150,
+    140,
+    145,
+    [120, 130, 140, 150, 140]
+  );
+  const dashboardAssets = new DashboardAssets(calorieDisplay, bloodGlucoseDisplay);
+
+  res.status(200).json(dashboardAssets);
 });
 
 module.exports = router;

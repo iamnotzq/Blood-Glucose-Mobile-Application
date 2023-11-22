@@ -1,22 +1,46 @@
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, StyleSheet, View, TouchableOpacity } from "react-native";
-import React from "react";
 import CalorieContainer from "../components/calorieContainer";
 import GlucoseContainer from "../components/glucoseContainer";
 import Footer from "../navigation/Footer";
 
 const DashboardScreen = () => {
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/dashboard")
+      .then((response) => response.json())
+      .then((data) => {
+        setDashboardData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching dashboard data:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  console.log(dashboardData);
+  const calorieDisplay = dashboardData?.calorieDisplay || {};
+  const bloodGlucoseDisplay = dashboardData?.bloodGlucoseDisplay || {};
+  console.log(`Calorie Display: ${JSON.stringify(calorieDisplay)}`);
+  console.log(`Blood Glucose Dispaly: ${JSON.stringify(bloodGlucoseDisplay)}`);
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View style={styles.componentsContainer}>
         <View>
           <TouchableOpacity style={styles.component}>
-            <CalorieContainer />
+            {calorieDisplay && <CalorieContainer data={calorieDisplay} />}
           </TouchableOpacity>
 
           <View style={{ margin: 20 }}></View>
 
           <TouchableOpacity style={styles.component}>
-            <GlucoseContainer />
+            {bloodGlucoseDisplay && (
+              <GlucoseContainer data={bloodGlucoseDisplay} />
+            )}
           </TouchableOpacity>
         </View>
       </View>
