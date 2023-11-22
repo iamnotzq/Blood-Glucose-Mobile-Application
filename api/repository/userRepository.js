@@ -21,7 +21,15 @@ const saveUser = async (newUser) => {
   return newUser._id;
 };
 
+const getUserHashedPassword = async (email) => {
+  const user = await User.findOne({ email });
+  const hashedPassword = user.password;
+
+  return hashedPassword;
+};
+
 module.exports = {
   userExists,
   saveUser,
+  getUserHashedPassword,
 };

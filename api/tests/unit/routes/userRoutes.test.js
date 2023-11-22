@@ -39,7 +39,7 @@ describe("userRoutes", () => {
       hypo_mg_dl: 70,
       last_name: "Doe",
       medication_list: [],
-      password: "fakePassword",
+      password: "fakePassword**",
       target_lower_mg_dl: 80,
       target_upper_mg_dl: 130,
       username: "johndoe001",
@@ -58,5 +58,43 @@ describe("userRoutes", () => {
 
     expect(response.status).toBe(500);
     expect(response.body).toEqual({ error: "Internal Server Error" });
+  });
+
+  it("POST /api/login should login user", async () => {
+    const userService = require("../../../services/userService");
+    const expectedResponse = "User has logged in";
+    const mockLoginUser = jest.fn().mockResolvedValue(expectedResponse);
+    userService.loginUser = mockLoginUser;
+
+    const invalidLoginRequestBody = {
+      email: "fake@email.com",
+      password: "Password123*",
+    };
+
+    const response = await request(testApp)
+      .post("/api/login")
+      .send(invalidLoginRequestBody);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toBe(expectedResponse);
+    expect(mockLoginUser).toHaveBeenCalledWith(invalidLoginRequestBody);
+  });
+
+  it("POST /api/login should throw 500 error when invalidLoginRequestBody is invalid", async () => {
+    require("../../../services/userService").loginUser.mockRejectedValue(
+      new Error("Mocked error")
+    );
+
+    const invalidLoginRequestBody = {
+      email: "invalid",
+      password: "",
+    };
+
+    const response = await request(testApp)
+      .post("/api/login")
+      .send(invalidLoginRequestBody);
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual("Login failed");
   });
 });

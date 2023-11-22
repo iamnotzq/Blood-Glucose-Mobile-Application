@@ -1,7 +1,7 @@
 const fakeUser1 = {
   username: "johndoe001",
   email: "fake@email.com",
-  password: "fakePassword",
+  password: "fakePassword**",
   first_name: "John",
   last_name: "Doe",
   country: "Singapore",
