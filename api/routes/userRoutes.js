@@ -38,20 +38,20 @@ router.post("/api/login", async (req, res) => {
 
 router.get("/api/dashboard", async (req, res) => {
   // await userService.getDashboardAssets(userId, currentDate);
-  const calorieDisplay = CalorieDisplay(
+  const calorieDisplay = new CalorieDisplay(
     2000,
     200,
     1800,
     10,
     [1500, 1600, 1700, 1800, 1900]
   );
-  const bloodGlucoseDisplay = BloodGlucoseDisplay(
+  const bloodGlucoseDisplay = new BloodGlucoseDisplay(
     150,
     140,
     145,
     [120, 130, 140, 150, 140]
   );
-  const dashboardAssets = DashboardAssets(calorieDisplay, bloodGlucoseDisplay);
+  const dashboardAssets = new DashboardAssets(calorieDisplay, bloodGlucoseDisplay);
 
   res.status(200).json(dashboardAssets);
 });

@@ -3,44 +3,52 @@ import { PieChart, BarChart } from "react-native-gifted-charts";
 import CalorieText from "./calorieText";
 import React from "react";
 
-const CalorieContainer = () => {
+const CalorieContainer = ({ data }) => {
+  console.log(`Data in Calorie Container: ${data}`);
+  const currentProgress = data.dailyProgress;
+  const progressLeft = 100 - currentProgress;
+  const calEaten = data.calEaten;
+  const calLeft = data.calLeft;
+  const dailyGoal = data.dailyGoal;
+  const consumptionHistory = data.consumptionHistory;
+
   const pieData = [
-    { value: 30, color: "#F8F9FB" },
-    { value: 70, color: "#9CC0E8" },
+    { value: currentProgress, color: "#F8F9FB" }, //current progress
+    { value: progressLeft, color: "#9CC0E8" }, //progress left
   ];
   const stackData = [
     {
       stacks: [
-        { value: 1500, color: "#3B83D1" },
-        { value: 500, color: "#9CC0E8" },
+        { value: consumptionHistory[0], color: "#3B83D1" }, //calLeft
+        { value: dailyGoal - consumptionHistory[0], color: "#9CC0E8" }, //calEaten
       ],
       label: "Mon",
     },
     {
       stacks: [
-        { value: 1680, color: "#3B83D1" },
-        { value: 320, color: "#9CC0E8" },
+        { value: consumptionHistory[1], color: "#3B83D1" },
+        { value: dailyGoal - consumptionHistory[1], color: "#9CC0E8" },
       ],
       label: "Tue",
     },
     {
       stacks: [
-        { value: 2000, color: "#3B83D1" },
-        { value: 0, color: "#9CC0E8" },
+        { value: consumptionHistory[2], color: "#3B83D1" },
+        { value: dailyGoal - consumptionHistory[2], color: "#9CC0E8" },
       ],
       label: "Wed",
     },
     {
       stacks: [
-        { value: 1898, color: "#3B83D1" },
-        { value: 102, color: "#9CC0E8" },
+        { value: consumptionHistory[3], color: "#3B83D1" },
+        { value: dailyGoal - consumptionHistory[3], color: "#9CC0E8" },
       ],
       label: "Thu",
     },
     {
       stacks: [
-        { value: 500, color: "#3B83D1" },
-        { value: 1500, color: "#9CC0E8" },
+        { value: consumptionHistory[4], color: "#3B83D1" },
+        { value: dailyGoal - consumptionHistory[4], color: "#9CC0E8" },
       ],
       label: "Today",
     },
@@ -51,7 +59,7 @@ const CalorieContainer = () => {
       <View style={styles.topCalorieContainer}>
         <Text style={styles.containerText}>Calories</Text>
         <View style={styles.chartContainer}>
-          <CalorieText text="Eaten" calories={500} />
+          <CalorieText text="Eaten" calories={calEaten} />
           <PieChart
             donut
             radius={55}
@@ -73,7 +81,7 @@ const CalorieContainer = () => {
               );
             }}
           />
-          <CalorieText text="Left" calories={1500} />
+          <CalorieText text="Left" calories={calLeft} />
         </View>
       </View>
 
