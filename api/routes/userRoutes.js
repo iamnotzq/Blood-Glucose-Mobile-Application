@@ -16,12 +16,17 @@ router.post("/api/create-user", async (req, res) => {
 });
 
 router.post("/api/login", async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const loginRequestBody = new LoginRequestBody(email, password);
+    const loginRequestBody = new LoginRequestBody(email, password);
 
-  const str = await userService.loginUser(loginRequestBody);
-  res.status(200).json(str);
+    const str = await userService.loginUser(loginRequestBody);
+    res.status(200).json(str);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json("Login failed");
+  }
 });
 
 module.exports = router;
