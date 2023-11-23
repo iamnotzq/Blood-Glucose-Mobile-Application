@@ -6,6 +6,11 @@ const foodEntry = new mongoose.Schema({
     type: String,
     required: true,
   },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
   food_name: {
     type: String,
     required: true,
