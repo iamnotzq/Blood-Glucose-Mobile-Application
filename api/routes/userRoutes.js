@@ -38,6 +38,7 @@ router.post("/api/login", async (req, res) => {
 
 router.get("/api/dashboard", async (req, res) => {
   // await userService.getDashboardAssets(userId, currentDate);
+  console.log("Calling getDashboardAssets API")
   const calorieDisplay = new CalorieDisplay(
     2000,
     200,
