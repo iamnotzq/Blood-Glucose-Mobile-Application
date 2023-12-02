@@ -113,18 +113,18 @@ describe("validateUserLogin", () => {
     });
 
     it("Should throw error when email is invalid", async () => {
-        const loginRequestBody = { email: invalidEmail, password: validPassword };
+        const loginRequestBody: LoginRequestBody = { email: invalidEmail, password: validPassword };
 
         await expect(
-            userService.validateUserLogin(loginRequestBody as LoginRequestBody)
+            userService.validateUserLogin(loginRequestBody)
         ).rejects.toThrow("Email is invalid");
     });
 
     it("Should throw error when user does not exist", async () => {
-        const loginRequestBody = { email: validEmail, password: validPassword };
+        const loginRequestBody: LoginRequestBody = { email: validEmail, password: validPassword };
 
         await expect(
-            userService.validateUserLogin(loginRequestBody as LoginRequestBody)
+            userService.validateUserLogin(loginRequestBody)
         ).rejects.toThrow(
             `User with email: ${loginRequestBody.email} does not exist, try creating an account`
         );
@@ -133,13 +133,13 @@ describe("validateUserLogin", () => {
     it("Should throw error when pasword is invalid", async () => {
         (userRepo.userExists as jest.Mock).mockImplementation(async () => true);
 
-        const loginRequestBody = {
+        const loginRequestBody: LoginRequestBody = {
             email: validEmail,
             password: invalidPassword,
         };
 
         await expect(
-            userService.validateUserLogin(loginRequestBody as LoginRequestBody)
+            userService.validateUserLogin(loginRequestBody)
         ).rejects.toThrow("Password is invalid");
         expect(userRepo.userExists).toHaveBeenCalledWith(validEmail);
     });
@@ -314,13 +314,13 @@ describe("loginUser", () => {
             .spyOn(userService, "validateUserLogin")
             .mockResolvedValue(false);
 
-        const loginRequestBody = {
+        const loginRequestBody: LoginRequestBody = {
             email: invalidEmail,
             password: invalidPassword,
         };
 
         await expect(
-            userService.loginUser(loginRequestBody as LoginRequestBody)
+            userService.loginUser(loginRequestBody)
         ).rejects.toThrow(
             "Login failed. Please check your credentials and try again."
         );
@@ -337,13 +337,13 @@ describe("loginUser", () => {
             .spyOn(userService, "validateUserLogin")
             .mockResolvedValue(true);
 
-        const loginRequestBody = {
+        const loginRequestBody: LoginRequestBody = {
             email: validEmail,
             password: validPassword,
         };
 
         const result = await userService.loginUser(
-            loginRequestBody as LoginRequestBody
+            loginRequestBody
         );
 
         expect(result).toBe("User has logged in");

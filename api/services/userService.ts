@@ -96,7 +96,7 @@ const loginUser = async (
         await validateUserLogin(loginRequestBody);
 
         return "User has logged in";
-    } catch (error) {
+    } catch (error: any) {
         console.error(error.message);
         throw new Error(
             "Login failed. Please check your credentials and try again."
