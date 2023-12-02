@@ -3,8 +3,8 @@ config();
 import { describe, expect, it, afterAll, beforeAll, beforeEach, afterEach } from '@jest/globals';
 import mongoose, { Document } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { User, UserDocument } from '../../../repository/models/user';
-import { userExists, saveUser, getUserHashedPassword } from '../../../repository/userRepository';
+import { User, UserDocument } from '../../../repositories/models/user';
+import { userExists, saveUser, getUserHashedPassword } from '../../../repositories/userRepository';
 
 let mongoServer: MongoMemoryServer
 
