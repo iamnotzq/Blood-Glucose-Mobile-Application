@@ -149,7 +149,7 @@ const FakeMixedFoodEntries: FoodDiaryEntryDocument[] = [
   } as FoodDiaryEntryDocument,
   {
     userId: "656b37d806383d43a9ebc7f2",
-    timestamp: new Date(Date.UTC(2023, 10, 2, 23, 59, 59, 999)),
+    timestamp: new Date(Date.UTC(2023, 10, 27, 23, 59, 59, 999)),
     foodName: "Fishball Noodes",
     portionSize: 4,
     mealType: "Dinner",

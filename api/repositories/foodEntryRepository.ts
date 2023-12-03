@@ -1,18 +1,17 @@
-import _ from "lodash";
 import FoodDiaryEntry, {
   FoodDiaryEntryDocument,
 } from "./models/foodDiaryEntry";
+import {
+  DailyConsumptionInformation,
+  CalorieDisplayDTO,
+} from "../dtos/dashboardDTOs";
 
-interface ConsumptionHistoryEntry {
-  date: Date;
-  day: string;
-  caloriesConsumed: number;
-}
+const calculateTotalCalories = (
+  ungroupedFoodEntries: FoodDiaryEntryDocument[]
+) => {
+  if (ungroupedFoodEntries.length === 0) return 0;
 
-const calculateTotalCalories = (foodDiaryEntries: FoodDiaryEntryDocument[]) => {
-  if (foodDiaryEntries.length === 0) return 0;
-
-  const totalCalories = foodDiaryEntries.reduce(
+  const totalCalories = ungroupedFoodEntries.reduce(
     (sum, entry) => sum + entry.nutritionalContent.calories,
     0
   );
@@ -22,9 +21,12 @@ const calculateTotalCalories = (foodDiaryEntries: FoodDiaryEntryDocument[]) => {
 
 const getUserCurrentCalorieConsumption = async (
   userId: string,
-  startOfDay: Date,
-  endOfDay: Date
+  currentTimestamp: Date
 ): Promise<number> => {
+  const startOfDay = new Date(currentTimestamp);
+  const endOfDay = new Date(currentTimestamp);
+  startOfDay.setUTCHours(0, 0, 0, 0);
+  endOfDay.setUTCHours(23, 59, 59, 999);
   const query = {
     userId: userId,
     timestamp: {
@@ -34,10 +36,10 @@ const getUserCurrentCalorieConsumption = async (
   };
 
   try {
-    const foodDiaryEntries: FoodDiaryEntryDocument[] =
+    const ungroupedFoodEntries: FoodDiaryEntryDocument[] =
       await FoodDiaryEntry.find(query);
 
-    const caloriesEaten = calculateTotalCalories(foodDiaryEntries);
+    const caloriesEaten = calculateTotalCalories(ungroupedFoodEntries);
 
     console.log(`Calories Eaten for user ${userId}: ${caloriesEaten}`);
 
@@ -52,45 +54,94 @@ const getUserCurrentCalorieConsumption = async (
 const getUserConsumptionHistory = async (
   userId: string,
   currentTimestamp: Date
-): Promise<ConsumptionHistoryEntry[]> => {
-  const sevenDaysAgo = new Date(currentTimestamp);
-  sevenDaysAgo.setDate(currentTimestamp.getDate() - 7);
+): Promise<DailyConsumptionInformation[]> => {
+  const sevenDaysAgoTimestamp = new Date(currentTimestamp);
+  sevenDaysAgoTimestamp.setUTCDate(currentTimestamp.getUTCDate() - 7);
+  sevenDaysAgoTimestamp.setUTCHours(0, 0, 0, 0);
 
   const query = {
-    userId,
-    timestamp: { $gte: sevenDaysAgo, $lte: currentTimestamp },
+    userId: userId,
+    timestamp: {
+      $gte: sevenDaysAgoTimestamp,
+      $lte: currentTimestamp,
+    },
   };
 
   try {
-    const entries: FoodDiaryEntryDocument[] = await FoodDiaryEntry.find(query);
+    const ungroupedFoodEntries: FoodDiaryEntryDocument[] =
+      await FoodDiaryEntry.find(query);
 
-    const groupedEntries = _.groupBy(
-      entries,
-      (entry) => entry.timestamp.toISOString().split("T")[0]
-    );
+    const dateGroupedEntries: Map<string, FoodDiaryEntryDocument[]> = new Map();
 
-    const sortedEntries = _.sortBy(
-      _.map(groupedEntries, (group, date) => ({
-        date: new Date(date),
-        day: new Date(date).toLocaleDateString("en-US", { weekday: "long" }),
-        caloriesConsumed: calculateTotalCalories(group),
-      })),
-      "date"
-    );
+    ungroupedFoodEntries.map((entry) => {
+      const entryTimestamp: Date = entry.timestamp;
+      const dateString: string = entryTimestamp.toISOString().split("T")[0];
 
-    return sortedEntries;
-  } catch (error) {
-    console.error(`Error fetching calorie history for ${userId}: ${error}`);
+      const existingEntries = dateGroupedEntries.get(dateString) || [];
+      dateGroupedEntries.set(dateString, [...existingEntries, entry]);
+    });
+
+    const dateGroupedEntriesArray = Array.from(dateGroupedEntries.entries());
+    const consumptionHistory = dateGroupedEntriesArray.map((group) => {
+      const foodEntries = group[1];
+      const totalCalories = calculateTotalCalories(foodEntries);
+
+      const dateString = group[0];
+      const groupTimestamp = new Date(dateString);
+      const options: Intl.DateTimeFormatOptions = { weekday: "long" };
+      const dayOfWeek = groupTimestamp.toLocaleDateString("en-US", options);
+
+      const consumptionInformation: DailyConsumptionInformation = {
+        dateString: dateString,
+        dayOfWeek: dayOfWeek,
+        totalCaloriesConsumed: totalCalories,
+      };
+
+      return consumptionInformation;
+    });
+
+    return consumptionHistory;
+  } catch (error: any) {
+    console.error(`Error finding consumption history for user: ${userId}`);
     throw error;
   }
 };
 
-// const getUserCalorieDisplayAssets = async (userId, date) => {
-//     const userObjectId = new ObjectId = (userId);
-//     const startOfDay = new Date(date).setHours(0, 0, 0, 0);
-//     const endOfDay = new Date(date).setHours(23, 59, 99, 999);
+const getUserCalorieDisplayInformation: (
+  userId: string,
+  currentTimestamp: Date
+) => Promise<CalorieDisplayDTO> = async (
+  userId: string,
+  currentTimestamp: Date
+) => {
+  try {
+    const currentCalorieConsumption = await getUserCurrentCalorieConsumption(
+      userId,
+      currentTimestamp
+    );
 
-//     const currentCalorieConsumption = getUserCurrentCalorieConsumption(userObjectId, startOfDay, endOfDay);
-// }
+    const consumptionHistory = await getUserConsumptionHistory(
+      userId,
+      currentTimestamp
+    );
 
-export { calculateTotalCalories, getUserCurrentCalorieConsumption };
+    const dto: CalorieDisplayDTO = {
+      currentCalorieConsumption: currentCalorieConsumption,
+      consumptionHistory: consumptionHistory,
+    };
+
+    return dto;
+  } catch (error: any) {
+    console.error(
+      `Error in receiving calorie display assets for user: ${userId}`
+    );
+    throw error;
+  }
+};
+
+export {
+  calculateTotalCalories,
+  getUserCurrentCalorieConsumption,
+  getUserConsumptionHistory,
+  getUserCalorieDisplayInformation,
+};
