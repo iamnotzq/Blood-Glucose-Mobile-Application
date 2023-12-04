@@ -9,7 +9,7 @@ import {
   beforeEach,
   afterEach,
 } from "@jest/globals";
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { User, UserDocument } from "../../../repositories/models/user";
 import {
