@@ -9,7 +9,7 @@ import {
   beforeEach,
   afterEach,
 } from "@jest/globals";
-import mongoose, { Document } from "mongoose";
+import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { User, UserDocument } from "../../../repositories/models/user";
 import {
@@ -41,6 +41,7 @@ const fakeUser = {
 };
 
 beforeAll(async () => {
+  console.log("Starting userRepository.test.ts");
   mongoServer = new MongoMemoryServer();
   const uri = process.env.MONGO_URI as string;
   await mongoose.connect(uri);
@@ -58,6 +59,8 @@ afterEach(async () => {
 afterAll(async () => {
   await mongoose.disconnect();
   await mongoServer.stop();
+
+  console.log("Completed userRepository.test.ts");
 });
 
 describe("userExists", () => {

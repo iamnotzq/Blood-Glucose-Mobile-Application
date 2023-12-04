@@ -10,7 +10,7 @@ import {
   afterAll,
   afterEach,
 } from "@jest/globals";
-import mongoose, { Document } from "mongoose";
+import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import * as foodDiaryRepo from "../../../repositories/foodEntryRepository";
 import FoodDiaryEntry, {
@@ -29,22 +29,16 @@ beforeAll(async () => {
   mongoServer = new MongoMemoryServer();
   const uri = process.env.MONGO_URI as string;
   await mongoose.connect(uri);
-}, 20000);
-
-beforeEach(async () => {
   await FoodDiaryEntry.insertMany(FakeMixedFoodEntries);
-});
-
-afterEach(async () => {
-  await FoodDiaryEntry.deleteMany();
-});
+}, 30000);
 
 afterAll(async () => {
+  await FoodDiaryEntry.deleteMany();
   await mongoose.disconnect();
   await mongoServer.stop();
 
   console.log("Completed foodEntryRepository.test.ts");
-});
+}, 10000);
 
 describe("calculateTotalCalories", () => {
   it("Should return the total number of calories when foodEntries is populated", () => {
