@@ -28,6 +28,7 @@ export interface FoodDiaryEntryDocument extends Document {
 
 
 const foodDiaryEntrySchema = new Schema<FoodDiaryEntryDocument>({
+    userId: { type: String, required: true },
     timestamp: { type: Date, default: Date.now, required: true },
     foodName: { type: String, required: true },
     portionSize: { type: Number, required: true },
