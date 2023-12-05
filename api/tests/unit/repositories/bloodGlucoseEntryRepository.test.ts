@@ -8,8 +8,9 @@ import {
   expect,
   afterAll,
   afterEach,
+  beforeEach,
 } from "@jest/globals";
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import BloodGlucoseEntry, {
   BloodGlucoseEntryDocument,
@@ -21,8 +22,12 @@ import {
   FakeTimestamp,
   FakeUserId,
 } from "./Fakes";
-import { BloodGlucoseSummary } from "../../../dtos/dashboardDTOs";
+import {
+  BloodGlucoseSummary,
+  DailyBloodGlucoseInformation,
+} from "../../../dtos/dashboardDTOs";
 import { calculateAverageHelper } from "./Helpers";
+import { expectedBloodGlucoseHistory } from "./expecteResults";
 
 let mongoServer: MongoMemoryServer;
 
@@ -36,13 +41,20 @@ describe("bloodGlucoseEntryRepository", () => {
 
     await mongoose.connect(uri);
     console.log("Connected to MongoDB successfully!");
-
-    await BloodGlucoseEntry.insertMany(MockBloodGlucoseEntries);
-    console.log("Mock data inserted");
   }, 45000);
 
-  afterAll(async () => {
+  beforeEach(async () => {
+    await BloodGlucoseEntry.insertMany(MockBloodGlucoseEntries);
+    jest.restoreAllMocks();
+    console.log("Mock data inserted");
+  });
+
+  afterEach(async () => {
     await BloodGlucoseEntry.deleteMany();
+    console.log("Mock data deleted");
+  });
+
+  afterAll(async () => {
     await mongoose.disconnect();
     if (mongoServer) await mongoServer.stop();
   }, 30000);
@@ -120,7 +132,9 @@ describe("bloodGlucoseEntryRepository", () => {
         glucoseLevel: 150,
       } as BloodGlucoseEntryDocument;
 
-      jest.spyOn(BloodGlucoseEntry, "find").mockResolvedValue([mockEntry]);
+      const findSpy = jest
+        .spyOn(BloodGlucoseEntry, "find")
+        .mockResolvedValue([mockEntry]);
 
       const expectedResult: BloodGlucoseSummary = {
         currentGlucoseLevel: mockEntry.glucoseLevel,
@@ -145,6 +159,95 @@ describe("bloodGlucoseEntryRepository", () => {
 
       await expect(
         bloodGlucoseEntryRepo.getUserRecentGlucoseSummary(
+          userId,
+          currentTimestamp
+        )
+      ).rejects.toThrow(mockErrorMessage);
+    });
+  });
+
+  describe("getUserBloodGlucoseHistory", () => {
+    const userId = FakeUserId;
+    const currentTimestamp = FakeTimestamp;
+
+    test("Should return an array of DailyBloodGlucoseInformation", async () => {
+      const expectedFiveDaysAgoTimestamp = new Date(currentTimestamp);
+      expectedFiveDaysAgoTimestamp.setUTCDate(
+        currentTimestamp.getUTCDate() - 5
+      );
+      expectedFiveDaysAgoTimestamp.setUTCHours(0, 0, 0, 0);
+
+      const expectedQuery = {
+        userId: userId,
+        timestamp: {
+          $gte: expectedFiveDaysAgoTimestamp,
+          $lte: currentTimestamp,
+        },
+      };
+
+      const findSpy = jest.spyOn(BloodGlucoseEntry, "find");
+
+      const expectedEntries: BloodGlucoseEntryDocument[] =
+        MockBloodGlucoseEntries.filter(
+          (entry) =>
+            entry.userId === userId &&
+            entry.timestamp >= expectedFiveDaysAgoTimestamp &&
+            entry.timestamp <= currentTimestamp
+        );
+      expectedEntries.sort(
+        (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
+      );
+
+      const expectedResult: DailyBloodGlucoseInformation[] = JSON.parse(
+        expectedBloodGlucoseHistory
+      );
+
+      const result = await bloodGlucoseEntryRepo.getUserBloodGlucoseHistory(
+        userId,
+        currentTimestamp
+      );
+
+      console.log(`Expected: ${expectedBloodGlucoseHistory}`);
+      console.log(`Result: ${JSON.stringify(result)}`);
+
+      expect(findSpy).toHaveBeenCalledWith(expectedQuery);
+      expect(result).toStrictEqual(expectedResult);
+    });
+
+    test("Should return an array of the current DailyBloodGlucoseInformation entries is empty", async () => {
+      const expectedDateString = currentTimestamp.toISOString().split("T")[0];
+      const expectedOptions: Intl.DateTimeFormatOptions = { weekday: "long" };
+      const expectedLocale = "en-US";
+      const expectedDayOfWeek = currentTimestamp.toLocaleDateString(
+        expectedLocale,
+        expectedOptions
+      );
+      const expectedCurrentGlucoseInformation: DailyBloodGlucoseInformation = {
+        dateString: expectedDateString,
+        dayOfWeek: expectedDayOfWeek,
+        averageGlucoseLevel: 0,
+      };
+      const expected = [expectedCurrentGlucoseInformation];
+
+      jest.spyOn(BloodGlucoseEntry, "find").mockResolvedValue([]);
+
+      const result = await bloodGlucoseEntryRepo.getUserBloodGlucoseHistory(
+        userId,
+        currentTimestamp
+      );
+
+      expect(result).toStrictEqual(expected);
+    });
+
+    test("Should handle errors and log error message", async () => {
+      const mockErrorMessage = "Mock Error";
+      const mockError = new Error(mockErrorMessage);
+      jest.spyOn(BloodGlucoseEntry, "find").mockRejectedValueOnce(() => {
+        throw mockError;
+      });
+
+      await expect(
+        bloodGlucoseEntryRepo.getUserBloodGlucoseHistory(
           userId,
           currentTimestamp
         )

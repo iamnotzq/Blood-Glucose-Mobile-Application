@@ -3,7 +3,9 @@ import FoodDiaryEntry, {
   NutritionalContentDocument,
 } from "../../../repositories/models/foodDiaryEntry";
 
-import { BloodGlucoseEntryDocument } from "../../../repositories/models/bloodGlucoseEntry";
+import BloodGlucoseEntry, {
+  BloodGlucoseEntryDocument,
+} from "../../../repositories/models/bloodGlucoseEntry";
 
 export const FakeUserId = "656aed89594fc49ef5cac032";
 
@@ -189,28 +191,58 @@ export const FakeBloodGlucoseEntries: BloodGlucoseEntryDocument[] = [
 export const MockBloodGlucoseEntries: BloodGlucoseEntryDocument[] = [
   {
     userId: FakeUserId,
-    timestamp: new Date(Date.UTC(2023, 11, 23, 23, 0, 0, 0)),
+    timestamp: new Date(Date.UTC(2023, 11, 23, 0, 0, 0, 0)),
     glucoseLevel: 150,
   } as BloodGlucoseEntryDocument,
   {
     userId: "656db5f588e3c644c1fbf909",
-    timestamp: new Date(Date.UTC(2023, 11, 23, 12, 0, 0, 0)),
+    timestamp: new Date(Date.UTC(2023, 11, 23, 0, 0, 0, 0)),
     glucoseLevel: 160,
   } as BloodGlucoseEntryDocument,
   {
     userId: FakeUserId,
-    timestamp: new Date(Date.UTC(2023, 11, 23, 12, 0, 0, 0)),
+    timestamp: new Date(Date.UTC(2023, 11, 23, 0, 0, 0, 0)),
     glucoseLevel: 160,
   } as BloodGlucoseEntryDocument,
   {
     userId: FakeUserId,
-    timestamp: new Date(Date.UTC(2023, 11, 23, 8, 0, 0, 0)),
+    timestamp: new Date(Date.UTC(2023, 11, 23, 0, 0, 0, 0)),
     glucoseLevel: 140,
   } as BloodGlucoseEntryDocument,
   {
     userId: FakeUserId,
     timestamp: new Date(Date.UTC(2023, 11, 22, 23, 59, 59, 999)),
     glucoseLevel: 150,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 21, 8, 0, 0, 0)),
+    glucoseLevel: 140,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 20, 8, 0, 0, 0)),
+    glucoseLevel: 140,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 20, 8, 0, 0, 0)),
+    glucoseLevel: 130,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 19, 8, 0, 0, 0)),
+    glucoseLevel: 120,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 18, 8, 0, 0, 0)),
+    glucoseLevel: 135,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 17, 8, 0, 0, 0)),
+    glucoseLevel: 140,
   } as BloodGlucoseEntryDocument,
   {
     userId: "656db5f588e3c644c1fbf909",

@@ -22,3 +22,9 @@ export interface BloodGlucoseSummary {
   previousGlucoseLevel: number;
   averageGlucoseLevel: number;
 }
+
+export interface DailyBloodGlucoseInformation {
+  dateString: string;
+  dayOfWeek: string;
+  averageGlucoseLevel: number;
+}

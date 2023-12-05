@@ -1,7 +1,10 @@
 import BloodGlucoseEntry, {
   BloodGlucoseEntryDocument,
 } from "./models/bloodGlucoseEntry";
-import { BloodGlucoseSummary } from "../dtos/dashboardDTOs";
+import {
+  BloodGlucoseSummary,
+  DailyBloodGlucoseInformation,
+} from "../dtos/dashboardDTOs";
 
 export const calculateAverageGlucoseLevel = (
   entries: BloodGlucoseEntryDocument[]
@@ -65,6 +68,84 @@ export const getUserRecentGlucoseSummary = async (
 
     return summary;
   } catch (error: any) {
+    throw error;
+  }
+};
+
+export const getUserBloodGlucoseHistory = async (
+  userId: string,
+  currentTimestamp: Date
+): Promise<DailyBloodGlucoseInformation[]> => {
+  const fiveDaysAgoTimestamp = new Date(currentTimestamp);
+  fiveDaysAgoTimestamp.setUTCDate(currentTimestamp.getUTCDate() - 5);
+  fiveDaysAgoTimestamp.setUTCHours(0, 0, 0, 0);
+
+  const query = {
+    userId: userId,
+    timestamp: {
+      $gte: fiveDaysAgoTimestamp,
+      $lte: currentTimestamp,
+    },
+  };
+
+  console.log(query);
+
+  try {
+    const ungroupedEntries: BloodGlucoseEntryDocument[] =
+      await BloodGlucoseEntry.find(query);
+
+    if (ungroupedEntries.length === 0) {
+      const currentDateString = currentTimestamp.toISOString().split("T")[0];
+      const options: Intl.DateTimeFormatOptions = { weekday: "long" };
+      const currentDayOfWeek = currentTimestamp.toLocaleDateString(
+        "en-US",
+        options
+      );
+      return [
+        {
+          dateString: currentDateString,
+          dayOfWeek: currentDayOfWeek,
+          averageGlucoseLevel: 0,
+        },
+      ];
+    }
+
+    console.log(`Received entries: ${JSON.stringify(ungroupedEntries)}`);
+
+    const dateGroupedEntries: Map<string, BloodGlucoseEntryDocument[]> =
+      new Map();
+    ungroupedEntries.map((entry) => {
+      const entryTimestamp: Date = entry.timestamp;
+      const dateString: string = entryTimestamp.toISOString().split("T")[0];
+
+      const existingEntries = dateGroupedEntries.get(dateString) || [];
+      dateGroupedEntries.set(dateString, [...existingEntries, entry]);
+    });
+
+    const dateGroupedEntriesArray = Array.from(dateGroupedEntries.entries());
+
+    const bloodGlucoseHistory: DailyBloodGlucoseInformation[] =
+      dateGroupedEntriesArray.map((group) => {
+        const bloodGlucoseEntries: BloodGlucoseEntryDocument[] = group[1];
+        const averageGlucoseLevel =
+          calculateAverageGlucoseLevel(bloodGlucoseEntries);
+        const dateString = group[0];
+        const groupTimestamp = new Date(dateString);
+        const options: Intl.DateTimeFormatOptions = { weekday: "long" };
+        const dayOfWeek = groupTimestamp.toLocaleDateString("en-US", options);
+
+        const glucoseInformation: DailyBloodGlucoseInformation = {
+          dateString: dateString,
+          dayOfWeek: dayOfWeek,
+          averageGlucoseLevel: averageGlucoseLevel,
+        };
+
+        return glucoseInformation;
+      });
+
+    return bloodGlucoseHistory;
+  } catch (error: any) {
+    console.log(error);
     throw error;
   }
 };
