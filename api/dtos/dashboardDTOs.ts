@@ -28,3 +28,10 @@ export interface DailyBloodGlucoseInformation {
   dayOfWeek: string;
   averageGlucoseLevel: number;
 }
+
+export interface BloodGlucoseDisplayAssets {
+  latestMeasurement: number;
+  previousMeasurement: number;
+  averageMeasurement: number;
+  measurementHistory: DailyBloodGlucoseInformation[];
+}

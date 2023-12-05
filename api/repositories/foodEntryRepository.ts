@@ -107,13 +107,10 @@ const getUserConsumptionHistory = async (
   }
 };
 
-const getUserCalorieDisplayInformation: (
+const getUserCalorieDisplayInformation = async (
   userId: string,
   currentTimestamp: Date
-) => Promise<CalorieDisplayDTO> = async (
-  userId: string,
-  currentTimestamp: Date
-) => {
+): Promise<CalorieDisplayDTO> => {
   try {
     const currentCalorieConsumption = await getUserCurrentCalorieConsumption(
       userId,

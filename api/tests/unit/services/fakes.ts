@@ -2,6 +2,8 @@ import {
   DailyConsumptionInformation,
   CalorieDisplayAssets,
   CalorieDisplayDTO,
+  BloodGlucoseSummary,
+  DailyBloodGlucoseInformation,
 } from "../../../dtos/dashboardDTOs";
 
 import { UserDocument } from "../../../repositories/models/user";
@@ -78,3 +80,37 @@ export const fakeCalorieDisplayAssets: CalorieDisplayAssets = {
   dailyProgress: fakeDailyProgress,
   consumptionHistory: fakeConsumptionHistory,
 };
+
+export const fakeBloodGlucoseSummary: BloodGlucoseSummary = {
+  currentGlucoseLevel: 130,
+  previousGlucoseLevel: 140,
+  averageGlucoseLevel: 135,
+};
+
+export const fakeBloodGlucoseHistory: DailyBloodGlucoseInformation[] = [
+  {
+    dateString: "2023-12-03",
+    dayOfWeek: "Sunday",
+    averageGlucoseLevel: 135,
+  },
+  {
+    dateString: "2023-12-02",
+    dayOfWeek: "Saturday",
+    averageGlucoseLevel: 140,
+  },
+  {
+    dateString: "2023-12-01",
+    dayOfWeek: "Friday",
+    averageGlucoseLevel: 120,
+  },
+  {
+    dateString: "2023-11-30",
+    dayOfWeek: "Thursday",
+    averageGlucoseLevel: 125,
+  },
+  {
+    dateString: "2023-11-29",
+    dayOfWeek: "Wednesday",
+    averageGlucoseLevel: 120,
+  },
+];

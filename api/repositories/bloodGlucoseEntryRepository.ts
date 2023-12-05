@@ -88,8 +88,6 @@ export const getUserBloodGlucoseHistory = async (
     },
   };
 
-  console.log(query);
-
   try {
     const ungroupedEntries: BloodGlucoseEntryDocument[] =
       await BloodGlucoseEntry.find(query);
@@ -109,8 +107,6 @@ export const getUserBloodGlucoseHistory = async (
         },
       ];
     }
-
-    console.log(`Received entries: ${JSON.stringify(ungroupedEntries)}`);
 
     const dateGroupedEntries: Map<string, BloodGlucoseEntryDocument[]> =
       new Map();
@@ -145,15 +141,7 @@ export const getUserBloodGlucoseHistory = async (
 
     return bloodGlucoseHistory;
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
-
-// const getUserBloodGlucoseHistory = async (
-//   userId: string,
-//   currentTimestamp: Date
-// ): Promise<any> => {
-
-//     const fiveDaysAgoTimestamp = new Date(currentTimestamp);
-// };

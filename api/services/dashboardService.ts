@@ -1,6 +1,16 @@
 import { User, UserDocument } from "../repositories/models/user";
 import { getUserCalorieDisplayInformation } from "../repositories/foodEntryRepository";
-import { CalorieDisplayDTO, CalorieDisplayAssets } from "../dtos/dashboardDTOs";
+import {
+  getUserRecentGlucoseSummary,
+  getUserBloodGlucoseHistory,
+} from "../repositories/bloodGlucoseEntryRepository";
+import {
+  CalorieDisplayDTO,
+  CalorieDisplayAssets,
+  BloodGlucoseDisplayAssets,
+  BloodGlucoseSummary,
+  DailyBloodGlucoseInformation,
+} from "../dtos/dashboardDTOs";
 
 export const getUserCalorieGoal = async (userId: string): Promise<number> => {
   try {
@@ -48,6 +58,34 @@ export const getUserCalorieDisplayAssets = async (
     return assets;
   } catch (error: any) {
     console.error(`Unable to get calorie display assets for user: ${userId}`);
+    throw error;
+  }
+};
+
+export const getUserBloodGlucoseDisplayAssets = async (
+  userId: string
+): Promise<BloodGlucoseDisplayAssets> => {
+  try {
+    const currentTimestamp = new Date();
+    const recentSummary: BloodGlucoseSummary =
+      await getUserRecentGlucoseSummary(userId, currentTimestamp);
+    const measurementHistory: DailyBloodGlucoseInformation[] =
+      await getUserBloodGlucoseHistory(userId, currentTimestamp);
+
+    const latestMeasurement = recentSummary.currentGlucoseLevel;
+    const previousMeasurement = recentSummary.previousGlucoseLevel;
+    const averageMeasurement = recentSummary.averageGlucoseLevel;
+
+    const assets: BloodGlucoseDisplayAssets = {
+      latestMeasurement: latestMeasurement,
+      previousMeasurement: previousMeasurement,
+      averageMeasurement: averageMeasurement,
+      measurementHistory: measurementHistory,
+    };
+
+    return assets;
+  } catch (error: any) {
+    console.error(error);
     throw error;
   }
 };
