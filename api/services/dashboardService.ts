@@ -10,6 +10,7 @@ import {
   BloodGlucoseDisplayAssets,
   BloodGlucoseSummary,
   DailyBloodGlucoseInformation,
+  DashboardDisplayAssets,
 } from "../dtos/dashboardDTOs";
 
 export const getUserCalorieGoal = async (userId: string): Promise<number> => {
@@ -87,5 +88,26 @@ export const getUserBloodGlucoseDisplayAssets = async (
   } catch (error: any) {
     console.error(error);
     throw error;
+  }
+};
+
+export const getDashboardAssets = async (
+  userId: string
+): Promise<DashboardDisplayAssets> => {
+  try {
+    const calorieDisplayAssets = await getUserCalorieDisplayAssets(userId);
+    const bloodGlucoseDisplayAssets = await getUserBloodGlucoseDisplayAssets(
+      userId
+    );
+
+    const dashboardDisplayAssets: DashboardDisplayAssets = {
+      calorieDisplayAssets: calorieDisplayAssets,
+      bloodGlucoseDisplayAssets: bloodGlucoseDisplayAssets,
+    };
+
+    return dashboardDisplayAssets;
+  } catch (error: any) {
+    console.error(error);
+    throw new Error(`Unable to retrieve dashboard assets for user: ${userId}`);
   }
 };

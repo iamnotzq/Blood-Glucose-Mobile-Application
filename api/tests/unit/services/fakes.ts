@@ -4,6 +4,7 @@ import {
   CalorieDisplayDTO,
   BloodGlucoseSummary,
   DailyBloodGlucoseInformation,
+  BloodGlucoseDisplayAssets,
 } from "../../../dtos/dashboardDTOs";
 
 import { UserDocument } from "../../../repositories/models/user";
@@ -114,3 +115,10 @@ export const fakeBloodGlucoseHistory: DailyBloodGlucoseInformation[] = [
     averageGlucoseLevel: 120,
   },
 ];
+
+export const fakeBloodGlucoseDisplayAssets: BloodGlucoseDisplayAssets = {
+  latestMeasurement: 130,
+  previousMeasurement: 140,
+  averageMeasurement: 135,
+  measurementHistory: fakeBloodGlucoseHistory,
+};

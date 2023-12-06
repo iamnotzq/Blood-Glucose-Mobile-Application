@@ -35,3 +35,8 @@ export interface BloodGlucoseDisplayAssets {
   averageMeasurement: number;
   measurementHistory: DailyBloodGlucoseInformation[];
 }
+
+export interface DashboardDisplayAssets {
+  calorieDisplayAssets: CalorieDisplayAssets;
+  bloodGlucoseDisplayAssets: BloodGlucoseDisplayAssets;
+}

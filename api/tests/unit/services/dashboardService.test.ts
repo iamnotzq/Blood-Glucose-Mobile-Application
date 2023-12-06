@@ -1,13 +1,21 @@
 import { User, UserDocument } from "../../../repositories/models/user";
-import { getUserCalorieDisplayInformation } from "../../../repositories/foodEntryRepository";
+import * as foodEntryRepo from "../../../repositories/foodEntryRepository";
 import * as bloodGlucoseRepo from "../../../repositories/bloodGlucoseEntryRepository";
 import * as dashboardService from "../../../services/dashboardService";
-import { beforeEach, describe, expect, it, jest, test } from "@jest/globals";
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  jest,
+  test,
+} from "@jest/globals";
 import * as fakes from "./fakes";
 import {
   BloodGlucoseDisplayAssets,
   BloodGlucoseSummary,
   DailyBloodGlucoseInformation,
+  DashboardDisplayAssets,
 } from "../../../dtos/dashboardDTOs";
 
 jest.mock("../../../repositories/foodEntryRepository");
@@ -15,8 +23,9 @@ jest.mock("../../../repositories/models/user");
 jest.mock("../../../repositories/bloodGlucoseEntryRepository");
 
 describe("dashboardService", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.resetAllMocks();
   });
 
   describe("getUserCalorieGoal", () => {
@@ -119,9 +128,9 @@ describe("dashboardService", () => {
 
     test("Should return CalorieDisplayAssets for a valid userId", async () => {
       (User.find as jest.Mock).mockImplementation(async () => fakeUser);
-      (getUserCalorieDisplayInformation as jest.Mock).mockImplementation(
-        async () => fakes.fakeCalorieDisplayDTO
-      );
+      const calorieDisplayInfoSpy = jest
+        .spyOn(foodEntryRepo, "getUserCalorieDisplayInformation")
+        .mockResolvedValue(fakes.fakeCalorieDisplayDTO);
 
       (User.findById as jest.Mock).mockImplementation(async () => fakeUser);
       jest
@@ -145,11 +154,11 @@ describe("dashboardService", () => {
         .spyOn(console, "error")
         .mockImplementation(async () => undefined);
 
-      (getUserCalorieDisplayInformation as jest.Mock).mockImplementation(
-        async () => {
+      const calorieDisplayInfoSpy = jest
+        .spyOn(foodEntryRepo, "getUserCalorieDisplayInformation")
+        .mockRejectedValue(() => {
           throw mockError;
-        }
-      );
+        });
 
       await expect(
         dashboardService.getUserCalorieDisplayAssets(fakeUserId)
@@ -162,7 +171,7 @@ describe("dashboardService", () => {
     });
 
     test("Should throw error when getUserCalorieGoal throws error", async () => {
-      const mockErrorMessage = "Mock Error";
+      const mockErrorMessage = `User not found for: ${fakeUserId}`;
       const mockError = new Error(mockErrorMessage);
 
       const consoleErrorSpy = jest
@@ -295,6 +304,73 @@ describe("dashboardService", () => {
       await expect(
         dashboardService.getUserBloodGlucoseDisplayAssets(userId)
       ).rejects.toThrow(mockError);
+    });
+  });
+
+  describe("getDashboardAssets", () => {
+    const userId = fakes.fakeUserId;
+    const user = fakes.fakeUser;
+
+    const calorieDisplayInfo = fakes.fakeCalorieDisplayDTO;
+    const glucoseSummary = fakes.fakeBloodGlucoseSummary;
+    const glucoseHistory = fakes.fakeBloodGlucoseHistory;
+
+    const calorieGoal = fakes.fakeCalorieGoal;
+    const calorieAssets = fakes.fakeCalorieDisplayAssets;
+    const glucoseAssets = fakes.fakeBloodGlucoseDisplayAssets;
+
+    test("Should return DashboardDisplayAssets for valid fields", async () => {
+      const calorieDisplayInfoSpy = jest
+        .spyOn(foodEntryRepo, "getUserCalorieDisplayInformation")
+        .mockResolvedValue(calorieDisplayInfo);
+
+      (User.findById as jest.Mock).mockImplementation(async () => user);
+      const calorieGoalSpy = jest
+        .spyOn(dashboardService, "getUserCalorieGoal")
+        .mockResolvedValue(calorieGoal);
+
+      const calorieAssetsSpy = jest
+        .spyOn(dashboardService, "getUserCalorieDisplayAssets")
+        .mockResolvedValue(calorieAssets);
+
+      const glucoseSummarySpy = jest
+        .spyOn(bloodGlucoseRepo, "getUserRecentGlucoseSummary")
+        .mockResolvedValue(glucoseSummary);
+
+      const glucoseHistorySpy = jest
+        .spyOn(bloodGlucoseRepo, "getUserBloodGlucoseHistory")
+        .mockResolvedValue(glucoseHistory);
+
+      const glucoseAssetsSpy = jest
+        .spyOn(dashboardService, "getUserBloodGlucoseDisplayAssets")
+        .mockResolvedValue(glucoseAssets);
+
+      const expected: DashboardDisplayAssets = {
+        calorieDisplayAssets: calorieAssets,
+        bloodGlucoseDisplayAssets: glucoseAssets,
+      };
+
+      const result = await dashboardService.getDashboardAssets(userId);
+
+      expect(result).toStrictEqual(expected);
+      expect(foodEntryRepo.getUserCalorieDisplayInformation).toHaveBeenCalled();
+      expect(bloodGlucoseRepo.getUserRecentGlucoseSummary).toHaveBeenCalled();
+      expect(bloodGlucoseRepo.getUserBloodGlucoseHistory).toHaveBeenCalled();
+    });
+
+    test("Should handle errors", async () => {
+      const mockErrorMessage = `Unable to retrieve dashboard assets for user: ${userId}`;
+      const mockError = new Error(mockErrorMessage);
+
+      const summarySpy = jest
+        .spyOn(dashboardService, "getUserBloodGlucoseDisplayAssets")
+        .mockRejectedValue(async () => {
+          throw mockError;
+        });
+
+      await expect(
+        dashboardService.getDashboardAssets(userId)
+      ).rejects.toThrowError(mockError);
     });
   });
 });
