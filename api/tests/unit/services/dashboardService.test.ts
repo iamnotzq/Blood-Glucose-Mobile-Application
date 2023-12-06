@@ -1,4 +1,4 @@
-import { User, UserDocument } from "../../../repositories/models/user";
+import User, { UserDocument } from "../../../repositories/models/user";
 import * as foodEntryRepo from "../../../repositories/foodEntryRepository";
 import * as bloodGlucoseRepo from "../../../repositories/bloodGlucoseEntryRepository";
 import * as dashboardService from "../../../services/dashboardService";
@@ -24,7 +24,6 @@ jest.mock("../../../repositories/bloodGlucoseEntryRepository");
 
 describe("dashboardService", () => {
   afterEach(() => {
-    jest.restoreAllMocks();
     jest.resetAllMocks();
   });
 
@@ -52,7 +51,7 @@ describe("dashboardService", () => {
     const fakeUserId = fakes.fakeUserId;
 
     test("Should return caloricGoal for valid user", async () => {
-      (User.findById as jest.Mock).mockImplementation(async () => fakeUser);
+      jest.spyOn(User, "findById").mockResolvedValue(fakeUser);
       const expected = fakeUser.caloricGoalKcal;
 
       const result = await dashboardService.getUserCalorieGoal(fakeUserId);
@@ -81,9 +80,9 @@ describe("dashboardService", () => {
         targetUpperMgDl: 120,
       } as UserDocument;
 
-      (User.findById as jest.Mock).mockImplementation(
-        async () => fakeUserWithoutCaloricGoal
-      );
+      jest
+        .spyOn(User, "findById")
+        .mockResolvedValue(fakeUserWithoutCaloricGoal);
       const expected = 0;
 
       const result = await dashboardService.getUserCalorieGoal(fakeUserId);
@@ -92,7 +91,7 @@ describe("dashboardService", () => {
     });
 
     test("Should throw error when a user cannot be found", async () => {
-      (User.findById as jest.Mock).mockImplementation(async () => null);
+      jest.spyOn(User, "findById").mockResolvedValue(null);
 
       const errorMessage = `User not found for: ${fakeUserId}`;
 

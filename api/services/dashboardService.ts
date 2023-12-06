@@ -1,4 +1,4 @@
-import { User, UserDocument } from "../repositories/models/user";
+import User, { UserDocument } from "../repositories/models/user";
 import { getUserCalorieDisplayInformation } from "../repositories/foodEntryRepository";
 import {
   getUserRecentGlucoseSummary,

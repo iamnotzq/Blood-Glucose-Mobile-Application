@@ -30,39 +30,13 @@ router.post("/api/login", async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const loginRequestBody = new LoginRequestBody(email, password);
 
-    const str = await loginUser(loginRequestBody);
+    const userId = await loginUser(loginRequestBody);
 
-    //if successful, get dashboard assets
-
-    res.status(200).json(str);
+    res.status(200).json(userId);
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Login failed");
   }
-});
-
-router.get("/api/dashboard", async (req: Request, res: Response) => {
-  // await userService.getDashboardAssets(userId, currentDate);
-  console.log("Calling getDashboardAssets API");
-  const calorieDisplay = new CalorieDisplay(
-    2000,
-    200,
-    1800,
-    10,
-    [1500, 1600, 1700, 1800, 1900]
-  );
-  const bloodGlucoseDisplay = new BloodGlucoseDisplay(
-    150,
-    140,
-    145,
-    [120, 130, 140, 150, 140]
-  );
-  const dashboardAssets = new DashboardAssets(
-    calorieDisplay,
-    bloodGlucoseDisplay
-  );
-
-  res.status(200).json(dashboardAssets);
 });
 
 export default router;

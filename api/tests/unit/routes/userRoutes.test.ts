@@ -2,8 +2,9 @@ import request from "supertest";
 import express from "express";
 import mongoose from "mongoose";
 import userRoutes from "../../../routes/userRoutes";
-import { jest, describe, expect, it, afterAll } from "@jest/globals";
+import { jest, describe, expect, afterAll, test } from "@jest/globals";
 
+jest.mock("../../.././repositories/database");
 jest.mock("../../../services/userService");
 
 const testApp = express();
@@ -35,7 +36,7 @@ afterAll(async () => {
 }, 20000);
 
 describe("userRoutes", () => {
-  it("POST /api/create-user should create a new user and return user ID", async () => {
+  test("POST /api/create-user should create a new user and return user ID", async () => {
     const userService = require("../../../services/userService");
     const mockCreateUser = jest
       .fn()
@@ -69,7 +70,7 @@ describe("userRoutes", () => {
     });
   });
 
-  it("POST /api/create-user should throw 500 error when a user with the same email exists", async () => {
+  test("POST /api/create-user should throw 500 error when a user with the same email exists", async () => {
     require("../../../services/userService").createUser.mockRejectedValue(
       new Error("Mocked error")
     );
@@ -82,7 +83,7 @@ describe("userRoutes", () => {
     expect(response.body).toEqual({ error: "Internal Server Error" });
   });
 
-  it("POST /api/login should login user", async () => {
+  test("POST /api/login should login user", async () => {
     const userService = require("../../../services/userService");
     const expectedResponse = "User has logged in";
     const mockLoginUser = jest
@@ -104,7 +105,7 @@ describe("userRoutes", () => {
     expect(mockLoginUser).toHaveBeenCalledWith(invalidLoginRequestBody);
   });
 
-  it("POST /api/login should throw 500 error when invalidLoginRequestBody is invalid", async () => {
+  test("POST /api/login should throw 500 error when invalidLoginRequestBody is invalid", async () => {
     require("../../../services/userService").loginUser.mockRejectedValue(
       new Error("Mocked error")
     );

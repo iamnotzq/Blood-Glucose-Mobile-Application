@@ -92,4 +92,4 @@ const userSchema = new Schema<UserDocument>({
 
 const User = mongoose.model<UserDocument>("User", userSchema);
 
-export { User, UserDocument };
+export default User;
