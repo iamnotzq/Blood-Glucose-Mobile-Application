@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 config();
 import {
+  jest,
   describe,
   expect,
   it,
@@ -11,7 +12,7 @@ import {
 } from "@jest/globals";
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
-import { User, UserDocument } from "../../../repositories/models/user";
+import User, { UserDocument } from "../../../repositories/models/user";
 import {
   userExists,
   saveUser,

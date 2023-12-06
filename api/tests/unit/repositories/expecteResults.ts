@@ -1,0 +1,2 @@
+export const expectedBloodGlucoseHistory =
+  '[{"dateString":"2023-12-23","dayOfWeek":"Saturday","averageGlucoseLevel":150},{"dateString":"2023-12-22","dayOfWeek":"Friday","averageGlucoseLevel":150},{"dateString":"2023-12-21","dayOfWeek":"Thursday","averageGlucoseLevel":140},{"dateString":"2023-12-20","dayOfWeek":"Wednesday","averageGlucoseLevel":135},{"dateString":"2023-12-19","dayOfWeek":"Tuesday","averageGlucoseLevel":120},{"dateString":"2023-12-18","dayOfWeek":"Monday","averageGlucoseLevel":135}]';

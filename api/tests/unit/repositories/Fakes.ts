@@ -3,9 +3,15 @@ import FoodDiaryEntry, {
   NutritionalContentDocument,
 } from "../../../repositories/models/foodDiaryEntry";
 
-const FakeDate = new Date(Date.UTC(2023, 11, 23, 0, 0, 0, 0));
+import BloodGlucoseEntry, {
+  BloodGlucoseEntryDocument,
+} from "../../../repositories/models/bloodGlucoseEntry";
 
-const FakeNutritionalContentDocument: NutritionalContentDocument = {
+export const FakeUserId = "656aed89594fc49ef5cac032";
+
+export const FakeTimestamp = new Date(Date.UTC(2023, 11, 23, 0, 0, 0, 0));
+
+export const FakeNutritionalContentDocument: NutritionalContentDocument = {
   calories: 250,
   carbohydrates: 30,
   sodium: 400,
@@ -13,9 +19,9 @@ const FakeNutritionalContentDocument: NutritionalContentDocument = {
   fiber: 5,
 };
 
-const FakeFoodEntryDocument: FoodDiaryEntryDocument = {
-  userId: "656aed89594fc49ef5cac032",
-  timestamp: FakeDate,
+export const FakeFoodEntryDocument: FoodDiaryEntryDocument = {
+  userId: FakeUserId,
+  timestamp: FakeTimestamp,
   foodName: "Chicken Rice",
   portionSize: 1,
   mealType: "Lunch",
@@ -23,9 +29,9 @@ const FakeFoodEntryDocument: FoodDiaryEntryDocument = {
   nutritionalContent: FakeNutritionalContentDocument,
 } as FoodDiaryEntryDocument;
 
-const FakeFoodEntries: FoodDiaryEntryDocument[] = [
+export const FakeFoodEntries: FoodDiaryEntryDocument[] = [
   {
-    userId: "656aed89594fc49ef5cac032",
+    userId: FakeUserId,
     timestamp: new Date(Date.UTC(2023, 11, 2, 0, 0, 0, 0)),
     foodName: "Cereal",
     portionSize: 1,
@@ -40,7 +46,7 @@ const FakeFoodEntries: FoodDiaryEntryDocument[] = [
     },
   } as FoodDiaryEntryDocument,
   {
-    userId: "656aed89594fc49ef5cac032",
+    userId: FakeUserId,
     timestamp: new Date(Date.UTC(2023, 11, 2, 12, 0, 0, 0)),
     foodName: "Chicken Rice",
     portionSize: 2,
@@ -55,7 +61,7 @@ const FakeFoodEntries: FoodDiaryEntryDocument[] = [
     },
   } as FoodDiaryEntryDocument,
   {
-    userId: "656aed89594fc49ef5cac032",
+    userId: FakeUserId,
     timestamp: new Date(Date.UTC(2023, 11, 2, 23, 59, 59, 999)),
     foodName: "Salad",
     portionSize: 0.5,
@@ -71,9 +77,9 @@ const FakeFoodEntries: FoodDiaryEntryDocument[] = [
   } as FoodDiaryEntryDocument,
 ];
 
-const FakeMixedFoodEntries: FoodDiaryEntryDocument[] = [
+export const FakeMixedFoodEntries: FoodDiaryEntryDocument[] = [
   {
-    userId: "656aed89594fc49ef5cac032",
+    userId: FakeUserId,
     timestamp: new Date(Date.UTC(2023, 11, 2, 0, 0, 0, 0)),
     foodName: "Cereal",
     portionSize: 1,
@@ -88,7 +94,7 @@ const FakeMixedFoodEntries: FoodDiaryEntryDocument[] = [
     },
   } as FoodDiaryEntryDocument,
   {
-    userId: "656aed89594fc49ef5cac032",
+    userId: FakeUserId,
     timestamp: new Date(Date.UTC(2023, 11, 2, 12, 0, 0, 0)),
     foodName: "Chicken Rice",
     portionSize: 2,
@@ -103,7 +109,7 @@ const FakeMixedFoodEntries: FoodDiaryEntryDocument[] = [
     },
   } as FoodDiaryEntryDocument,
   {
-    userId: "656aed89594fc49ef5cac032",
+    userId: FakeUserId,
     timestamp: new Date(Date.UTC(2023, 11, 2, 23, 59, 59, 999)),
     foodName: "Salad",
     portionSize: 0.5,
@@ -118,7 +124,7 @@ const FakeMixedFoodEntries: FoodDiaryEntryDocument[] = [
     },
   } as FoodDiaryEntryDocument,
   {
-    userId: "656aed89594fc49ef5cac032",
+    userId: FakeUserId,
     timestamp: new Date(Date.UTC(2023, 11, 7, 0, 0, 0, 0)),
     foodName: "Chicken Pau",
     portionSize: 1,
@@ -133,7 +139,7 @@ const FakeMixedFoodEntries: FoodDiaryEntryDocument[] = [
     },
   } as FoodDiaryEntryDocument,
   {
-    userId: "656aed89594fc49ef5cac032",
+    userId: FakeUserId,
     timestamp: new Date(Date.UTC(2023, 11, 3, 12, 0, 0, 0)),
     foodName: "Hor Fun",
     portionSize: 2,
@@ -164,9 +170,83 @@ const FakeMixedFoodEntries: FoodDiaryEntryDocument[] = [
   } as FoodDiaryEntryDocument,
 ];
 
-export {
-  FakeFoodEntries,
-  FakeFoodEntryDocument,
-  FakeNutritionalContentDocument,
-  FakeMixedFoodEntries,
-};
+export const FakeBloodGlucoseEntries: BloodGlucoseEntryDocument[] = [
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 23, 23, 0, 0, 0)),
+    glucoseLevel: 150,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 23, 12, 0, 0, 0)),
+    glucoseLevel: 160,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 23, 8, 0, 0, 0)),
+    glucoseLevel: 140,
+  } as BloodGlucoseEntryDocument,
+];
+
+export const MockBloodGlucoseEntries: BloodGlucoseEntryDocument[] = [
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 23, 0, 0, 0, 0)),
+    glucoseLevel: 150,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: "656db5f588e3c644c1fbf909",
+    timestamp: new Date(Date.UTC(2023, 11, 23, 0, 0, 0, 0)),
+    glucoseLevel: 160,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 23, 0, 0, 0, 0)),
+    glucoseLevel: 160,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 23, 0, 0, 0, 0)),
+    glucoseLevel: 140,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 22, 23, 59, 59, 999)),
+    glucoseLevel: 150,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 21, 8, 0, 0, 0)),
+    glucoseLevel: 140,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 20, 8, 0, 0, 0)),
+    glucoseLevel: 140,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 20, 8, 0, 0, 0)),
+    glucoseLevel: 130,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 19, 8, 0, 0, 0)),
+    glucoseLevel: 120,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 18, 8, 0, 0, 0)),
+    glucoseLevel: 135,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: FakeUserId,
+    timestamp: new Date(Date.UTC(2023, 11, 17, 8, 0, 0, 0)),
+    glucoseLevel: 140,
+  } as BloodGlucoseEntryDocument,
+  {
+    userId: "656db5f588e3c644c1fbf909",
+    timestamp: new Date(Date.UTC(2023, 11, 8, 0, 0, 0, 0)),
+    glucoseLevel: 140,
+  } as BloodGlucoseEntryDocument,
+];
