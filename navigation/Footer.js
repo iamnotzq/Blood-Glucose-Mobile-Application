@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons, Ionicons, Feather } from "@expo/vector-icons";
+import Menu from "./menu";
 
 const Footer = () => {
+  const [isMenuVisible, setMenuVisible] = useState(false);
+
   return (
     <View>
       <View style={styles.mainContainer}>
@@ -15,7 +19,10 @@ const Footer = () => {
           <Text style={styles.iconText}>Home</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.circle}>
+        <TouchableOpacity
+          style={styles.circle}
+          onPress={() => setMenuVisible(true)}
+        >
           <Feather name="plus" size={40} color="#F8F9FB" />
         </TouchableOpacity>
 
@@ -24,6 +31,8 @@ const Footer = () => {
           <Text style={styles.iconText}>Profile</Text>
         </TouchableOpacity>
       </View>
+
+      <Menu isVisible={isMenuVisible} onClose={() => setMenuVisible(false)} />
     </View>
   );
 };
