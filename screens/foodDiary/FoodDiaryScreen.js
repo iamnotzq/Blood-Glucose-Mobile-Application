@@ -85,11 +85,17 @@ const FoodDiaryScreen = () => {
         >
           <TouchableOpacity style={styles.foodEntrybutton}>
             <FontAwesome name="pencil-square-o" size={60} color="#ffffff" />
-            <Text style={styles.buttonText}>Manual Entry</Text>
+            <Text style={styles.buttonText}>New Entry</Text>
           </TouchableOpacity>
 
+          <View
+            style={{
+              justifyContent: "center",
+              alightContent: "center",
+            }}
+          ></View>
           <TouchableOpacity style={styles.foodEntrybutton}>
-            <Ionicons name="ios-barcode-outline" size={60} color="#3B83D1" />
+            <Ionicons name="ios-barcode-outline" size={60} color="#ffffff" />
             <Text style={styles.buttonText}>Scan a Barcode</Text>
           </TouchableOpacity>
         </View>
