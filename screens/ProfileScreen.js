@@ -16,7 +16,6 @@ const ProfileScreen = () => {
 
   return (
     <CommonLayout>
-      <View style={{ flex: 1 }}>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.topTextContainer}>
             <Text style={styles.nameText}>
@@ -73,7 +72,6 @@ const ProfileScreen = () => {
             </View>
           </View>
         </SafeAreaView>
-      </View>
     </CommonLayout>
   );
 };
@@ -81,12 +79,12 @@ const ProfileScreen = () => {
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  height: "100%",
   mainContainer: {
+    height: "100%",
     width: "100%",
-    backgroundColor: "#ffffff",
     justifyContent: "center",
     alignItems: "center",
+    flex: 1,
     flexGrow: 1,
   },
   componentsContainer: {
