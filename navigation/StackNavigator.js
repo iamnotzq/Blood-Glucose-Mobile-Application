@@ -8,6 +8,7 @@ import UserParticularsScreen from "../screens/onboarding/UserParticularsScreen";
 import UserMeasurementsScreen from "../screens/onboarding/UserMeasurementsScreen";
 import UserDiabetesScreen from "../screens/onboarding/UserDiabetesScreen";
 import { NavigationContainer } from "@react-navigation/native";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -43,6 +44,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -1,25 +1,39 @@
+import { StyleSheet, Text, View, TouchableOpacity, Modal } from "react-native";
 import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from "react-native";
-import { Ionicons, MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
+  Ionicons,
+  MaterialCommunityIcons,
+  Fontisto,
+  Entypo,
+} from "@expo/vector-icons";
 import React from "react";
-import Footer from "../navigation/Footer";
 
-const MenuScreen = () => {
+const Menu = ({ isVisible, onClose }) => {
   return (
-    <SafeAreaView style={styles.mainContainer}>
-      <View></View>
-
+    <Modal
+      transparent
+      animationType="slide"
+      visible={isVisible}
+      onRequestClose={onClose}
+    >
       <View style={styles.menu}>
+        <TouchableOpacity
+          onPress={onClose}
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <View></View>
+          <Entypo name="cross" size={24} color="#F8F9FB" />
+        </TouchableOpacity>
+
         <View style={styles.row}>
           <TouchableOpacity style={styles.box}>
             <Ionicons name="person-outline" size={80} color="#3B83D1" />
             <Text style={styles.iconText}>Profile</Text>
           </TouchableOpacity>
+
           <TouchableOpacity style={styles.box}>
             <MaterialCommunityIcons name="pill" size={80} color="#3B83D1" />
             <Text style={styles.iconText}>Medication</Text>
@@ -56,31 +70,25 @@ const MenuScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
-
-      <Footer />
-    </SafeAreaView>
+    </Modal>
   );
 };
 
-export default MenuScreen;
+export default Menu;
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    height: "100%",
-    width: "100%",
-    backgroundColor: "#E8EBF2",
-    alignItems: "center",
-    paddingHorizontal: 10,
-    justifyContent: "space-between",
-  },
   menu: {
     borderRadius: 16,
-    width: 375,
-    height: 560,
+    width: "100%",
+    height: "100%",
     backgroundColor: "#9CC0E8",
     shadowColor: "black",
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
+    alignContent: "center",
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    zIndex: 9999,
   },
   row: {
     flexDirection: "row",
