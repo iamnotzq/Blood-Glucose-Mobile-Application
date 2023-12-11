@@ -50,6 +50,11 @@ const StackNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="FoodDiary"
           component={FoodDiaryScreen}
           options={{ headerShown: false }}
