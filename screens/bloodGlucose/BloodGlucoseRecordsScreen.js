@@ -3,7 +3,7 @@ import CommonLayout from "../CommonLayout";
 import ClickableText from "../../components/touchable/clickableText";
 import TextButton from "../../components/touchable/textButton";
 
-const BloodGlucoseRecordsScreen = () => {
+const BloodGlucoseRecordsScreen = ({ navigation }) => {
   const bloodGlucoseRecords = [
     {
       glucoseLevel: 140,
@@ -56,8 +56,8 @@ const BloodGlucoseRecordsScreen = () => {
   };
 
   return (
-    <CommonLayout>
-      <SafeAreaView style={styles.mainContainer}>
+    <CommonLayout navigation={navigation}>
+      <SafeAreaView style={styles.mainContainer} key="bg-records">
         <View style={styles.recordsBox}>
           <View style={styles.recordsBoxComponent}>
             <ClickableText
@@ -75,6 +75,7 @@ const BloodGlucoseRecordsScreen = () => {
             maybeBackgroundColor="#ffffff"
             maybeTextColor="#3B83D1"
             maybeBorderColor="#3B83D1"
+            onPress={() => navigation.navigate("NewBloodGlucoseRecord")}
           />
         </View>
       </SafeAreaView>

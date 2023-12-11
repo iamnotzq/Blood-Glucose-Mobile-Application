@@ -59,8 +59,8 @@ const FoodEntriesComponent = ({}) => {
 
 const FoodDiaryScreen = ({ navigation }) => {
   return (
-    <CommonLayout>
-      <SafeAreaView style={styles.mainContainer}>
+    <CommonLayout navigation={navigation}>
+      <SafeAreaView style={styles.mainContainer} key="food-diary">
         <View
           style={{
             flexDirection: "row",

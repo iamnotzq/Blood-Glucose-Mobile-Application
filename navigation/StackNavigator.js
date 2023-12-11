@@ -12,6 +12,9 @@ import ProfileScreen from "../screens/ProfileScreen";
 import FoodDiaryScreen from "../screens/foodDiary/FoodDiaryScreen";
 import FoodEntrySummaryScreen from "../screens/foodDiary/FoodEntrySummaryScreen";
 import NewFoodEntryScreen from "../screens/foodDiary/NewFoodEntryScreen";
+import CommonLayout from "../screens/CommonLayout";
+import BloodGlucoseRecordsScreen from "../screens/bloodGlucose/BloodGlucoseRecordsScreen";
+import NewBloodGlucoseRecordScreen from "../screens/bloodGlucose/NewBloodGlucoseRecordScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -67,6 +70,21 @@ const StackNavigator = () => {
         <Stack.Screen
           name="FoodEntrySummary"
           component={FoodEntrySummaryScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="BloodGlucoseRecords"
+          component={BloodGlucoseRecordsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="NewBloodGlucoseRecord"
+          component={NewBloodGlucoseRecordScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Common"
+          component={CommonLayout}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -32,7 +32,7 @@ const NewBloodGlucoseRecordScreen = ({ navigation }) => {
         />
         <View></View>
       </View>
-      <SafeAreaView style={styles.mainContainer}>
+      <SafeAreaView style={styles.mainContainer} key="new-bg-record">
         <View style={styles.componentsContainer}>
           <Text style={styles.header}>Record Details</Text>
           <View style={styles.divider}></View>
@@ -68,7 +68,10 @@ const NewBloodGlucoseRecordScreen = ({ navigation }) => {
             </View>
           </View>
 
-          <TouchableOpacity style={styles.rowContainer}>
+          <TouchableOpacity
+            style={styles.rowContainer}
+            onPress={() => navigation.navigate("Profile")}
+          >
             <FontAwesome5 name="check-circle" size={40} color="#3DD17B" />
           </TouchableOpacity>
         </View>

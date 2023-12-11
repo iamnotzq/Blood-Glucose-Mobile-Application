@@ -1,7 +1,7 @@
 import { SafeAreaView, Text, StyleSheet, View } from "react-native";
 import CommonLayout from "./CommonLayout";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const firstName = "John";
   const lastName = "Doe";
   const age = 25;
@@ -15,63 +15,61 @@ const ProfileScreen = () => {
   const hyper = 140;
 
   return (
-    <CommonLayout>
-        <SafeAreaView style={styles.mainContainer}>
-          <View style={styles.topTextContainer}>
-            <Text style={styles.nameText}>
-              {firstName} {lastName}, {age}
-            </Text>
-            <Text style={styles.diabetesText}>{diabetesType} Diabetes</Text>
-          </View>
+    <CommonLayout navigation={navigation}>
+      <SafeAreaView style={styles.mainContainer}>
+        <View style={styles.topTextContainer}>
+          <Text style={styles.nameText}>
+            {firstName} {lastName}, {age}
+          </Text>
+          <Text style={styles.diabetesText}>{diabetesType} Diabetes</Text>
+        </View>
 
-          <View style={styles.componentsContainer}>
-            <View style={styles.userInfoContainer}>
-              <Text style={styles.userInfoHeaderText}>Basic Measurements</Text>
+        <View style={styles.componentsContainer}>
+          <View style={styles.userInfoContainer}>
+            <Text style={styles.userInfoHeaderText}>Basic Measurements</Text>
 
-              <View style={styles.userInfoComponentsContainer}>
-                <View style={styles.userInfoComponent}>
-                  <Text style={styles.userInfoComponentHeader}>{height}</Text>
-                  <Text style={styles.userInfoComponentText}>Height</Text>
-                </View>
-
-                <View style={styles.userInfoComponent}>
-                  <Text style={styles.userInfoComponentHeader}>{weight}</Text>
-                  <Text style={styles.userInfoComponentText}>Weight</Text>
-                </View>
-                <View style={styles.userInfoComponent}>
-                  <Text style={styles.userInfoComponentHeader}>
-                    {calorieGoal}
-                  </Text>
-                  <Text style={styles.userInfoComponentText}>Calorie Goal</Text>
-                </View>
+            <View style={styles.userInfoComponentsContainer}>
+              <View style={styles.userInfoComponent}>
+                <Text style={styles.userInfoComponentHeader}>{height}</Text>
+                <Text style={styles.userInfoComponentText}>Height</Text>
               </View>
 
-              <View style={styles.divider}></View>
+              <View style={styles.userInfoComponent}>
+                <Text style={styles.userInfoComponentHeader}>{weight}</Text>
+                <Text style={styles.userInfoComponentText}>Weight</Text>
+              </View>
+              <View style={styles.userInfoComponent}>
+                <Text style={styles.userInfoComponentHeader}>
+                  {calorieGoal}
+                </Text>
+                <Text style={styles.userInfoComponentText}>Calorie Goal</Text>
+              </View>
+            </View>
 
-              <Text style={styles.userInfoHeaderText}>
-                Blood Glucose Levels
-              </Text>
-              <View style={styles.userInfoComponentsContainer}>
-                <View style={styles.userInfoComponent}>
-                  <Text style={styles.userInfoComponentHeader}>{hypo}</Text>
-                  <Text style={styles.userInfoComponentText}>Hypo</Text>
-                </View>
+            <View style={styles.divider}></View>
 
-                <View style={styles.userInfoComponent}>
-                  <Text style={styles.userInfoComponentHeader}>
-                    {acceptableLower} - {acceptableUpper}
-                  </Text>
-                  <Text style={styles.userInfoComponentText}>Acceptable</Text>
-                </View>
+            <Text style={styles.userInfoHeaderText}>Blood Glucose Levels</Text>
+            <View style={styles.userInfoComponentsContainer}>
+              <View style={styles.userInfoComponent}>
+                <Text style={styles.userInfoComponentHeader}>{hypo}</Text>
+                <Text style={styles.userInfoComponentText}>Hypo</Text>
+              </View>
 
-                <View style={styles.userInfoComponent}>
-                  <Text style={styles.userInfoComponentHeader}>{hyper}</Text>
-                  <Text style={styles.userInfoComponentText}>Hyper</Text>
-                </View>
+              <View style={styles.userInfoComponent}>
+                <Text style={styles.userInfoComponentHeader}>
+                  {acceptableLower} - {acceptableUpper}
+                </Text>
+                <Text style={styles.userInfoComponentText}>Acceptable</Text>
+              </View>
+
+              <View style={styles.userInfoComponent}>
+                <Text style={styles.userInfoComponentHeader}>{hyper}</Text>
+                <Text style={styles.userInfoComponentText}>Hyper</Text>
               </View>
             </View>
           </View>
-        </SafeAreaView>
+        </View>
+      </SafeAreaView>
     </CommonLayout>
   );
 };

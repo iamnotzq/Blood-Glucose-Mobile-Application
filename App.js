@@ -8,7 +8,7 @@ import BloodGlucoseRecordsScreen from "./screens/bloodGlucose/BloodGlucoseRecord
 import NewBloodGlucoseRecordScreen from "./screens/bloodGlucose/NewBloodGlucoseRecordScreen";
 
 export default function App() {
-  return <NewBloodGlucoseRecordScreen />;
+  return <StackNavigator />;
 }
 
 const styles = StyleSheet.create({
