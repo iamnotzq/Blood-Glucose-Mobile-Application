@@ -1,5 +1,4 @@
 import CommonLayout from "../CommonLayout";
-import React from "react";
 import {
   SafeAreaView,
   View,
