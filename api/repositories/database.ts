@@ -8,7 +8,7 @@ export const connectToDatabase = async (): Promise<void> => {
 
     console.log("Db is connected");
   } catch (err) {
-    console.error("Error connecting to the database:", err);
+    console.error("Error connecting to the database:", err.message);
     process.exit(1);
   }
 };
