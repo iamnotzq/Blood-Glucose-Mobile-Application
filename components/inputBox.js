@@ -5,29 +5,39 @@ const InputBox = ({
   placeholder,
   width,
   secureTextEntry,
+  maybeHeight,
   maybeOnChangeText,
   maybeValue,
   maybeMarginBottom,
   maybeOnSubmitEditing,
+  maybePaddingHorizontal,
 }) => {
   const onChangeText = maybeOnChangeText || (() => {});
   const onSubmitEditing = maybeOnSubmitEditing || (() => {});
   const value = maybeValue || "";
   const marginBottom = maybeMarginBottom || 12;
+  const height = maybeHeight || 48;
+  const paddingHorizontal = maybePaddingHorizontal || 16;
 
   return (
-    <KeyboardAvoidingView style={styles.mainContainer}>
+    <KeyboardAvoidingView
+      style={{
+        width: width,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <TextInput
         placeholder={placeholder}
         placeholderTextColor="#9CC0E8"
         style={{
-          height: 48,
-          width: width,
+          height: height,
+          width: "100%",
           borderRadius: 16,
           borderWidth: 3,
           borderColor: "#3B83D1",
           backgroundColor: "#F8F9FB",
-          paddingHorizontal: 16,
+          paddingHorizontal: paddingHorizontal,
           marginBottom: marginBottom,
         }}
         secureTextEntry={secureTextEntry}

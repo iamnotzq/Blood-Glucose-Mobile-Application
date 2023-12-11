@@ -47,6 +47,8 @@ const NewFoodEntryScreen = () => {
     setMatchedFoods([]);
   };
 
+  console.log(userInput);
+
   return (
     <CommonLayout>
       <InputBox
@@ -120,5 +122,6 @@ const styles = StyleSheet.create({
     padding: 2,
     fontSize: 16,
     backgroundColor: "#F8F9FB",
+    zIndex: 9999,
   },
 });
