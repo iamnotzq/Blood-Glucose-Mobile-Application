@@ -57,7 +57,7 @@ const NewFoodEntryScreen = ({ navigation }) => {
         maybeValue={userInput}
         maybeOnSubmitEditing={handleInputSubmit}
       />
-      <SafeAreaView style={styles.mainContainer}>
+      <SafeAreaView style={styles.mainContainer} key="new-food-entry">
         {matchedFoods.length === 0 ? (
           <View style={styles.textBoxContainer}>
             <Text style={styles.textBoxHeader}>Log Your Meal</Text>

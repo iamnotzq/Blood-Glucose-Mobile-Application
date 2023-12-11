@@ -7,7 +7,11 @@ import {
 } from "@expo/vector-icons";
 import React from "react";
 
-const Menu = ({ isVisible, onClose }) => {
+const Menu = ({ isVisible, onClose, navigation }) => {
+  const navigateAndClose = (screenName) => {
+    navigation.navigate(screenName);
+    onClose();
+  };
   return (
     <Modal
       transparent
@@ -29,7 +33,10 @@ const Menu = ({ isVisible, onClose }) => {
         </TouchableOpacity>
 
         <View style={styles.row}>
-          <TouchableOpacity style={styles.box}>
+          <TouchableOpacity
+            style={styles.box}
+            onPress={() => navigateAndClose("Profile")}
+          >
             <Ionicons name="person-outline" size={80} color="#3B83D1" />
             <Text style={styles.iconText}>Profile</Text>
           </TouchableOpacity>
@@ -41,7 +48,10 @@ const Menu = ({ isVisible, onClose }) => {
         </View>
 
         <View style={styles.row}>
-          <TouchableOpacity style={styles.box}>
+          <TouchableOpacity
+            style={styles.box}
+            onPress={() => navigateAndClose("FoodDiary")}
+          >
             <MaterialCommunityIcons
               name="notebook-edit-outline"
               size={80}
@@ -49,7 +59,10 @@ const Menu = ({ isVisible, onClose }) => {
             />
             <Text style={styles.iconText}>Food Diary</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.box}>
+          <TouchableOpacity
+            style={styles.box}
+            onPress={() => navigateAndClose("BloodGlucoseRecords")}
+          >
             <Fontisto name="injection-syringe" size={80} color="#3B83D1" />
             <Text style={styles.iconText}>Glucose</Text>
           </TouchableOpacity>

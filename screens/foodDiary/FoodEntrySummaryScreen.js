@@ -38,8 +38,8 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation }) => {
   const calculatedFibre = fibre * numberOfServings;
 
   return (
-    <CommonLayout>
-      <SafeAreaView style={styles.mainContainer}>
+    <CommonLayout navigation={navigation}>
+      <SafeAreaView style={styles.mainContainer} key="food-entry-summary">
         <View
           style={{
             flexDirection: "row",
@@ -105,7 +105,10 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation }) => {
                 <Text style={styles.foodDetailsText}>{calculatedFibre} g</Text>
               </View>
               <View style={{ marginTop: 5, paddingHorizontal: 32 }}>
-                <TouchableOpacity style={styles.rowContainer}>
+                <TouchableOpacity
+                  style={styles.rowContainer}
+                  onPress={() => navigation.navigate("Profile")}
+                >
                   <View></View>
                   <FontAwesome5 name="check-circle" size={40} color="#3DD17B" />
                 </TouchableOpacity>
