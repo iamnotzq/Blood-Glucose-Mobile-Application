@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import ProfileScreen from "./screens/ProfileScreen";
+import FoodDiaryScreen from "./screens/foodDiary/FoodDiaryScreen";
+import NewFoodEntryScreen from "./screens/foodDiary/NewFoodEntryScreen";
+import FoodEntryDetailsScreen from "./screens/foodDiary/FoodEntrySummaryScreen";
+import StackNavigator from "./navigation/StackNavigator";
 
 export default function App() {
-  // return <StackNavigator />;
-  // return <DashboardScreen />;
-  return <ProfileScreen />;
-  // return <Menu />;
-  // return <Test />;
+  return <StackNavigator />;
 }
 
 const styles = StyleSheet.create({
