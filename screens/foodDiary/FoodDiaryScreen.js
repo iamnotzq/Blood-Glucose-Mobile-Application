@@ -1,4 +1,5 @@
 import CommonLayout from "../CommonLayout";
+import React from "react";
 import {
   SafeAreaView,
   View,
@@ -57,7 +58,7 @@ const FoodEntriesComponent = ({}) => {
   );
 };
 
-const FoodDiaryScreen = () => {
+const FoodDiaryScreen = ({ navigation }) => {
   return (
     <CommonLayout>
       <SafeAreaView style={styles.mainContainer}>
@@ -83,7 +84,10 @@ const FoodDiaryScreen = () => {
             width: "100%",
           }}
         >
-          <TouchableOpacity style={styles.foodEntrybutton}>
+          <TouchableOpacity
+            style={styles.foodEntrybutton}
+            onPress={() => navigation.navigate("NewFoodEntry")}
+          >
             <FontAwesome name="pencil-square-o" size={60} color="#ffffff" />
             <Text style={styles.buttonText}>New Entry</Text>
           </TouchableOpacity>

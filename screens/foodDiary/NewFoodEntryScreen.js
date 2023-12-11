@@ -10,12 +10,11 @@ import {
 import CommonLayout from "../CommonLayout";
 import InputBox from "../../components/inputBox";
 
-const NewFoodEntryScreen = () => {
+const NewFoodEntryScreen = ({ navigation }) => {
   const [userInput, setUserInput] = useState("");
   const [matchedFoods, setMatchedFoods] = useState([]);
   const [showList, setShowList] = useState(false);
   const allFoods = ["Fried chicken", "Fried Kway Teow", "Fried Rice"];
-
   const handleInputChange = (text) => {
     setUserInput(text);
   };
@@ -45,9 +44,8 @@ const NewFoodEntryScreen = () => {
     setUserInput(food);
     setShowList(false);
     setMatchedFoods([]);
+    navigation.navigate("FoodEntrySummary");
   };
-
-  console.log(userInput);
 
   return (
     <CommonLayout>

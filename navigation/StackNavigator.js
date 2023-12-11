@@ -9,6 +9,9 @@ import UserMeasurementsScreen from "../screens/onboarding/UserMeasurementsScreen
 import UserDiabetesScreen from "../screens/onboarding/UserDiabetesScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import ProfileScreen from "../screens/ProfileScreen";
+import FoodDiaryScreen from "../screens/foodDiary/FoodDiaryScreen";
+import FoodEntrySummaryScreen from "../screens/foodDiary/FoodEntrySummaryScreen";
+import NewFoodEntryScreen from "../screens/foodDiary/NewFoodEntryScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -47,8 +50,18 @@ const StackNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Profile"
-          component={ProfileScreen}
+          name="FoodDiary"
+          component={FoodDiaryScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="NewFoodEntry"
+          component={NewFoodEntryScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FoodEntrySummary"
+          component={FoodEntrySummaryScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
