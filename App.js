@@ -4,9 +4,10 @@ import FoodDiaryScreen from "./screens/foodDiary/FoodDiaryScreen";
 import NewFoodEntryScreen from "./screens/foodDiary/NewFoodEntryScreen";
 import FoodEntryDetailsScreen from "./screens/foodDiary/FoodEntrySummaryScreen";
 import StackNavigator from "./navigation/StackNavigator";
+import BloodGlucoseRecordsScreen from "./screens/bloodGlucose/BloodGlucoseRecordsScreen";
 
 export default function App() {
-  return <StackNavigator />;
+  return <BloodGlucoseRecordsScreen />;
 }
 
 const styles = StyleSheet.create({

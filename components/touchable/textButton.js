@@ -5,6 +5,7 @@ const TextButton = ({
   text,
   onPress,
   maybeButtonHeight,
+  maybeButtonWidth,
   maybeFontSize,
   maybeFontWeight,
   maybeBackgroundColor,
@@ -19,8 +20,9 @@ const TextButton = ({
     : "#3B83D1";
   const textColor = maybeTextColor ? maybeTextColor : "#F8F9FB";
   const borderColor = maybeBorderColor ? maybeBorderColor : "#3B83D1";
+  const buttonWidth = maybeButtonWidth ? maybeButtonWidth : "100%";
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity style={{ width: buttonWidth }} onPress={onPress}>
       <View
         style={{
           alignContent: "center",

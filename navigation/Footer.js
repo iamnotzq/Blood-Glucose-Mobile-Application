@@ -4,7 +4,7 @@ import React from "react";
 import { MaterialCommunityIcons, Ionicons, Feather } from "@expo/vector-icons";
 import Menu from "./menu";
 
-const Footer = () => {
+const Footer = ({}) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
 
   return (

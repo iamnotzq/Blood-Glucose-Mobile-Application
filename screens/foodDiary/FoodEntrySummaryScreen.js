@@ -21,9 +21,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 //   fibre: Number,
 // };
 
-const FoodEntrySummaryScreen = ({ foodDetails }) => {
+const FoodEntrySummaryScreen = ({ foodDetails, navigation }) => {
   const foodName = "Fried Kway Teow";
-  const servingSize = 100;
   const numberOfServings = 1.5;
 
   const calories = 200;
