@@ -3,11 +3,6 @@ import { config } from "dotenv";
 import { connectToDatabase } from "../repositories/database";
 import { createUser, loginUser } from "../services/userService";
 import LoginRequestBody from "./models/requests/loginUserRequestBody";
-import {
-  CalorieDisplay,
-  DashboardAssets,
-  BloodGlucoseDisplay,
-} from "./models/responses/dashboardAssets";
 
 config();
 

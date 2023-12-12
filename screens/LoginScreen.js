@@ -42,7 +42,10 @@ const LoginScreen = ({ navigation }) => {
         <View style={{ flex: 1 }}></View>
 
         <View>
-          <TextButton text="Log In" onPress={() => navigation.navigate("Profile")}/>
+          <TextButton
+            text="Log In"
+            onPress={() => navigation.navigate("Dashboard")}
+          />
           <View style={styles.smallTextContainer}>
             <Text style={styles.smallText}>Don't have an account?</Text>
             <Text> </Text>

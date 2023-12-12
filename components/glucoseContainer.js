@@ -7,14 +7,10 @@ const GlucoseContainer = ({ data }) => {
   const previousMeasurement = data.previousMeasurement;
   const averageMeasurement = data.averageMeasurement;
   const measurementHistory = data.measurementHistory;
-
-  const lineData = [
-    { value: measurementHistory[0], label: "Mon" },
-    { value: measurementHistory[1], label: "Tue" },
-    { value: measurementHistory[2], label: "Wed" },
-    { value: measurementHistory[3], label: "Thu" },
-    { value: measurementHistory[4], label: "Today" },
-  ];
+  const lineData = measurementHistory.map((item, index) => ({
+    value: item?.averageGlucoseLevel || 0,
+    label: item?.dayOfWeek || "NIL", // Use a default label if dayOfWeek is not available
+  }));
 
   return (
     <View>

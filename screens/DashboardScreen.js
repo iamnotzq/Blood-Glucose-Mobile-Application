@@ -8,9 +8,9 @@ import {
 } from "react-native";
 import CalorieContainer from "../components/calorieContainer";
 import GlucoseContainer from "../components/glucoseContainer";
-import Footer from "../navigation/Footer";
+import CommonLayout from "./CommonLayout";
 
-const DashboardScreen = () => {
+const DashboardScreen = ({ navigation }) => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,29 +35,34 @@ const DashboardScreen = () => {
   }
 
   console.log(dashboardData);
-  const calorieDisplay = dashboardData?.calorieDisplay || {};
-  const bloodGlucoseDisplay = dashboardData?.bloodGlucoseDisplay || {};
+  const calorieDisplayAssets = dashboardData?.calorieDisplayAssets || {};
+  console.log(calorieDisplayAssets);
+  const bloodGlucoseDisplayAssets =
+    dashboardData?.bloodGlucoseDisplayAssets || {};
+  console.log(bloodGlucoseDisplayAssets);
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
-      <View style={styles.componentsContainer}>
-        <View>
-          <TouchableOpacity style={styles.component}>
-            {calorieDisplay && <CalorieContainer data={calorieDisplay} />}
-          </TouchableOpacity>
+    <CommonLayout navigation={navigation}>
+      <SafeAreaView style={styles.mainContainer}>
+        <View style={styles.componentsContainer}>
+          <View>
+            <TouchableOpacity style={styles.component}>
+              {calorieDisplayAssets && (
+                <CalorieContainer data={calorieDisplayAssets} />
+              )}
+            </TouchableOpacity>
 
-          <View style={{ margin: 20 }}></View>
+            <View style={{ margin: 20 }}></View>
 
-          <TouchableOpacity style={styles.component}>
-            {bloodGlucoseDisplay && (
-              <GlucoseContainer data={bloodGlucoseDisplay} />
-            )}
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.component}>
+              {bloodGlucoseDisplayAssets && (
+                <GlucoseContainer data={bloodGlucoseDisplayAssets} />
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-
-      <Footer />
-    </SafeAreaView>
+      </SafeAreaView>
+    </CommonLayout>
   );
 };
 
@@ -69,6 +74,8 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#E8EBF2",
     alignItems: "center",
+    flex: 1,
+    flexGrow: 1,
   },
   headerText: {
     marginTop: 16,

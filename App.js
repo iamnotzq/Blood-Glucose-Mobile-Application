@@ -6,6 +6,8 @@ import FoodEntryDetailsScreen from "./screens/foodDiary/FoodEntrySummaryScreen";
 import StackNavigator from "./navigation/StackNavigator";
 import BloodGlucoseRecordsScreen from "./screens/bloodGlucose/BloodGlucoseRecordsScreen";
 import NewBloodGlucoseRecordScreen from "./screens/bloodGlucose/NewBloodGlucoseRecordScreen";
+import DashboardScreen from "./screens/DashboardScreen";
+// import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
   return <StackNavigator />;
