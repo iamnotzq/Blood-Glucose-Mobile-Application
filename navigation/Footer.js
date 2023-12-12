@@ -10,7 +10,10 @@ const Footer = ({ navigation }) => {
   return (
     <View>
       <View style={styles.mainContainer}>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => navigation.navigate("Dashboard")}
+        >
           <MaterialCommunityIcons
             name="view-dashboard-outline"
             size={50}

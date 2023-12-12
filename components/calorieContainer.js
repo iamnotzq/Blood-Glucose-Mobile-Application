@@ -4,55 +4,35 @@ import CalorieText from "./calorieText";
 import React from "react";
 
 const CalorieContainer = ({ data }) => {
-  console.log(`Data in Calorie Container: ${data}`);
   const currentProgress = data.dailyProgress;
-  const progressLeft = 100 - currentProgress;
+  const currentProgressPercent = currentProgress * 100;
+  const progressLeft = 1 - currentProgress;
   const calEaten = data.calEaten;
   const calLeft = data.calLeft;
-  const dailyGoal = data.dailyGoal;
+  const calGoal = data.calGoal;
   const consumptionHistory = data.consumptionHistory;
 
   const pieData = [
     { value: currentProgress, color: "#F8F9FB" }, //current progress
     { value: progressLeft, color: "#9CC0E8" }, //progress left
   ];
-  const stackData = [
-    {
+
+  const stackData = Array.from({ length: 5 }).map((_, index) => {
+    const historyItem = consumptionHistory[index] || {
+      totalCaloriesConsumed: 0,
+    };
+    const calConsumed = historyItem.totalCaloriesConsumed;
+    const calLeft = calGoal - calConsumed;
+
+    return {
       stacks: [
-        { value: consumptionHistory[0], color: "#3B83D1" }, //calLeft
-        { value: dailyGoal - consumptionHistory[0], color: "#9CC0E8" }, //calEaten
+        { value: calConsumed, color: "#3B83D1" }, // calLeft
+        { value: calLeft, color: "#9CC0E8" }, // calEaten
       ],
-      label: "Mon",
-    },
-    {
-      stacks: [
-        { value: consumptionHistory[1], color: "#3B83D1" },
-        { value: dailyGoal - consumptionHistory[1], color: "#9CC0E8" },
-      ],
-      label: "Tue",
-    },
-    {
-      stacks: [
-        { value: consumptionHistory[2], color: "#3B83D1" },
-        { value: dailyGoal - consumptionHistory[2], color: "#9CC0E8" },
-      ],
-      label: "Wed",
-    },
-    {
-      stacks: [
-        { value: consumptionHistory[3], color: "#3B83D1" },
-        { value: dailyGoal - consumptionHistory[3], color: "#9CC0E8" },
-      ],
-      label: "Thu",
-    },
-    {
-      stacks: [
-        { value: consumptionHistory[4], color: "#3B83D1" },
-        { value: dailyGoal - consumptionHistory[4], color: "#9CC0E8" },
-      ],
-      label: "Today",
-    },
-  ];
+      label: historyItem.dayOfWeek, // Assuming you have a function to get the day label
+    };
+  });
+
   return (
     <View>
       {/* Top container */}
@@ -76,7 +56,7 @@ const CalorieContainer = ({ data }) => {
                     color: "#F8F9FB",
                   }}
                 >
-                  25%
+                  {currentProgressPercent}%
                 </Text>
               );
             }}
