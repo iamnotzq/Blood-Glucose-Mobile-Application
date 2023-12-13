@@ -68,11 +68,7 @@ const FoodDiaryScreen = ({ navigation }) => {
             width: "90%",
           }}
         >
-          <ClickableText
-            text="Food Dairy"
-            fontSize={30}
-            maybeFontWeight={600}
-          />
+          <Text style={styles.mainHeaderText}>Food Diary</Text>
           <View></View>
         </View>
         <FoodEntriesComponent />
@@ -117,6 +113,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     flexGrow: 1,
+  },
+  mainHeaderText: {
+    color: "#3B83D1",
+    fontSize: 24,
+    fontWeight: "900",
   },
   foodEntriesContainer: {
     height: "70%",

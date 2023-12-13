@@ -1,7 +1,14 @@
-import { SafeAreaView, Text, StyleSheet, View, FlatList } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import CommonLayout from "../CommonLayout";
 import ClickableText from "../../components/touchable/clickableText";
 import TextButton from "../../components/touchable/textButton";
+import { FontAwesome } from "@expo/vector-icons";
 
 const BloodGlucoseRecordsScreen = ({ navigation }) => {
   const bloodGlucoseRecords = [
@@ -58,26 +65,61 @@ const BloodGlucoseRecordsScreen = ({ navigation }) => {
   return (
     <CommonLayout navigation={navigation}>
       <SafeAreaView style={styles.mainContainer} key="bg-records">
-        <View style={styles.recordsBox}>
-          <View style={styles.recordsBoxComponent}>
-            <ClickableText
-              text={date}
-              fontSize={28}
-              maybeTextColor="#ffffff"
-              maybeFontWeight={700}
-            />
-            <View style={styles.divider}></View>
+        <View
+          style={{
+            justifyContent: "space-between",
+            width: "90%",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "90%",
+            }}
+          >
+            <Text style={styles.mainHeaderText}>Glucose Records</Text>
           </View>
-          {displayRecords(bloodGlucoseRecords)}
-
-          <TextButton
-            text="New Record"
-            maybeBackgroundColor="#ffffff"
-            maybeTextColor="#3B83D1"
-            maybeBorderColor="#3B83D1"
-            onPress={() => navigation.navigate("NewBloodGlucoseRecord")}
-          />
+          <View style={{ margin: 4 }}></View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "90%",
+            }}
+          >
+            <ClickableText text={date} fontSize={18} maybeFontWeight={400} />
+          </View>
         </View>
+
+        <View
+          style={{
+            width: "90%",
+            height: "50%",
+            justifyContent: "center",
+            alignContent: "center",
+            backgroundColor: "#ffffff",
+            borderRadius: 16,
+            borderWidth: 3,
+            borderColor: "#3B83D1",
+            shadowColor: "black",
+            shadowOffset: {
+              height: 3,
+              width: 0,
+            },
+            shadowOpacity: 0.3,
+          }}
+        >
+          <View>{displayRecords(bloodGlucoseRecords)}</View>
+        </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("NewBloodGlucoseRecord")}
+        >
+          <FontAwesome name="pencil-square-o" size={50} color="#ffffff" />
+          <Text style={styles.buttonText}>New Records</Text>
+        </TouchableOpacity>
+        <View></View>
       </SafeAreaView>
     </CommonLayout>
   );
@@ -89,10 +131,15 @@ const styles = StyleSheet.create({
   mainContainer: {
     height: "100%",
     width: "100%",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     alignItems: "center",
     flex: 1,
     flexGrow: 1,
+  },
+  mainHeaderText: {
+    color: "#3B83D1",
+    fontSize: 24,
+    fontWeight: "900",
   },
   recordsBox: {
     height: "60%",
@@ -134,6 +181,27 @@ const styles = StyleSheet.create({
   noEntriesText: {
     color: "#ffffff",
     fontSize: 24,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  button: {
+    height: 125,
+    width: 125,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#3B83D1",
+    shadowColor: "black",
+    shadowOffset: {
+      height: 3,
+      width: 0,
+    },
+    shadowOpacity: 0.3,
+  },
+  buttonText: {
+    color: "#ffffff",
+    marginTop: 4,
+    fontSize: 16,
     fontWeight: "600",
     textAlign: "center",
   },

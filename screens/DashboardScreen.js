@@ -44,16 +44,16 @@ const DashboardScreen = ({ navigation }) => {
 
   return (
     <CommonLayout navigation={navigation}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "90%",
+        }}
+      >
+        <Text style={styles.mainHeaderText}>Dashboard</Text>
+      </View>
       <SafeAreaView style={styles.mainContainer}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "90%",
-          }}
-        >
-          <ClickableText text="Dashboard" fontSize={30} maybeFontWeight={600} />
-        </View>
         <View style={styles.componentsContainer}>
           <View>
             <TouchableOpacity style={styles.component}>
@@ -79,6 +79,11 @@ const DashboardScreen = ({ navigation }) => {
 export default DashboardScreen;
 
 const styles = StyleSheet.create({
+  mainHeaderText: {
+    color: "#3B83D1",
+    fontSize: 24,
+    fontWeight: "900",
+  },
   mainContainer: {
     height: "100%",
     width: "100%",
