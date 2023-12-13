@@ -9,6 +9,7 @@ import {
 import CalorieContainer from "../components/calorieContainer";
 import GlucoseContainer from "../components/glucoseContainer";
 import CommonLayout from "./CommonLayout";
+import ClickableText from "../components/touchable/clickableText";
 
 const DashboardScreen = ({ navigation }) => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -43,6 +44,15 @@ const DashboardScreen = ({ navigation }) => {
 
   return (
     <CommonLayout navigation={navigation}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "90%",
+        }}
+      >
+        <Text style={styles.mainHeaderText}>Dashboard</Text>
+      </View>
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.componentsContainer}>
           <View>
@@ -69,6 +79,11 @@ const DashboardScreen = ({ navigation }) => {
 export default DashboardScreen;
 
 const styles = StyleSheet.create({
+  mainHeaderText: {
+    color: "#3B83D1",
+    fontSize: 24,
+    fontWeight: "900",
+  },
   mainContainer: {
     height: "100%",
     width: "100%",
@@ -86,7 +101,7 @@ const styles = StyleSheet.create({
   },
   componentsContainer: {
     paddingHorizontal: 48,
-    justifyContent: "",
+    justifyContent: "space-evenly",
     alignItems: "center",
     flexGrow: 1,
   },

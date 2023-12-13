@@ -15,7 +15,7 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
-app.use("", userRoutes);
+// app.use("", userRoutes);
 app.use("", dashboardRoutes);
 
 app.get("/", (req: Request, res: Response) => {

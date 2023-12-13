@@ -47,7 +47,7 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation }) => {
             width: "90%",
           }}
         >
-          <ClickableText text="Summary" fontSize={30} maybeFontWeight={600} />
+          <Text style={styles.mainHeaderText}>Summary</Text>
         </View>
         <View style={styles.componentsContainer}>
           <View style={styles.componentContainer}>
@@ -131,6 +131,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     flexGrow: 1,
+  },
+  mainHeaderText: {
+    color: "#3B83D1",
+    fontSize: 24,
+    fontWeight: "900",
   },
   divider: {
     width: "100%",

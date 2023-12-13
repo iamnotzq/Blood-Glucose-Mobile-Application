@@ -22,7 +22,7 @@ const CalorieContainer = ({ data }) => {
       totalCaloriesConsumed: 0,
     };
     const calConsumed = historyItem.totalCaloriesConsumed;
-    const calLeft = calGoal - calConsumed;
+    const calLeft = calGoal - calConsumed < 0 ? calGoal : calGoal - calConsumed;
 
     return {
       stacks: [

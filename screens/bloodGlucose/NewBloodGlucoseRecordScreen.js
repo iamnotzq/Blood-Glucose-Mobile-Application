@@ -14,67 +14,71 @@ import ClickableText from "../../components/touchable/clickableText";
 
 const NewBloodGlucoseRecordScreen = ({ navigation }) => {
   const { dateString, timeString } = useDateTime();
+  const meal = "Breakfast";
   const bloodGlucoseLevel = 140;
 
   return (
-    <CommonLayout>
-      <View
-        style={{
-          flexDirection: "row",
-          width: "90%",
-          justifyContent: "space-between",
-        }}
-      >
-        <ClickableText
-          text="Add New Record"
-          fontSize={34}
-          maybeFontWeight="600"
-        />
-        <View></View>
-      </View>
+    <CommonLayout navigation={navigation}>
       <SafeAreaView style={styles.mainContainer} key="new-bg-record">
-        <View style={styles.componentsContainer}>
-          <Text style={styles.header}>Record Details</Text>
-          <View style={styles.divider}></View>
-          <View style={styles.rowContainer}>
-            <View style={styles.rowObject}>
-              <Text style={styles.mainText}>Date</Text>
-            </View>
-            <View style={styles.rowObject}>
-              <Text style={styles.mainText}>{dateString}</Text>
-            </View>
-          </View>
-          <View style={styles.rowContainer}>
-            <View style={styles.rowObject}>
-              <Text style={styles.mainText}>Time</Text>
-            </View>
-            <View style={styles.rowObject}>
-              <Text style={styles.mainText}>{timeString}</Text>
-            </View>
-          </View>
-          <View style={styles.rowContainer}>
-            <View style={styles.rowObject}>
-              <Text style={styles.mainText}>Glucose Level</Text>
-            </View>
+        <View
+          style={{
+            flexDirection: "row",
+            width: "90%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text style={styles.mainHeaderText}>Record Details</Text>
+          <View></View>
+        </View>
 
-            <View style={styles.rowObject}>
-              <InputBox
-                placeholder=""
-                width="50%"
-                secureTextEntry={false}
-                maybeHeight={30}
-              />
-              <Text style={styles.mainText}>mg/dl</Text>
-            </View>
-          </View>
-
-          <TouchableOpacity
-            style={styles.rowContainer}
-            onPress={() => navigation.navigate("Profile")}
+        <View style={styles.detailsContainer}>
+          <View></View>
+          <View
+            style={{
+              width: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            <FontAwesome5 name="check-circle" size={40} color="#3DD17B" />
+            <View style={styles.detailsRow}>
+              <Text style={styles.detailsHeader}>Date</Text>
+              <Text style={styles.detailsText}>{dateString}</Text>
+            </View>
+
+            <View style={styles.detailsRow}>
+              <Text style={styles.detailsHeader}>Time</Text>
+              <Text style={styles.detailsText}>{timeString}</Text>
+            </View>
+
+            <View style={styles.detailsRow}>
+              <Text style={styles.detailsHeader}>Meal</Text>
+              <Text style={styles.detailsText}>{meal}</Text>
+            </View>
+
+            <View style={styles.detailsRow}>
+              <Text style={styles.detailsHeader}>Glucose Levels</Text>
+              <View
+                style={{
+                  width: "50%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <InputBox
+                  placeholder=""
+                  secureTextEntry={false}
+                  maybeHeight={30}
+                  width="50%"
+                />
+              </View>
+            </View>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+            <FontAwesome5 name="check-circle" size={44} color="#3DD17B" />
           </TouchableOpacity>
         </View>
+
+        <View></View>
       </SafeAreaView>
     </CommonLayout>
   );
@@ -86,57 +90,45 @@ const styles = StyleSheet.create({
   mainContainer: {
     height: "100%",
     width: "100%",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     alignItems: "center",
     flex: 1,
     flexGrow: 1,
   },
-  componentsContainer: {
-    height: "50%",
-    width: "90%",
-    backgroundColor: "#3B83D1",
-    borderRadius: 16,
-    padding: 16,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "black",
-    shadowOffset: {
-      height: 3,
-      width: 0,
-    },
-    shadowOpacity: 0.3,
-  },
-  header: {
-    color: "#ffffff",
+  mainHeaderText: {
+    color: "#3B83D1",
     fontSize: 24,
-    fontWeight: "700",
-    textAlign: "center",
+    fontWeight: "900",
   },
-  rowContainer: {
-    width: "100%",
-    backgroundColor: "#3B83D1",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
-  rowObject: {
-    width: "50%",
-    height: 50,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
-  mainText: {
-    color: "#ffffff",
-    fontSize: 18,
-    fontWeight: "600",
-    textAlign: "center",
-  },
-  divider: {
-    width: "100%",
-    height: 2,
+  detailsContainer: {
+    width: "90%",
+    height: "40%",
     backgroundColor: "#ffffff",
-    margin: 16,
-    opacity: 0.7,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderRadius: 16,
+    borderColor: "#3B83D1",
+    borderWidth: 3,
+  },
+  detailsRow: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 6,
+  },
+  detailsHeader: {
+    width: "50%",
+    color: "#3B83D1",
+    fontSize: 22,
+    fontWeight: "800",
+    textAlign: "center",
+    justifyContent: "center",
+  },
+  detailsText: {
+    width: "50%",
+    color: "#3B83D1",
+    fontSize: 20,
+    fontWeight: "500",
+    textAlign: "center",
   },
 });

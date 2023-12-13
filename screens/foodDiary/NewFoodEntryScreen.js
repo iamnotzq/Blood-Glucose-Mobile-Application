@@ -48,7 +48,7 @@ const NewFoodEntryScreen = ({ navigation }) => {
   };
 
   return (
-    <CommonLayout>
+    <CommonLayout navigation={navigation}>
       <InputBox
         placeholder="Search for food"
         width="90%"

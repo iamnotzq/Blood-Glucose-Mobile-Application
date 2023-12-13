@@ -11,6 +11,7 @@ const TextButton = ({
   maybeBackgroundColor,
   maybeTextColor,
   maybeBorderColor,
+  maybeShadowOpacity,
 }) => {
   const buttonHeight = maybeButtonHeight ? maybeButtonHeight : 48;
   const fontSize = maybeFontSize ? maybeFontSize : 20;
@@ -21,6 +22,7 @@ const TextButton = ({
   const textColor = maybeTextColor ? maybeTextColor : "#F8F9FB";
   const borderColor = maybeBorderColor ? maybeBorderColor : "#3B83D1";
   const buttonWidth = maybeButtonWidth ? maybeButtonWidth : "100%";
+  const shadowOpacity = maybeShadowOpacity ? maybeShadowOpacity : 0.3;
   return (
     <TouchableOpacity style={{ width: buttonWidth }} onPress={onPress}>
       <View
@@ -38,7 +40,7 @@ const TextButton = ({
             height: 3,
             width: 0,
           },
-          shadowOpacity: 0.3,
+          shadowOpacity: shadowOpacity,
         }}
       >
         <Text
