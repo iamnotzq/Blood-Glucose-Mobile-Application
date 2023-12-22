@@ -2,16 +2,15 @@ import React, { useState, useEffect } from "react";
 import { SafeAreaView, Text, StyleSheet, View } from "react-native";
 import CommonLayout from "./CommonLayout";
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation, route }) => {
+  const { id } = route.params;
   const [assets, setAssets] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8000/api/profile/65854d4c010a9f8c1a4300db"
-        );
+        const response = await fetch(`http://localhost:8000/api/profile/${id}`);
         const assets = await response.json();
         setLoading(false);
         setAssets(assets);

@@ -10,14 +10,17 @@ import CalorieContainer from "../components/calorieContainer";
 import GlucoseContainer from "../components/glucoseContainer";
 import CommonLayout from "./CommonLayout";
 
-const DashboardScreen = ({ navigation }) => {
+const DashboardScreen = ({ route, navigation }) => {
+  const { id } = route.params;
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/dashboard");
+        const response = await fetch(
+          `http://localhost:8000/api/dashboard/${id}`
+        );
         const data = await response.json();
         setDashboardData(data);
         setLoading(false);
@@ -42,7 +45,7 @@ const DashboardScreen = ({ navigation }) => {
   console.log(bloodGlucoseDisplayAssets);
 
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <View
         style={{
           flexDirection: "row",

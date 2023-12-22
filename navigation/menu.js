@@ -7,7 +7,7 @@ import {
 } from "@expo/vector-icons";
 import React from "react";
 
-const Menu = ({ isVisible, onClose, navigation }) => {
+const Menu = ({ isVisible, onClose, navigation, id }) => {
   const navigateAndClose = (screenName) => {
     navigation.navigate(screenName);
     onClose();
@@ -35,7 +35,7 @@ const Menu = ({ isVisible, onClose, navigation }) => {
         <View style={styles.row}>
           <TouchableOpacity
             style={styles.box}
-            onPress={() => navigateAndClose("Profile")}
+            onPress={() => navigateAndClose("Profile", { id: id })}
           >
             <Ionicons name="person-outline" size={80} color="#3B83D1" />
             <Text style={styles.iconText}>Profile</Text>
@@ -50,7 +50,7 @@ const Menu = ({ isVisible, onClose, navigation }) => {
         <View style={styles.row}>
           <TouchableOpacity
             style={styles.box}
-            onPress={() => navigateAndClose("FoodDiary")}
+            onPress={() => navigateAndClose("FoodDiary", { id: id })}
           >
             <MaterialCommunityIcons
               name="notebook-edit-outline"
@@ -61,7 +61,7 @@ const Menu = ({ isVisible, onClose, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.box}
-            onPress={() => navigateAndClose("BloodGlucoseRecords")}
+            onPress={() => navigateAndClose("BloodGlucoseRecords", { id: id })}
           >
             <Fontisto name="injection-syringe" size={80} color="#3B83D1" />
             <Text style={styles.iconText}>Glucose</Text>

@@ -27,7 +27,9 @@ const LoginScreen = ({ navigation }) => {
         setUserId(userId);
         console.log(`User ${userId} has successfully logged in`);
 
-        navigation.navigate("Dashboard");
+        navigation.navigate("Dashboard", {
+          id: userId,
+        });
       } else {
         console.error("Login failed");
       }
