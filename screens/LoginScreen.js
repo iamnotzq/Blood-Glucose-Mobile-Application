@@ -5,13 +5,6 @@ import TextButton from "../components/touchable/textButton";
 import InputBox from "../components/inputBox";
 
 const LoginScreen = ({ navigation }) => {
-  const handleWelcomeButtonPress = () => {
-    navigation.navigate("Welcome");
-  };
-  const handleSignUpButtonPress = () => {
-    navigation.navigate("CreateAccount");
-  };
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userId, setUserId] = useState(null);
@@ -45,7 +38,12 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <Text style={styles.appText} onPress={handleWelcomeButtonPress}>
+      <Text
+        style={styles.appText}
+        onPress={() => {
+          navigation.navigate("Welcome");
+        }}
+      >
         NUTRIWISE
       </Text>
 
@@ -86,7 +84,9 @@ const LoginScreen = ({ navigation }) => {
             <Text> </Text>
             <ClickableText
               text="Sign Up"
-              onPress={handleSignUpButtonPress}
+              onPress={() => {
+                navigation.navigate("CreateAccount");
+              }}
               fontSize={16}
               maybeFontWeight="800"
             />
