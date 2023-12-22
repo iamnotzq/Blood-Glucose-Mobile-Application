@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { config } from "dotenv";
 import { connectToDatabase } from "../repositories/database";
 import { createUser, loginUser } from "../services/userService";
-import LoginRequestBody from "./models/requests/loginUserRequestBody";
+import { LoginRequestBody } from "./models/requests/loginUserRequestBody";
 
 config();
 
@@ -23,10 +23,13 @@ router.post("/api/create-user", async (req: Request, res: Response) => {
 router.post("/api/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    const loginRequestBody = new LoginRequestBody(email, password);
+    const loginRequestBody: LoginRequestBody = {
+      email: email,
+      password: password,
+    };
 
     const userId = await loginUser(loginRequestBody);
-
+    console.log(`User ${userId} has successfully logged in`);
     res.status(200).json(userId);
   } catch (err: any) {
     console.error(err.message);
