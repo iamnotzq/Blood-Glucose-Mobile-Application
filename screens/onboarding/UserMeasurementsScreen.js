@@ -1,16 +1,24 @@
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import InputBox from "../../components/inputBox";
 import RightArrowButton from "../../components/touchable/rightArrowButton";
 import ClickableText from "../../components/touchable/clickableText";
 
-const UserMeasurementsScreen = ({ navigation }) => {
-  const handleBackButtonPress = () => {
-    navigation.goBack();
-  };
-  const handleNextButtonPress = () => {
-    navigation.navigate("UserDiabetes");
-  };
+const UserMeasurementsScreen = ({ route, navigation }) => {
+  const {
+    username,
+    email,
+    password,
+    firstName,
+    lastName,
+    country,
+    phoneNumber,
+  } = route.params;
+
+  const [age, setAge] = useState("");
+  const [gender, setgender] = useState("");
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -24,12 +32,27 @@ const UserMeasurementsScreen = ({ navigation }) => {
 
         <View style={styles.textInputContainer}>
           <View style={styles.textInputRow}>
-            <InputBox placeholder="Age" width={150} />
-            <InputBox placeholder="Gender" width={150} />
+            <InputBox
+              placeholder="Age"
+              width={150}
+              maybeOnChangeText={(text) => setAge(text)}
+              maybeValue={age}
+            />
+            <InputBox
+              placeholder="Gender"
+              width={150}
+              maybeOnChangeText={(text) => setgender(text)}
+              maybeValue={gender}
+            />
           </View>
 
           <View style={styles.textInputRow}>
-            <InputBox placeholder="Weight" width={275} />
+            <InputBox
+              placeholder="Weight"
+              width={275}
+              maybeOnChangeText={(text) => setWeight(text)}
+              maybeValue={weight}
+            />
 
             <View style={styles.sideTextContainer}>
               <Text style={styles.sideText}>kg</Text>
@@ -37,7 +60,12 @@ const UserMeasurementsScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.textInputRow}>
-            <InputBox placeholder="Height" width={275} />
+            <InputBox
+              placeholder="Height"
+              width={275}
+              maybeOnChangeText={(text) => setHeight(text)}
+              maybeValue={height}
+            />
 
             <View style={styles.sideTextContainer}>
               <Text style={styles.sideText}>cm</Text>
@@ -51,13 +79,29 @@ const UserMeasurementsScreen = ({ navigation }) => {
           <View style={styles.buttonContainer}>
             <ClickableText
               text="Back"
-              onPress={handleBackButtonPress}
+              onPress={() => {
+                navigation.goBack();
+              }}
               fontSize={24}
             />
 
             <RightArrowButton
               size={32}
-              onPress={handleNextButtonPress}
+              onPress={() => {
+                navigation.navigate("UserDiabetes", {
+                  username: username,
+                  email: email,
+                  password: password,
+                  firstName: firstName,
+                  lastName: lastName,
+                  country: country,
+                  phoneNumber: phoneNumber,
+                  age: age,
+                  gender: gender,
+                  weight: weight,
+                  height: height,
+                });
+              }}
               width={48}
             />
           </View>

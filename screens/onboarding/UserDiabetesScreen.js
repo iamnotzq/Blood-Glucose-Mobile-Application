@@ -1,16 +1,26 @@
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import RightArrowButton from "../../components/touchable/rightArrowButton";
 import ClickableText from "../../components/touchable/clickableText";
 import TextButton from "../../components/touchable/textButton";
 
-const UserDiabetesScreen = ({ navigation }) => {
-  const handleBackButtonPress = () => {
-    navigation.goBack();
-  };
-  const handleNextButtonPress = () => {
-    navigation.navigate("Login");
-  };
+const UserDiabetesScreen = ({ route, navigation }) => {
+  const {
+    username,
+    email,
+    password,
+    firstName,
+    lastName,
+    country,
+    phoneNumber,
+    age,
+    gender,
+    weight,
+    height,
+  } = route.params;
+
+  const [diabetesType, setDiabetesType] = useState("");
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Text style={styles.appText}>NUTRIWISE</Text>
@@ -27,24 +37,28 @@ const UserDiabetesScreen = ({ navigation }) => {
             maybeBackgroundColor="#F8F9FB"
             maybeTextColor="#3B83D1"
             maybeFontWeight="400"
+            onPress={() => setDiabetesType("Type 1")}
           />
           <TextButton
             text="Type 2"
             maybeBackgroundColor="#F8F9FB"
             maybeTextColor="#3B83D1"
             maybeFontWeight="400"
+            onPress={() => setDiabetesType("Type 2")}
           />
           <TextButton
             text="Gestational"
             maybeBackgroundColor="#F8F9FB"
             maybeTextColor="#3B83D1"
             maybeFontWeight="400"
+            onPress={() => setDiabetesType("Gestational")}
           />
           <TextButton
             text="Others"
             maybeBackgroundColor="#F8F9FB"
             maybeTextColor="#3B83D1"
             maybeFontWeight="400"
+            onPress={() => setDiabetesType("Others")}
           />
         </View>
 
@@ -54,13 +68,30 @@ const UserDiabetesScreen = ({ navigation }) => {
           <View style={styles.buttonContainer}>
             <ClickableText
               text="Back"
-              onPress={handleBackButtonPress}
+              onPress={() => {
+                navigation.goBack();
+              }}
               fontSize={24}
             />
 
             <RightArrowButton
               size={32}
-              onPress={handleNextButtonPress}
+              onPress={() => {
+                navigation.navigate("UserGlucoseLevels", {
+                  username,
+                  email,
+                  password,
+                  firstName,
+                  lastName,
+                  country,
+                  phoneNumber,
+                  age,
+                  gender,
+                  weight,
+                  height,
+                  diabetesType,
+                });
+              }}
               width={48}
             />
           </View>

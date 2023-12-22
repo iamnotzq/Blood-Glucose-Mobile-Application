@@ -1,7 +1,7 @@
 import * as bcrypt from "bcrypt";
 import * as userService from "../../../services/userService";
 import * as userRepo from "../../../repositories/userRepository"
-import LoginRequestBody from "../../../routes/models/requests/loginUserRequestBody";
+import LoginRequestBody from "../../../routes/models/requests/requestBodies";
 import { jest, describe, expect, it, afterAll, beforeAll, beforeEach, afterEach } from '@jest/globals';
 
 jest.mock("bcrypt");

@@ -7,6 +7,7 @@ import StackNavigator from "./navigation/StackNavigator";
 import BloodGlucoseRecordsScreen from "./screens/bloodGlucose/BloodGlucoseRecordsScreen";
 import NewBloodGlucoseRecordScreen from "./screens/bloodGlucose/NewBloodGlucoseRecordScreen";
 import DashboardScreen from "./screens/DashboardScreen";
+import UserGlucoseLevelsScreen from "./screens/onboarding/UserGlucoseLevelsScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {

@@ -1,7 +1,13 @@
 import * as bcrypt from "bcrypt";
 import User, { UserDocument } from "../repositories/models/user";
 import * as userRepository from "../repositories/userRepository";
-import { LoginRequestBody } from "../routes/models/requests/loginUserRequestBody";
+import {
+  CreateUserRequestBody,
+  LoginRequestBody,
+  NewUserRequestBody,
+} from "../routes/models/requests/requestBodies";
+import { NewUserResponseBody } from "../routes/models/responses/responseBodies";
+
 // helper functions
 // TODO add error message
 const validateEmail = (maybeEmail?: string): boolean => {
@@ -37,6 +43,55 @@ const hashPassword = async (password?: string): Promise<string> => {
   return hashedPassword;
 };
 
+export const validateNewUser = async (
+  requestBody: NewUserRequestBody
+): Promise<NewUserResponseBody> => {
+  const { username, email, password, confirmPassword } = requestBody;
+
+  const usernameExists = await User.findOne({ username });
+  if (usernameExists) {
+    return {
+      isValid: false,
+      status: 409,
+      message: `User with username: ${username} already exists`,
+    };
+  }
+
+  const emailExists = await User.findOne({ email });
+  if (emailExists) {
+    return {
+      isValid: false,
+      status: 409,
+      message: `User with email: ${email} already exists`,
+    };
+  }
+
+  const passwordIsValid = validatePassword(password);
+
+  if (!passwordIsValid) {
+    return {
+      isValid: false,
+      status: 409,
+      message: `Password is invalid`,
+    };
+  }
+
+  const passwordsMatch = password === confirmPassword ? true : false;
+  if (!passwordsMatch) {
+    return {
+      isValid: false,
+      status: 409,
+      message: `Passwords do not match`,
+    };
+  }
+
+  return {
+    isValid: true,
+    status: 200,
+    message: `New user is valid`,
+  };
+};
+
 const validateUserLogin = async (
   loginRequestBody: LoginRequestBody
 ): Promise<boolean> => {
@@ -62,7 +117,7 @@ const validateUserLogin = async (
   return true;
 };
 
-const createUser = async (userData: any): Promise<string> => {
+const createUser = async (userData: CreateUserRequestBody): Promise<string> => {
   const maybeEmail = userData.email;
   const maybeEmailIsValid = validateEmail(maybeEmail);
   if (!maybeEmailIsValid) throw new Error("Email is invalid");

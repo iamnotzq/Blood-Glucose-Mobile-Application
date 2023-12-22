@@ -1,22 +1,54 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import InputBox from "../components/inputBox";
 import ClickableText from "../components/touchable/clickableText";
 import TextButton from "../components/touchable/textButton";
 
 const CreateAccountScreen = ({ navigation }) => {
-  const handleWelcomeButtonPress = () => {
-    navigation.navigate("Welcome");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleNewUserValidation = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/new-user/validate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+            confirmPassword,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        console.log(`Credentials valid`);
+        navigation.navigate("UserParticulars", {
+          username: username,
+          email: email,
+          password: password,
+        });
+      }
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   };
-  const handleLoginButtonPress = () => {
-    navigation.navigate("Login");
-  };
-  const handleCreateAccountButtonPress = () => {
-    navigation.navigate("UserParticulars");
-  };
+
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <Text style={styles.appText} onPress={handleWelcomeButtonPress}>
+      <Text
+        style={styles.appText}
+        onPress={() => {
+          navigation.navigate("Welcome");
+        }}
+      >
         NUTRIWISE
       </Text>
 
@@ -27,25 +59,46 @@ const CreateAccountScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.inputContainer}>
-          <InputBox placeholder="Username" width="100%" />
-          <InputBox placeholder="Email" width="100%" />
-          <InputBox placeholder="Password" width="100%" />
-          <InputBox placeholder="Confirm Password" width="100%" />
+          <InputBox
+            placeholder="Username"
+            width="100%"
+            maybeOnChangeText={(text) => setUsername(text)}
+            maybeValue={username}
+          />
+          <InputBox
+            placeholder="Email"
+            width="100%"
+            maybeOnChangeText={(text) => setEmail(text)}
+            maybeValue={email}
+          />
+          <InputBox
+            placeholder="Password"
+            width="100%"
+            maybeOnChangeText={(text) => setPassword(text)}
+            maybeValue={password}
+            secureTextEntry={true}
+          />
+          <InputBox
+            placeholder="Confirm Password"
+            width="100%"
+            maybeOnChangeText={(text) => setConfirmPassword(text)}
+            maybeValue={confirmPassword}
+            secureTextEntry={true}
+          />
         </View>
 
         <View style={{ flex: 1 }}></View>
 
         <View>
-          <TextButton
-            text="Create Account"
-            onPress={handleCreateAccountButtonPress}
-          />
+          <TextButton text="Create Account" onPress={handleNewUserValidation} />
           <View style={styles.smallTextContainer}>
             <Text style={styles.smallText}>Already have an account?</Text>
             <Text> </Text>
             <ClickableText
               text="Log In"
-              onPress={handleLoginButtonPress}
+              onPress={() => {
+                navigation.navigate("Login");
+              }}
               fontSize={16}
               maybeFontWeight="800"
             />

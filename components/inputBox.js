@@ -44,6 +44,7 @@ const InputBox = ({
         onChangeText={onChangeText}
         value={value}
         onSubmitEditing={onSubmitEditing}
+        autoCapitalize="none"
       />
     </KeyboardAvoidingView>
   );
