@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   SafeAreaView,
   Text,
@@ -7,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import CommonLayout from "../CommonLayout";
-import ClickableText from "../../components/touchable/clickableText";
 import InputBox from "../../components/inputBox";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -22,6 +22,9 @@ import { FontAwesome5 } from "@expo/vector-icons";
 // };
 
 const FoodEntrySummaryScreen = ({ foodDetails, navigation }) => {
+  const [servingSize, setServingSize] = useState("");
+  const [noOfServings, setNoOfServings] = useState("");
+
   const foodName = "Fried Kway Teow";
   const numberOfServings = 1.5;
 
@@ -63,6 +66,8 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation }) => {
                   secureTextEntry={false}
                   width="20%"
                   maybeHeight={28}
+                  maybeOnChangeText={(text) => setServingSize(text)}
+                  maybeValue={servingSize}
                 />
               </View>
               <View style={styles.rowContainer}>
@@ -72,6 +77,8 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation }) => {
                   secureTextEntry={false}
                   width="20%"
                   maybeHeight={28}
+                  maybeOnChangeText={(text) => setNoOfServings(text)}
+                  maybeValue={noOfServings}
                 />
               </View>
             </View>
