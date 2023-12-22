@@ -1,18 +1,46 @@
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, Text, StyleSheet, View } from "react-native";
 import CommonLayout from "./CommonLayout";
 
 const ProfileScreen = ({ navigation }) => {
-  const firstName = "John";
-  const lastName = "Doe";
-  const age = 25;
-  const diabetesType = "Type 1";
-  const height = 170;
-  const weight = 65;
-  const calorieGoal = 2000;
-  const hypo = 70;
-  const acceptableLower = 110;
-  const acceptableUpper = 130;
-  const hyper = 140;
+  const [assets, setAssets] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8000/api/profile/65854d4c010a9f8c1a4300db"
+        );
+        const assets = await response.json();
+        setLoading(false);
+        setAssets(assets);
+      } catch (error) {
+        console.error("Error fetching profile assets: ", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <Text>Loading</Text>;
+  }
+
+  console.log(assets);
+
+  const firstName = assets?.firstName;
+  const lastName = assets?.lastName;
+  const age = assets?.age;
+  const diabetesType = assets?.diabetesType;
+  const height = assets?.heightCm;
+  const weight = assets?.weightKg;
+  const calorieGoal = assets?.caloricGoalKcal;
+  const hypo = assets?.hypoMgDl;
+  const acceptableLower = assets?.targetLowerMgDl;
+  const acceptableUpper = assets?.targetUpperMgDl;
+  const hyper = assets?.hyperMgDl;
 
   return (
     <CommonLayout navigation={navigation}>
