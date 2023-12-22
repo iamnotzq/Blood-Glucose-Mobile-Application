@@ -12,8 +12,9 @@ export const calculateAverageGlucoseLevel = (
   const length = entries.length;
   const sum = entries.reduce((sum, entry) => sum + entry.glucoseLevel, 0);
   const average = sum / length;
+  const roundedAverage = Math.ceil(average);
 
-  return average;
+  return roundedAverage;
 };
 
 export const getUserRecentGlucoseSummary = async (

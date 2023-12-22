@@ -3,6 +3,9 @@ import { LineChart } from "react-native-gifted-charts";
 import React from "react";
 
 const GlucoseContainer = ({ data }) => {
+  const lower = 110;
+  const upper = 130;
+
   const latestMeasurement = data.latestMeasurement;
   const previousMeasurement = data.previousMeasurement;
   const averageMeasurement = data.averageMeasurement;
@@ -12,12 +15,24 @@ const GlucoseContainer = ({ data }) => {
     label: item?.dayOfWeek || "NIL", // Use a default label if dayOfWeek is not available
   }));
 
+  const rangeText =
+    latestMeasurement >= lower && latestMeasurement <= upper
+      ? "Acceptable"
+      : latestMeasurement < lower
+      ? "Hypoglycemic"
+      : "Hyperglycemic";
+
+  const rangeColour =
+    latestMeasurement >= lower && latestMeasurement <= upper
+      ? "#3DD17B"
+      : "#D13D3D";
+
   return (
     <View>
       <View style={styles.topGlucoseContainer}>
         <View style={styles.latestMeasurementContainer}>
+          <Text style={styles.glucoseText}>Glucose</Text>
           <View>
-            <Text style={styles.glucoseText}>Glucose</Text>
             <Text style={styles.subText}>Latest Measurement</Text>
           </View>
 
@@ -29,7 +44,9 @@ const GlucoseContainer = ({ data }) => {
             </View>
 
             <View>
-              <Text style={styles.glucoseRangeText}>Acceptable</Text>
+              <Text style={[styles.glucoseRangeText, { color: rangeColour }]}>
+                {rangeText}
+              </Text>
             </View>
           </View>
         </View>
@@ -39,7 +56,12 @@ const GlucoseContainer = ({ data }) => {
         <View style={styles.lastAndAverageContainer}>
           <View style={styles.textAndCirlceContainer}>
             <Text style={styles.topCircleText}>Last Scan</Text>
-            <View style={styles.lastScanContainer}>
+            <View
+              style={[
+                styles.lastScanContainer,
+                { backgroundColor: rangeColour },
+              ]}
+            >
               <Text style={styles.circleNumberText}>{previousMeasurement}</Text>
               <Text style={styles.circleUnitText}>mg/dL</Text>
             </View>
@@ -47,7 +69,12 @@ const GlucoseContainer = ({ data }) => {
 
           <View style={styles.textAndCirlceContainer}>
             <Text style={styles.topCircleText}>Average</Text>
-            <View style={styles.averageContainer}>
+            <View
+              style={[
+                styles.averageContainer,
+                { backgroundColor: rangeColour },
+              ]}
+            >
               <Text style={styles.circleNumberText}>{averageMeasurement}</Text>
               <Text style={styles.circleUnitText}>mg/dL</Text>
             </View>
@@ -86,6 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   latestMeasurementContainer: {
+    // flexDirection: "row",
     justifyContent: "center",
     flexGrow: 1,
   },
@@ -96,7 +124,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     color: "#3B83D1",
-    fontSize: 8,
+    fontSize: 12,
     fontWeight: "500",
   },
   bottomGlucoseContainer: {
@@ -126,7 +154,7 @@ const styles = StyleSheet.create({
   },
   glucoseRangeText: {
     color: "#3DD17B",
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "900",
     textAlign: "center",
   },
@@ -146,22 +174,22 @@ const styles = StyleSheet.create({
   },
   topCircleText: {
     color: "#9CC0E8",
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "500",
     textAlign: "center",
     marginBottom: 2,
   },
   lastScanContainer: {
-    height: 50,
-    width: 50,
+    height: 75,
+    width: 75,
     backgroundColor: "#D13D3D",
     borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
   },
   averageContainer: {
-    height: 50,
-    width: 50,
+    height: 75,
+    width: 75,
     backgroundColor: "#3DD17B",
     borderRadius: 50,
     justifyContent: "center",
@@ -169,13 +197,13 @@ const styles = StyleSheet.create({
   },
   circleNumberText: {
     color: "#F8F9FB",
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "900",
     textAlign: "center",
   },
   circleUnitText: {
     color: "#F8F9FB",
-    fontSize: 8,
+    fontSize: 14,
     fontWeight: "400",
     textAlign: "center",
   },
