@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   SafeAreaView,
   Text,
@@ -6,19 +7,53 @@ import {
   TouchableOpacity,
 } from "react-native";
 import CommonLayout from "../CommonLayout";
-import React from "react";
 import { useDateTime } from "../../components/hooks/commonHooks";
 import InputBox from "../../components/inputBox";
 import { FontAwesome5 } from "@expo/vector-icons";
-import ClickableText from "../../components/touchable/clickableText";
 
-const NewBloodGlucoseRecordScreen = ({ navigation }) => {
+const NewBloodGlucoseRecordScreen = ({ navigation, route }) => {
+  const [glucoseLevel, setGlucoseLevel] = useState("");
+
+  const { id } = route.params;
+  const timestamp = new Date();
+
+  console.log(timestamp);
   const { dateString, timeString } = useDateTime();
-  const meal = "Breakfast";
-  const bloodGlucoseLevel = 140;
+
+  const handleClick = async () => {
+    const reqBody = {
+      userId: id,
+      timestamp: timestamp,
+      glucoseLevel: glucoseLevel,
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/glucose/new-entry",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reqBody),
+        }
+      );
+
+      if (response.ok) {
+        const newId = await response.json();
+        console.log(`Glucose entry has been created: ${newId}`);
+
+        navigation.navigate("Dashboard", { id: id });
+      } else {
+        console.error("Glucose entry creation failed");
+      }
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
+  };
 
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer} key="new-bg-record">
         <View
           style={{
@@ -51,11 +86,6 @@ const NewBloodGlucoseRecordScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.detailsRow}>
-              <Text style={styles.detailsHeader}>Meal</Text>
-              <Text style={styles.detailsText}>{meal}</Text>
-            </View>
-
-            <View style={styles.detailsRow}>
               <Text style={styles.detailsHeader}>Glucose Levels</Text>
               <View
                 style={{
@@ -69,11 +99,13 @@ const NewBloodGlucoseRecordScreen = ({ navigation }) => {
                   secureTextEntry={false}
                   maybeHeight={30}
                   width="50%"
+                  maybeOnChangeText={(text) => setGlucoseLevel(text)}
+                  maybeValue={glucoseLevel}
                 />
               </View>
             </View>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+          <TouchableOpacity onPress={handleClick}>
             <FontAwesome5 name="check-circle" size={44} color="#3DD17B" />
           </TouchableOpacity>
         </View>

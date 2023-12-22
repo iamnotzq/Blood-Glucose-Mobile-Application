@@ -15,6 +15,8 @@ const DashboardScreen = ({ route, navigation }) => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  console.log(`Retrieving DashboardAssets for ${id}`);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,12 +39,9 @@ const DashboardScreen = ({ route, navigation }) => {
     return <Text>Loading</Text>;
   }
 
-  console.log(dashboardData);
   const calorieDisplayAssets = dashboardData?.calorieDisplayAssets || {};
-  console.log(calorieDisplayAssets);
   const bloodGlucoseDisplayAssets =
     dashboardData?.bloodGlucoseDisplayAssets || {};
-  console.log(bloodGlucoseDisplayAssets);
 
   return (
     <CommonLayout navigation={navigation} id={id}>

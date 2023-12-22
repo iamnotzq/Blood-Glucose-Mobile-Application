@@ -11,16 +11,6 @@ import CommonLayout from "../CommonLayout";
 import InputBox from "../../components/inputBox";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-// const food = {
-//   name: String,
-//   servingSize: Number,
-//   calories_kcal: Number,
-//   carbs_grams: Number,
-//   fat_grams: Number,
-//   protein_grams: Number,
-//   fibre: Number,
-// };
-
 const FoodEntrySummaryScreen = ({ foodDetails, navigation, route }) => {
   const { id } = route.params;
   const [servingSize, setServingSize] = useState("");

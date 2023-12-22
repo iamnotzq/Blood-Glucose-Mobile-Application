@@ -7,6 +7,8 @@ const ProfileScreen = ({ navigation, route }) => {
   const [assets, setAssets] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  console.log(`Retrieving ProfileAssets for: ${id}`);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,8 +28,6 @@ const ProfileScreen = ({ navigation, route }) => {
   if (loading) {
     return <Text>Loading</Text>;
   }
-
-  console.log(assets);
 
   const firstName = assets?.firstName;
   const lastName = assets?.lastName;

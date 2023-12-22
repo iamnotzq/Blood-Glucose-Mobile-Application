@@ -10,24 +10,25 @@ import ClickableText from "../../components/touchable/clickableText";
 import TextButton from "../../components/touchable/textButton";
 import { FontAwesome } from "@expo/vector-icons";
 
-const BloodGlucoseRecordsScreen = ({ navigation }) => {
+const BloodGlucoseRecordsScreen = ({ navigation, route }) => {
+  const { id } = route.params;
   const bloodGlucoseRecords = [
-    {
-      glucoseLevel: 140,
-      time: "6:41 pm",
-    },
-    {
-      glucoseLevel: 127,
-      time: "4:30 pm",
-    },
-    {
-      glucoseLevel: 130,
-      time: "11:27 am",
-    },
-    {
-      glucoseLevel: 118,
-      time: "9:32 am",
-    },
+    // {
+    //   glucoseLevel: 140,
+    //   time: "6:41 pm",
+    // },
+    // {
+    //   glucoseLevel: 127,
+    //   time: "4:30 pm",
+    // },
+    // {
+    //   glucoseLevel: 130,
+    //   time: "11:27 am",
+    // },
+    // {
+    //   glucoseLevel: 118,
+    //   time: "9:32 am",
+    // },
   ];
   const date = "11 December 2023";
 
@@ -63,7 +64,7 @@ const BloodGlucoseRecordsScreen = ({ navigation }) => {
   };
 
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer} key="bg-records">
         <View
           style={{
@@ -114,7 +115,9 @@ const BloodGlucoseRecordsScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("NewBloodGlucoseRecord")}
+          onPress={() =>
+            navigation.navigate("NewBloodGlucoseRecord", { id: id })
+          }
         >
           <FontAwesome name="pencil-square-o" size={50} color="#ffffff" />
           <Text style={styles.buttonText}>New Records</Text>
