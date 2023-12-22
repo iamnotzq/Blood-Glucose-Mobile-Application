@@ -9,7 +9,6 @@ import {
 import CalorieContainer from "../components/calorieContainer";
 import GlucoseContainer from "../components/glucoseContainer";
 import CommonLayout from "./CommonLayout";
-import ClickableText from "../components/touchable/clickableText";
 
 const DashboardScreen = ({ navigation }) => {
   const [dashboardData, setDashboardData] = useState(null);

@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ClickableText from "../components/touchable/clickableText";
 import TextButton from "../components/touchable/textButton";
 import InputBox from "../components/inputBox";
@@ -10,6 +10,37 @@ const LoginScreen = ({ navigation }) => {
   };
   const handleSignUpButtonPress = () => {
     navigation.navigate("CreateAccount");
+  };
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userId, setUserId] = useState(null);
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        const userId = await response.json();
+        setUserId(userId);
+        console.log(`User ${userId} has successfully logged in`);
+
+        navigation.navigate("Dashboard");
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   };
 
   return (
@@ -26,12 +57,19 @@ const LoginScreen = ({ navigation }) => {
 
         <View style={styles.inputContainer}>
           <Text style={styles.inputText}>Email</Text>
-          <InputBox placeholder="johndoe@email.com" width="100%" />
+          <InputBox
+            placeholder="johndoe@email.com"
+            width="100%"
+            maybeOnChangeText={(text) => setEmail(text)}
+            maybeValue={email}
+          />
           <Text style={styles.inputText}>Password</Text>
           <InputBox
             placeholder="••••••••••"
             width="100%"
             secureTextEntry={true}
+            maybeOnChangeText={(text) => setPassword(text)}
+            maybeValue={password}
           />
           <View style={styles.forgotPasswordContainer}>
             <View></View>
@@ -42,10 +80,7 @@ const LoginScreen = ({ navigation }) => {
         <View style={{ flex: 1 }}></View>
 
         <View>
-          <TextButton
-            text="Log In"
-            onPress={() => navigation.navigate("Dashboard")}
-          />
+          <TextButton text="Log In" onPress={handleLogin} />
           <View style={styles.smallTextContainer}>
             <Text style={styles.smallText}>Don't have an account?</Text>
             <Text> </Text>
