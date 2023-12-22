@@ -57,9 +57,10 @@ const FoodEntriesComponent = ({}) => {
   );
 };
 
-const FoodDiaryScreen = ({ navigation }) => {
+const FoodDiaryScreen = ({ navigation, route }) => {
+  const { id } = route.params;
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer} key="food-diary">
         <View
           style={{
@@ -81,7 +82,7 @@ const FoodDiaryScreen = ({ navigation }) => {
         >
           <TouchableOpacity
             style={styles.foodEntrybutton}
-            onPress={() => navigation.navigate("NewFoodEntry")}
+            onPress={() => navigation.navigate("NewFoodEntry", { id: id })}
           >
             <FontAwesome name="pencil-square-o" size={60} color="#ffffff" />
             <Text style={styles.buttonText}>New Entry</Text>

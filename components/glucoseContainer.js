@@ -55,7 +55,7 @@ const GlucoseContainer = ({ data }) => {
         </View>
       </View>
 
-      <View style={styles.bottomGlucoseContainer}>
+      {/* <View style={styles.bottomGlucoseContainer}>
         <LineChart
           height={80}
           yAxisOffset={115}
@@ -65,7 +65,7 @@ const GlucoseContainer = ({ data }) => {
           textColor="#F8F9FB"
           dataPointsColor="#F8F9FB"
         />
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -75,11 +75,12 @@ export default GlucoseContainer;
 const styles = StyleSheet.create({
   topGlucoseContainer: {
     paddingHorizontal: 16,
-    height: 150,
+    height: 250,
     width: 350,
     backgroundColor: "#F8F9FB",
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    borderRadius: 16,
+    // borderTopLeftRadius: 16,
+    // borderTopRightRadius: 16,
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",

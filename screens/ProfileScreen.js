@@ -42,7 +42,7 @@ const ProfileScreen = ({ navigation, route }) => {
   const hyper = assets?.hyperMgDl;
 
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.topTextContainer}>
           <Text style={styles.nameText}>

@@ -9,7 +9,7 @@ import React from "react";
 
 const Menu = ({ isVisible, onClose, navigation, id }) => {
   const navigateAndClose = (screenName) => {
-    navigation.navigate(screenName);
+    navigation.navigate(screenName, { id: id });
     onClose();
   };
   return (
@@ -35,7 +35,7 @@ const Menu = ({ isVisible, onClose, navigation, id }) => {
         <View style={styles.row}>
           <TouchableOpacity
             style={styles.box}
-            onPress={() => navigateAndClose("Profile", { id: id })}
+            onPress={() => navigateAndClose("Profile")}
           >
             <Ionicons name="person-outline" size={80} color="#3B83D1" />
             <Text style={styles.iconText}>Profile</Text>
@@ -50,7 +50,7 @@ const Menu = ({ isVisible, onClose, navigation, id }) => {
         <View style={styles.row}>
           <TouchableOpacity
             style={styles.box}
-            onPress={() => navigateAndClose("FoodDiary", { id: id })}
+            onPress={() => navigateAndClose("FoodDiary")}
           >
             <MaterialCommunityIcons
               name="notebook-edit-outline"
@@ -61,7 +61,7 @@ const Menu = ({ isVisible, onClose, navigation, id }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.box}
-            onPress={() => navigateAndClose("BloodGlucoseRecords", { id: id })}
+            onPress={() => navigateAndClose("BloodGlucoseRecords")}
           >
             <Fontisto name="injection-syringe" size={80} color="#3B83D1" />
             <Text style={styles.iconText}>Glucose</Text>

@@ -21,7 +21,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 //   fibre: Number,
 // };
 
-const FoodEntrySummaryScreen = ({ foodDetails, navigation }) => {
+const FoodEntrySummaryScreen = ({ foodDetails, navigation, route }) => {
+  const { id } = route.params;
   const [servingSize, setServingSize] = useState("");
   const [noOfServings, setNoOfServings] = useState("");
 
@@ -41,7 +42,7 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation }) => {
   const calculatedFibre = fibre * numberOfServings;
 
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer} key="food-entry-summary">
         <View
           style={{
@@ -114,7 +115,7 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation }) => {
               <View style={{ marginTop: 5, paddingHorizontal: 32 }}>
                 <TouchableOpacity
                   style={styles.rowContainer}
-                  onPress={() => navigation.navigate("Profile")}
+                  onPress={() => navigation.navigate("Dashboard", { id: id })}
                 >
                   <View></View>
                   <FontAwesome5 name="check-circle" size={40} color="#3DD17B" />

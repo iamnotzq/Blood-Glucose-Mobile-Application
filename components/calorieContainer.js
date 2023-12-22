@@ -66,7 +66,7 @@ const CalorieContainer = ({ data }) => {
       </View>
 
       {/* Bottom container */}
-      <View style={styles.bottomCalorieContainer}>
+      {/* <View style={styles.bottomCalorieContainer}>
         <BarChart
           width={340}
           height={80}
@@ -75,7 +75,7 @@ const CalorieContainer = ({ data }) => {
           noOfSections={2}
           stackData={stackData}
         />
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -85,11 +85,12 @@ export default CalorieContainer;
 const styles = StyleSheet.create({
   topCalorieContainer: {
     paddingHorizontal: 16,
-    height: 150,
+    height: 250,
     width: 350,
     backgroundColor: "#3B83D1",
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    borderRadius: 16,
+    // borderTopLeftRadius: 16,
+    // borderTopRightRadius: 16,
     justifyContent: "center",
     alignContent: "center",
   },
