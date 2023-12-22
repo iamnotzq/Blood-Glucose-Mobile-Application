@@ -1,6 +1,4 @@
-import BloodGlucoseEntry, {
-  BloodGlucoseEntryDocument,
-} from "../repositories/models/bloodGlucoseEntry";
+import BloodGlucoseEntry from "../repositories/models/bloodGlucoseEntry";
 
 import { AddBloodGlucoseEntryRequestBody } from "../routes/models/requests/requestBodies";
 

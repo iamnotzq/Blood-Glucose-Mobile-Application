@@ -14,10 +14,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 const FoodEntrySummaryScreen = ({ foodDetails, navigation, route }) => {
   const { id } = route.params;
   const [servingSize, setServingSize] = useState("");
-  const [noOfServings, setNoOfServings] = useState("");
 
   const foodName = "Fried Kway Teow";
-  const numberOfServings = 1.5;
 
   const calories = 200;
   const carbs = 10;
@@ -25,11 +23,11 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation, route }) => {
   const protein = 20;
   const fibre = 2;
 
-  const calculatedCalories = calories * numberOfServings;
-  const calculatedCarbs = carbs * numberOfServings;
-  const calculatedFat = fat * numberOfServings;
-  const calculatedProtein = protein * numberOfServings;
-  const calculatedFibre = fibre * numberOfServings;
+  const calculatedCalories = calories * servingSize || 0;
+  const calculatedCarbs = carbs * servingSize || 0;
+  const calculatedFat = fat * servingSize || 0;
+  const calculatedProtein = protein * servingSize || 0;
+  const calculatedFibre = fibre * servingSize || 0;
 
   return (
     <CommonLayout navigation={navigation} id={id}>
@@ -51,7 +49,7 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation, route }) => {
             <View style={styles.divider}></View>
             <View style={styles.componentContainer}>
               <View style={styles.rowContainer}>
-                <Text style={styles.servingText}>Serving Size (g)</Text>
+                <Text style={styles.servingText}>Serving Size</Text>
                 <InputBox
                   placeholder=""
                   secureTextEntry={false}
@@ -59,17 +57,6 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation, route }) => {
                   maybeHeight={28}
                   maybeOnChangeText={(text) => setServingSize(text)}
                   maybeValue={servingSize}
-                />
-              </View>
-              <View style={styles.rowContainer}>
-                <Text style={styles.servingText}>Number of Servings</Text>
-                <InputBox
-                  placeholder=""
-                  secureTextEntry={false}
-                  width="20%"
-                  maybeHeight={28}
-                  maybeOnChangeText={(text) => setNoOfServings(text)}
-                  maybeValue={noOfServings}
                 />
               </View>
             </View>

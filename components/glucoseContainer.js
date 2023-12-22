@@ -27,6 +27,16 @@ const GlucoseContainer = ({ data }) => {
       ? "#3DD17B"
       : "#D13D3D";
 
+  const lastScanColour =
+    previousMeasurement >= lower && previousMeasurement <= upper
+      ? "#3DD17B"
+      : "#D13D3D";
+
+  const averageColour =
+    averageMeasurement >= lower && latestMeasurement <= upper
+      ? "#3DD17B"
+      : "#D13D3D";
+
   return (
     <View>
       <View style={styles.topGlucoseContainer}>
@@ -59,7 +69,7 @@ const GlucoseContainer = ({ data }) => {
             <View
               style={[
                 styles.lastScanContainer,
-                { backgroundColor: rangeColour },
+                { backgroundColor: lastScanColour },
               ]}
             >
               <Text style={styles.circleNumberText}>{previousMeasurement}</Text>
@@ -72,7 +82,7 @@ const GlucoseContainer = ({ data }) => {
             <View
               style={[
                 styles.averageContainer,
-                { backgroundColor: rangeColour },
+                { backgroundColor: averageColour },
               ]}
             >
               <Text style={styles.circleNumberText}>{averageMeasurement}</Text>

@@ -3,7 +3,7 @@ import { config } from "dotenv";
 import { connectToDatabase } from "../repositories/database";
 import { getDashboardAssets } from "../services/dashboardService";
 import { DashboardDisplayAssets } from "../dtos/dashboardDTOs";
-import { fakeDashboardAssets } from "../tests/unit/routes/fakes";
+import NutritionalContent from "../repositories/models/nutritionalContent";
 
 config();
 
@@ -26,22 +26,25 @@ router.get("/api/dashboard/:user_id", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/api/dashboard/", async (req: Request, res: Response) => {
-  const currentTimestamp = new Date();
-  const timeOptions: Intl.DateTimeFormatOptions = {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true, // Use 12-hour clock format
+router.post("/api/nutritionalcontent", async (req: Request, res: Response) => {
+  const nutritionalContent = {
+    foodName: "Fried Kway Teow",
+    calories: 500,
+    carbohydrates: 60,
+    sodium: 800,
+    fat: 25,
+    fiber: 5,
   };
-  const formattedTime = currentTimestamp.toLocaleTimeString([], timeOptions);
 
+  const content = new NutritionalContent(nutritionalContent);
   try {
-    const dashboardAssets: DashboardDisplayAssets = fakeDashboardAssets;
-    console.log(`get-dashboard-assets called at ${formattedTime}`);
-    res.status(200).json(dashboardAssets);
+    await content.save();
+
+    const id = content._id;
+    res.status(200).json(id);
   } catch (error: any) {
     console.error(error.message);
-    res.status(500).json(`Error retrieving dashboard assets for user`);
+    res.status(500).json(`Error`);
   }
 });
 
