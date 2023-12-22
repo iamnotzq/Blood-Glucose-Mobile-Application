@@ -43,6 +43,8 @@ const DashboardScreen = ({ route, navigation }) => {
   const bloodGlucoseDisplayAssets =
     dashboardData?.bloodGlucoseDisplayAssets || {};
 
+  console.log(bloodGlucoseDisplayAssets);
+
   return (
     <CommonLayout navigation={navigation} id={id}>
       <View

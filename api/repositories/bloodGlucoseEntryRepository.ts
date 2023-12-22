@@ -40,8 +40,6 @@ export const getUserRecentGlucoseSummary = async (
       query
     );
 
-    console.log(entries);
-
     const entriesLength = entries.length;
 
     if (entriesLength === 0) {
@@ -51,6 +49,8 @@ export const getUserRecentGlucoseSummary = async (
         averageGlucoseLevel: 0,
       };
     }
+
+    entries.sort((a, b) => (b.timestamp as any) - (a.timestamp as any));
 
     const currentGlucoseLevel = entriesLength > 0 ? entries[0].glucoseLevel : 0;
     const previousGlucoseLevel =
