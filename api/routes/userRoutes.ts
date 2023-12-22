@@ -13,6 +13,8 @@ connectToDatabase();
 router.post("/api/create-user", async (req: Request, res: Response) => {
   try {
     const newUserId = await createUser(req.body);
+
+    console.log(`User ${newUserId} has been created`);
     res.status(200).json(newUserId);
   } catch (err: any) {
     console.error("Error creating user:", err);
@@ -29,6 +31,7 @@ router.post("/api/login", async (req: Request, res: Response) => {
     };
 
     const userId = await loginUser(loginRequestBody);
+
     console.log(`User ${userId} has successfully logged in`);
     res.status(200).json(userId);
   } catch (err: any) {
