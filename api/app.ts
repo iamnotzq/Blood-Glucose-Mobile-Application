@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes";
 import dashboardRoutes from "./routes/dashboardRoutes";
+import profileRoutes from "./routes/profileRoutes";
 
 const app = express();
 const corsOptions = {
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use("", userRoutes);
 app.use("", dashboardRoutes);
+app.use("", profileRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world");
