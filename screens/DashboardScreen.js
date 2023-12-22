@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -17,23 +17,46 @@ const DashboardScreen = ({ route, navigation }) => {
 
   console.log(`Retrieving DashboardAssets for ${id}`);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8000/api/dashboard/${id}`
-        );
-        const data = await response.json();
-        setDashboardData(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-        setLoading(false);
-      }
-    };
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/dashboard/${id}`);
+      const data = await response.json();
+      setDashboardData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+      setLoading(false);
+    }
+  }, [id]);
 
-    fetchData();
-  }, []);
+  useEffect(() => {
+    const focusListener = navigation.addListener("focus", () => {
+      fetchData();
+    });
+
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      focusListener();
+    };
+  }, [navigation, fetchData]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8000/api/dashboard/${id}`
+  //       );
+  //       const data = await response.json();
+  //       setDashboardData(data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error("Error fetching dashboard data:", error);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   if (loading) {
     return <Text>Loading</Text>;
