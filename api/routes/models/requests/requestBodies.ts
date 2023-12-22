@@ -29,3 +29,9 @@ export interface CreateUserRequestBody {
   targetLowerMgDl: number;
   targetUpperMgDl: number;
 }
+
+export interface AddBloodGlucoseEntryRequestBody {
+  userId: string;
+  timestamp: Date;
+  glucoseLevel: number;
+}
