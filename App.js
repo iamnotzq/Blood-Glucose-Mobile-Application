@@ -11,7 +11,7 @@ import UserGlucoseLevelsScreen from "./screens/onboarding/UserGlucoseLevelsScree
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <StackNavigator />;
+  return <ProfileScreen />;
 }
 
 const styles = StyleSheet.create({
