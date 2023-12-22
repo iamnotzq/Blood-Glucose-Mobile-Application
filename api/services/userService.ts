@@ -1,8 +1,7 @@
 import * as bcrypt from "bcrypt";
-import User from "../repositories/models/user";
+import User, { UserDocument } from "../repositories/models/user";
 import * as userRepository from "../repositories/userRepository";
-import LoginRequestBody from "../routes/models/requests/loginUserRequestBody";
-
+import { LoginRequestBody } from "../routes/models/requests/loginUserRequestBody";
 // helper functions
 // TODO add error message
 const validateEmail = (maybeEmail?: string): boolean => {
@@ -93,14 +92,20 @@ const loginUser = async (
   loginRequestBody: LoginRequestBody
 ): Promise<string> => {
   try {
-    await validateUserLogin(loginRequestBody);
+    const userIsValid = await validateUserLogin(loginRequestBody);
 
-    return "User has logged in";
+    if (!userIsValid) {
+      return "Validation failed";
+    }
+
+    const email = loginRequestBody.email;
+    const user: UserDocument = await User.findOne({ email });
+    const userId = user.id;
+
+    return userId;
   } catch (error: any) {
     console.error(error.message);
-    throw new Error(
-      "Login failed. Please check your credentials and try again."
-    );
+    throw new Error("Error in logging in");
   }
 };
 
