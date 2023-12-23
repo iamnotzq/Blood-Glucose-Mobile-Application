@@ -35,3 +35,12 @@ export interface AddBloodGlucoseEntryRequestBody {
   timestamp: Date;
   glucoseLevel: number;
 }
+
+export interface AddFoodDiaryEntryRequestBody {
+  userId: string;
+  foodName: string;
+  timestamp: Date;
+  portionSize: number;
+  mealType: string;
+  mealDescription: string;
+}

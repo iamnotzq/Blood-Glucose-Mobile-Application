@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   Text,
@@ -11,25 +11,86 @@ import CommonLayout from "../CommonLayout";
 import InputBox from "../../components/inputBox";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-const FoodEntrySummaryScreen = ({ foodDetails, navigation, route }) => {
+const FoodEntrySummaryScreen = ({ navigation, route }) => {
   const { id } = route.params;
   const [servingSize, setServingSize] = useState("");
-  const [noOfServings, setNoOfServings] = useState("");
-
+  const [foodDetails, setFoodDetails] = useState(null);
   const foodName = "Fried Kway Teow";
-  const numberOfServings = 1.5;
 
-  const calories = 200;
-  const carbs = 10;
-  const fat = 8;
-  const protein = 20;
-  const fibre = 2;
+  useEffect(() => {
+    const fetchNutritionalContent = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/food/nutritional-content/Fried%20Kway%20Teow`
+        );
 
-  const calculatedCalories = calories * numberOfServings;
-  const calculatedCarbs = carbs * numberOfServings;
-  const calculatedFat = fat * numberOfServings;
-  const calculatedProtein = protein * numberOfServings;
-  const calculatedFibre = fibre * numberOfServings;
+        const content = await response.json();
+
+        console.log(content);
+        setFoodDetails(content);
+      } catch (error) {
+        console.error("Error fetching nutritional content:", error.message);
+      }
+    };
+
+    fetchNutritionalContent();
+  }, []);
+
+  const calories = foodDetails?.calories || 0;
+  const carbs = foodDetails?.carbohydrates || 0;
+  const fat = foodDetails?.fat || 0;
+  const sodium = foodDetails?.sodium || 0;
+  const fiber = foodDetails?.fiber || 0;
+
+  const calculatedCalories = calories * servingSize || calories;
+  const calculatedCarbs = carbs * servingSize || carbs;
+  const calculatedFat = fat * servingSize || fat;
+  const calculatedProtein = sodium * servingSize || sodium;
+  const calculatedFibre = fiber * servingSize || fiber;
+
+  const timestamp = new Date();
+  const hours = timestamp.getHours();
+  let mealType;
+
+  if (hours < 12) {
+    mealType = "breakfast";
+  } else if (hours >= 12 && hours < 19) {
+    mealType = "lunch";
+  } else {
+    mealType = "dinner";
+  }
+
+  const handleClick = async () => {
+    const reqBody = {
+      userId: id,
+      foodName: foodName,
+      timestamp: timestamp,
+      portionSize: servingSize,
+      mealType: mealType,
+      mealDescription: "",
+    };
+
+    try {
+      const response = await fetch("http://localhost:8000/api/food/new-entry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reqBody),
+      });
+
+      if (response.ok) {
+        const newId = await response.json();
+        console.log(`Glucose entry has been created: ${newId}`);
+
+        navigation.navigate("Dashboard", { id: id });
+      } else {
+        console.error("Glucose entry creation failed");
+      }
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
+  };
 
   return (
     <CommonLayout navigation={navigation} id={id}>
@@ -51,7 +112,7 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation, route }) => {
             <View style={styles.divider}></View>
             <View style={styles.componentContainer}>
               <View style={styles.rowContainer}>
-                <Text style={styles.servingText}>Serving Size (g)</Text>
+                <Text style={styles.servingText}>Serving Size</Text>
                 <InputBox
                   placeholder=""
                   secureTextEntry={false}
@@ -59,17 +120,6 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation, route }) => {
                   maybeHeight={28}
                   maybeOnChangeText={(text) => setServingSize(text)}
                   maybeValue={servingSize}
-                />
-              </View>
-              <View style={styles.rowContainer}>
-                <Text style={styles.servingText}>Number of Servings</Text>
-                <InputBox
-                  placeholder=""
-                  secureTextEntry={false}
-                  width="20%"
-                  maybeHeight={28}
-                  maybeOnChangeText={(text) => setNoOfServings(text)}
-                  maybeValue={noOfServings}
                 />
               </View>
             </View>
@@ -99,13 +149,13 @@ const FoodEntrySummaryScreen = ({ foodDetails, navigation, route }) => {
                 </Text>
               </View>
               <View style={styles.rowContainer}>
-                <Text style={styles.foodDetailsText}>Fibre</Text>
+                <Text style={styles.foodDetailsText}>Fiber</Text>
                 <Text style={styles.foodDetailsText}>{calculatedFibre} g</Text>
               </View>
               <View style={{ marginTop: 5, paddingHorizontal: 32 }}>
                 <TouchableOpacity
                   style={styles.rowContainer}
-                  onPress={() => navigation.navigate("Dashboard", { id: id })}
+                  onPress={handleClick}
                 >
                   <View></View>
                   <FontAwesome5 name="check-circle" size={40} color="#3DD17B" />

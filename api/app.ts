@@ -4,6 +4,7 @@ import userRoutes from "./routes/userRoutes";
 import dashboardRoutes from "./routes/dashboardRoutes";
 import profileRoutes from "./routes/profileRoutes";
 import bloodGlucoseRoutes from "./routes/bloodGlucoseRoutes";
+import foodDiaryRoutes from "./routes/foodDiaryRoutes";
 
 const app = express();
 const corsOptions = {
@@ -21,6 +22,7 @@ app.use("", userRoutes);
 app.use("", dashboardRoutes);
 app.use("", profileRoutes);
 app.use("", bloodGlucoseRoutes);
+app.use("", foodDiaryRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world");
