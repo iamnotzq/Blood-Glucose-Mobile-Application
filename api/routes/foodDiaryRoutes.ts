@@ -14,14 +14,14 @@ const router = express.Router();
 connectToDatabase();
 
 router.get(
-  "/api/food/nutritional-content",
+  "/api/food/nutritional-content/:foodName",
   async (req: Request, res: Response) => {
-    const foodName = req.body;
+    const foodName = req.params.foodName;
     try {
       const content = await getNutritionalContent(foodName);
       res.status(200).json(content);
     } catch (error: any) {
-      console.error(`Error in retrieving nutritiona content`);
+      console.error(`Error in retrieving nutritional content`);
       throw new Error(`Error ${error.message}`);
     }
   }
