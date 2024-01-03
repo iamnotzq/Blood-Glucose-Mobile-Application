@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import CommonLayout from "../CommonLayout";
 import ClickableText from "../../components/touchable/clickableText";
-import TextButton from "../../components/touchable/textButton";
 import { FontAwesome } from "@expo/vector-icons";
 
 const BloodGlucoseRecordsScreen = ({ navigation, route }) => {
