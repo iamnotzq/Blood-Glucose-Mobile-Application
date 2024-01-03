@@ -8,10 +8,11 @@ import BloodGlucoseRecordsScreen from "./screens/bloodGlucose/BloodGlucoseRecord
 import NewBloodGlucoseRecordScreen from "./screens/bloodGlucose/NewBloodGlucoseRecordScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import UserGlucoseLevelsScreen from "./screens/onboarding/UserGlucoseLevelsScreen";
+import BloodGlucoseChartScreen from "./screens/bloodGlucose/BloodGlucoseChartScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <StackNavigator />;
+  return <BloodGlucoseChartScreen />;
 }
 
 const styles = StyleSheet.create({
