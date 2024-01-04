@@ -19,6 +19,7 @@ import DashboardScreen from "../screens/DashboardScreen";
 import UserGlucoseLevelsScreen from "../screens/onboarding/UserGlucoseLevelsScreen";
 import BloodGlucoseChartScreen from "../screens/bloodGlucose/BloodGlucoseChartScreen";
 import AnalysisScreen from "../screens/AnalysisScreen";
+import MedicationScreen from "../screens/MedicationScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -104,6 +105,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Analysis"
           component={AnalysisScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Medication"
+          component={MedicationScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
