@@ -41,7 +41,10 @@ const Menu = ({ isVisible, onClose, navigation, id }) => {
             <Text style={styles.iconText}>Profile</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.box}>
+          <TouchableOpacity
+            style={styles.box}
+            onPress={() => navigateAndClose("Medication")}
+          >
             <MaterialCommunityIcons name="pill" size={80} color="#3B83D1" />
             <Text style={styles.iconText}>Medication</Text>
           </TouchableOpacity>
