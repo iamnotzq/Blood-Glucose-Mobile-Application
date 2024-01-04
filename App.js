@@ -9,6 +9,7 @@ import NewBloodGlucoseRecordScreen from "./screens/bloodGlucose/NewBloodGlucoseR
 import DashboardScreen from "./screens/DashboardScreen";
 import UserGlucoseLevelsScreen from "./screens/onboarding/UserGlucoseLevelsScreen";
 import BloodGlucoseChartScreen from "./screens/bloodGlucose/BloodGlucoseChartScreen";
+import AnalysisScreen from "./screens/AnalysisScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
