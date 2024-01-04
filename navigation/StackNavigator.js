@@ -18,6 +18,7 @@ import NewBloodGlucoseRecordScreen from "../screens/bloodGlucose/NewBloodGlucose
 import DashboardScreen from "../screens/DashboardScreen";
 import UserGlucoseLevelsScreen from "../screens/onboarding/UserGlucoseLevelsScreen";
 import BloodGlucoseChartScreen from "../screens/bloodGlucose/BloodGlucoseChartScreen";
+import AnalysisScreen from "../screens/AnalysisScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -98,6 +99,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="NewBloodGlucoseRecord"
           component={NewBloodGlucoseRecordScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Analysis"
+          component={AnalysisScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

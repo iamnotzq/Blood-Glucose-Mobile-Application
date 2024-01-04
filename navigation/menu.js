@@ -69,13 +69,16 @@ const Menu = ({ isVisible, onClose, navigation, id }) => {
         </View>
 
         <View style={styles.row}>
-          <TouchableOpacity style={styles.box}>
+          <TouchableOpacity
+            style={styles.box}
+            onPress={() => navigateAndClose("Analysis")}
+          >
             <MaterialCommunityIcons
               name="clipboard-text-outline"
               size={80}
               color="#3B83D1"
             />
-            <Text style={styles.iconText}>Summary</Text>
+            <Text style={styles.iconText}>Analysis</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.box}>
             <Ionicons name="md-settings-outline" size={80} color="#3B83D1" />
