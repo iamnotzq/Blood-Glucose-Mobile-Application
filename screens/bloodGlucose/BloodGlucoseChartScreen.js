@@ -11,14 +11,22 @@ import CommonLayout from "../CommonLayout";
 import Header from "../../navigation/Header";
 
 const BloodGlucoseChartScreen = ({ navigation, route }) => {
+  const { id } = route.params;
+  console.log(`User id: ${id}`);
   const highlightedColor = "#3B83D1";
   const unhighlightedColor = "#9CC0E8";
 
   const [selectedBarIndex, setSelectedBarIndex] = useState(4);
   const [selectedData, setSelectedData] = useState(dayBarData);
+  const [selectedText, setSelectedText] = useState(
+    "Blood glucose levels indicate potential Hypoglycaemia. Click here for detailed analysis"
+  );
 
   useEffect(() => {
     setSelectedData(dayBarData);
+    setSelectedText(
+      "Blood glucose levels indicate potential Hypoglycaemia. Click here for detailed analysis"
+    );
   }, []);
 
   const handleBarPress = (index) => {
@@ -29,19 +37,28 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     switch (header) {
       case "Week":
         setSelectedData(weekBarData);
+        setSelectedText(
+          "Blood glucose levels indicate potential Hyperglycaemia. Click here for detailed analysis"
+        );
         break;
       case "Month":
         setSelectedData(monthBarData);
+        setSelectedText(
+          "Blood glucose levels are within the Acceptable range. Click here for detailed analysis"
+        );
         break;
       default:
         setSelectedData(dayBarData);
+        setSelectedText(
+          "Blood glucose levels indicate potential Hypoglycaemia. Click here for detailed analysis"
+        );
     }
   };
 
   const dayBarData = [
     {
       index: 0,
-      value: 130,
+      value: 100,
       spacing: 40,
       label: "7am",
       frontColor:
@@ -51,7 +68,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     },
     {
       index: 1,
-      value: 125,
+      value: 97,
       spacing: 40,
       label: "9am",
       frontColor:
@@ -61,7 +78,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     },
     {
       index: 2,
-      value: 100,
+      value: 105,
       spacing: 40,
       label: "12pm",
       frontColor:
@@ -71,7 +88,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     },
     {
       index: 3,
-      value: 127,
+      value: 108,
       spacing: 40,
       label: "3am",
       frontColor:
@@ -81,7 +98,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     },
     {
       index: 4,
-      value: 122,
+      value: 98,
       spacing: 40,
       label: "Now",
       frontColor:
@@ -94,7 +111,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
   const weekBarData = [
     {
       index: 0,
-      value: 100,
+      value: 140,
       spacing: 40,
       label: "M",
       frontColor:
@@ -104,7 +121,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     },
     {
       index: 1,
-      value: 90,
+      value: 138,
       spacing: 40,
       label: "T",
       frontColor:
@@ -114,7 +131,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     },
     {
       index: 2,
-      value: 110,
+      value: 128,
       spacing: 40,
       label: "W",
       frontColor:
@@ -124,7 +141,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     },
     {
       index: 3,
-      value: 115,
+      value: 143,
       spacing: 40,
       label: "T",
       frontColor:
@@ -134,7 +151,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     },
     {
       index: 4,
-      value: 127,
+      value: 133,
       spacing: 40,
       label: "Now",
       frontColor:
@@ -198,7 +215,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
   ];
 
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer}>
         <Header handleHeaderPress={handleHeaderPress} />
         <BarChart
@@ -217,10 +234,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
         />
 
         <TouchableOpacity style={styles.analysisContainer}>
-          <Text style={styles.analysisText}>
-            Blood glucose levels indicate potential Hypoglycaemia. Click here
-            for detailed analysis
-          </Text>
+          <Text style={styles.analysisText}>{selectedText}</Text>
         </TouchableOpacity>
 
         <View></View>

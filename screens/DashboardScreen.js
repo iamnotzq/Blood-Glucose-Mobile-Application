@@ -71,7 +71,12 @@ const DashboardScreen = ({ route, navigation }) => {
 
             <View style={{ margin: 20 }}></View>
 
-            <TouchableOpacity style={styles.component}>
+            <TouchableOpacity
+              style={styles.component}
+              onPress={() =>
+                navigation.navigate("BloodGlucoseChart", { id: id })
+              }
+            >
               {bloodGlucoseDisplayAssets && (
                 <GlucoseContainer data={bloodGlucoseDisplayAssets} />
               )}

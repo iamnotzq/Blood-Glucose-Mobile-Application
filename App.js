@@ -12,7 +12,7 @@ import BloodGlucoseChartScreen from "./screens/bloodGlucose/BloodGlucoseChartScr
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <BloodGlucoseChartScreen />;
+  return <StackNavigator />;
 }
 
 const styles = StyleSheet.create({
