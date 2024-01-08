@@ -4,6 +4,7 @@ import {
   MaterialCommunityIcons,
   Fontisto,
   Entypo,
+  FontAwesome5,
 } from "@expo/vector-icons";
 import React from "react";
 
@@ -82,10 +83,11 @@ const Menu = ({ isVisible, onClose, navigation, id }) => {
               color="#3B83D1"
             />
             <Text style={styles.iconText}>Analysis</Text>
+            
           </TouchableOpacity>
           <TouchableOpacity style={styles.box}>
-            <Ionicons name="md-settings-outline" size={80} color="#3B83D1" />
-            <Text style={styles.iconText}>Settings</Text>
+            <MaterialCommunityIcons name="doctor" size={80} color="#3B83D1" />
+            <Text style={styles.iconText}>Healthcare Info</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -129,8 +131,8 @@ const styles = StyleSheet.create({
   iconText: {
     color: "#3B83D1",
     textAlign: "center",
-    fontSize: 16,
-    fontWeight: "400",
+    fontSize: 18,
+    fontWeight: "600",
     margin: 10,
   },
 });
