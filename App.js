@@ -11,6 +11,7 @@ import UserGlucoseLevelsScreen from "./screens/onboarding/UserGlucoseLevelsScree
 import BloodGlucoseChartScreen from "./screens/bloodGlucose/BloodGlucoseChartScreen";
 import AnalysisScreen from "./screens/AnalysisScreen";
 import MedicationScreen from "./screens/MedicationScreen";
+import AddMedicationScreen from "./screens/AddMedicationScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
