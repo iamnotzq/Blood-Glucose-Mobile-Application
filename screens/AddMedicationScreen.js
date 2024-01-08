@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import TextButton from "../components/touchable/textButton";
 import InputBox from "../components/inputBox";
 import DropDownPicker from "react-native-dropdown-picker";
-import { medicationList } from "./data";
 
 const AddMedicationScreen = ({ navigation, route }) => {
   const { id } = route.params;

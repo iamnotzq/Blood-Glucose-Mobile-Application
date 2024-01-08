@@ -44,7 +44,7 @@ const getUserCurrentCalorieConsumption = async (
     console.log(`Calories Eaten for user ${userId}: ${caloriesEaten}`);
 
     return caloriesEaten;
-  } catch (error) {
+  } catch (error: any) {
     console.error(`Error finding consumption info for ${userId.toString()}`);
 
     throw error;

@@ -5,6 +5,8 @@ import dashboardRoutes from "./routes/dashboardRoutes";
 import profileRoutes from "./routes/profileRoutes";
 import bloodGlucoseRoutes from "./routes/bloodGlucoseRoutes";
 import foodDiaryRoutes from "./routes/foodDiaryRoutes";
+import analysisRoutes from "./routes/analysisRoutes";
+import { connectToDatabase } from "./repositories/database";
 
 const app = express();
 const corsOptions = {
@@ -13,6 +15,8 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
 };
+
+connectToDatabase();
 
 app.use(cors(corsOptions));
 
@@ -23,6 +27,7 @@ app.use("", dashboardRoutes);
 app.use("", profileRoutes);
 app.use("", bloodGlucoseRoutes);
 app.use("", foodDiaryRoutes);
+app.use("", analysisRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world");

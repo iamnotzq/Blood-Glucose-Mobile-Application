@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     color: "#3B83D1",
   },
   textContainer: {
-    height: 110,
+    height: 170,
     width: "90%",
     backgroundColor: "#3B83D1",
     borderBottomLeftRadius: 16,
@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    fontWeight: "600",
+    fontWeight: "500",
     color: "#ffffff",
+    textAlign: "center",
   },
 });

@@ -1,19 +1,46 @@
+import React, { useState, useEffect, useCallback } from "react";
 import { SafeAreaView, Text, View, StyleSheet } from "react-native";
 import CommonLayout from "./CommonLayout";
 import AnalysisContainer from "../components/analysisContainer";
+import { caloricProgressTexts } from "../data";
+import { bloodGlucoseTexts } from "../data";
+import TextButton from "../components/touchable/textButton";
 
 const AnalysisScreen = ({ navigation, route }) => {
   const { id } = route.params;
+  const [assets, setAssets] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const caloricGoal = 2000;
-  const caloricProgessText =
-    "Your goal of staying within " +
-    caloricGoal +
-    " kcal has been good so far, keep it up";
-  const dietText =
-    "Your diet recently has been high in saturated fats and low in fiber which may haved been contributing to your high blood glucose levels";
-  const bloodGlucoseText =
-    "Blood glucose readings in the morning have be higher than normal";
+  console.log(`Retrieving AnalysisAssets from ${id}`);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/analysis/${id}`);
+      const data = await response.json();
+      setAssets(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching analysis assets:", error);
+      setLoading(false);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    const focusListener = navigation.addListener("focus", () => {
+      fetchData();
+    });
+
+    return () => {
+      focusListener();
+    };
+  }, [navigation, fetchData]);
+
+  if (loading) {
+    return <Text>Loading</Text>;
+  }
+
+  const calorieRangeIndex = assets?.caloricRangeIndex;
+  const bloodGlucoseRangeIndex = assets?.bloodGlucoseRangeIndex;
 
   return (
     <CommonLayout navigation={navigation} id={id}>
@@ -24,11 +51,14 @@ const AnalysisScreen = ({ navigation, route }) => {
 
         <AnalysisContainer
           header="Caloric Progress"
-          text={caloricProgessText}
+          text={caloricProgressTexts[calorieRangeIndex]}
         />
-        <AnalysisContainer header="Blood Glucose" text={bloodGlucoseText} />
-        <AnalysisContainer header="Diet" text={dietText} />
-        {/* <AnalysisContainer header="Diet" text={text} /> */}
+        <AnalysisContainer
+          header="Blood Glucose"
+          text={bloodGlucoseTexts[bloodGlucoseRangeIndex]}
+        />
+
+        <TextButton text="Send email" maybeButtonWidth="50%" />
 
         <View></View>
       </SafeAreaView>
