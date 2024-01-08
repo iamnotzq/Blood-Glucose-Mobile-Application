@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import { config } from "dotenv";
-import { connectToDatabase } from "../repositories/database";
 import { getDashboardAssets } from "../services/dashboardService";
 import { DashboardDisplayAssets } from "../dtos/dashboardDTOs";
 import NutritionalContent from "../repositories/models/nutritionalContent";
@@ -8,8 +7,6 @@ import NutritionalContent from "../repositories/models/nutritionalContent";
 config();
 
 const router = express.Router();
-
-connectToDatabase();
 
 router.get("/api/dashboard/:user_id", async (req: Request, res: Response) => {
   const userId = req.params.user_id;

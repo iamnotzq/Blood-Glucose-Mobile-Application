@@ -16,7 +16,7 @@ import HealthcareProviderScreen from "./screens/HealthcareProviderScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <HealthcareProviderScreen />;
+  return <StackNavigator />;
 }
 
 const styles = StyleSheet.create({

@@ -1,14 +1,11 @@
 import express, { Request, Response } from "express";
 import { config } from "dotenv";
-import { connectToDatabase } from "../repositories/database";
 import { AddBloodGlucoseEntryRequestBody } from "./models/requests/requestBodies";
 import { addBloodGlucoseEntry } from "../services/bloodGlucoseService";
 
 config();
 
 const router = express.Router();
-
-connectToDatabase();
 
 router.post("/api/glucose/new-entry", async (req: Request, res: Response) => {
   try {

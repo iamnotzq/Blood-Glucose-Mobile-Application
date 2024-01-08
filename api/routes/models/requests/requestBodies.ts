@@ -1,16 +1,16 @@
-export interface LoginRequestBody {
+export type LoginRequestBody = {
   email: string;
   password: string;
-}
+};
 
-export interface NewUserRequestBody {
+export type NewUserRequestBody = {
   username: string;
   email: string;
   password: string;
   confirmPassword: string;
-}
+};
 
-export interface CreateUserRequestBody {
+export type CreateUserRequestBody = {
   username: string;
   email: string;
   password: string;
@@ -28,19 +28,19 @@ export interface CreateUserRequestBody {
   hypoMgDl: number;
   targetLowerMgDl: number;
   targetUpperMgDl: number;
-}
+};
 
-export interface AddBloodGlucoseEntryRequestBody {
+export type AddBloodGlucoseEntryRequestBody = {
   userId: string;
   timestamp: Date;
   glucoseLevel: number;
-}
+};
 
-export interface AddFoodDiaryEntryRequestBody {
+export type AddFoodDiaryEntryRequestBody = {
   userId: string;
   foodName: string;
   timestamp: Date;
   portionSize: number;
   mealType: string;
   mealDescription: string;
-}
+};

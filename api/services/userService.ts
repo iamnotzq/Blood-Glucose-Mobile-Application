@@ -6,6 +6,7 @@ import {
   LoginRequestBody,
   NewUserRequestBody,
 } from "../routes/models/requests/requestBodies";
+import { GetUserGlucoseLevelsResponseBody } from "../routes/models/responses/responseBodies";
 import { NewUserResponseBody } from "../routes/models/responses/responseBodies";
 
 // helper functions
@@ -161,6 +162,24 @@ const loginUser = async (
   } catch (error: any) {
     console.error(error.message);
     throw new Error("Error in logging in");
+  }
+};
+
+export const getUserGlucoseRange = async (
+  id: string
+): Promise<GetUserGlucoseLevelsResponseBody> => {
+  try {
+    const user: UserDocument | null = await User.findOne({ _id: id });
+    const lowerLevel = user.targetLowerMgDl;
+    const upperLevel = user.targetUpperMgDl;
+
+    const responseBody = {
+      lowerLevel: lowerLevel,
+      upperLevel: upperLevel,
+    };
+    return responseBody;
+  } catch (error: any) {
+    throw new Error(`Error in getUserGlucoseRange: ${error}`);
   }
 };
 

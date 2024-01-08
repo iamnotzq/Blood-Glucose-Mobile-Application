@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import { config } from "dotenv";
-import { connectToDatabase } from "../repositories/database";
 import { AddFoodDiaryEntryRequestBody } from "./models/requests/requestBodies";
 import {
   addFoodDiaryEntry,
@@ -10,8 +9,6 @@ import {
 config();
 
 const router = express.Router();
-
-connectToDatabase();
 
 router.get(
   "/api/food/nutritional-content/:foodName",

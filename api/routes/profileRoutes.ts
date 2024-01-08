@@ -1,12 +1,9 @@
 import express, { Request, Response } from "express";
 import { config } from "dotenv";
-import { connectToDatabase } from "../repositories/database";
 import { getProfileScreenAssets } from "../services/profileService";
 
 config();
 const router = express.Router();
-
-connectToDatabase();
 
 router.get("/api/profile/:user_id", async (req: Request, res: Response) => {
   const userId = req.params.user_id;

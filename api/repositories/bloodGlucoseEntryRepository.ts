@@ -17,6 +17,44 @@ export const calculateAverageGlucoseLevel = (
   return roundedAverage;
 };
 
+export const getUserCurrentBloodGlucoseLevels = async (
+  userId: string,
+  currentTimestamp: Date
+): Promise<number> => {
+  try {
+    const startOfDay = new Date(currentTimestamp);
+    startOfDay.setUTCHours(0, 0, 0, 0);
+    const endOfDay = new Date(currentTimestamp);
+    endOfDay.setUTCHours(23, 59, 59, 999);
+
+    const query = {
+      userId: userId,
+      timestamp: {
+        $gte: startOfDay,
+        $lte: endOfDay,
+      },
+    };
+
+    const entries: BloodGlucoseEntryDocument[] = await BloodGlucoseEntry.find(
+      query
+    );
+
+    const entriesLength = entries.length;
+
+    if (entriesLength === 0) {
+      return 0;
+    }
+
+    entries.sort((a, b) => (b.timestamp as any) - (a.timestamp as any));
+
+    const currentGlucoseLevel = entriesLength > 0 ? entries[0].glucoseLevel : 0;
+
+    return currentGlucoseLevel;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 export const getUserRecentGlucoseSummary = async (
   userId: string,
   currentTimestamp: Date
@@ -34,8 +72,6 @@ export const getUserRecentGlucoseSummary = async (
         $lte: endOfDay,
       },
     };
-
-    console.log(query);
 
     const entries: BloodGlucoseEntryDocument[] = await BloodGlucoseEntry.find(
       query

@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import { config } from "dotenv";
-import { connectToDatabase } from "../repositories/database";
 import {
   createUser,
   loginUser,
@@ -15,8 +14,6 @@ import { NewUserResponseBody } from "./models/responses/responseBodies";
 config();
 
 const router = express.Router();
-
-connectToDatabase();
 
 router.post("/api/new-user/validate", async (req: Request, res: Response) => {
   try {
