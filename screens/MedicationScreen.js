@@ -59,6 +59,9 @@ const MedicationScreen = ({ navigation, route }) => {
           maybeFontSize={24}
           maybeFontWeight="600"
           maybeButtonWidth={220}
+          onPress={() => {
+            navigation.navigate("AddMedication", { id: id });
+          }}
         />
 
         <View></View>

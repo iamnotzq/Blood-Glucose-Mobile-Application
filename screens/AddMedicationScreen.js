@@ -8,32 +8,19 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { medicationList } from "./data";
 
 const AddMedicationScreen = ({ navigation, route }) => {
-  const [medicationOpen, setMedicationOpen] = useState(false);
-  const [medicationValue, setMedicationValue] = useState(null);
+  const { id } = route.params;
+
   const [timeOpen, setTimeOpen] = useState(false);
   const [timeValue, setTimeValue] = useState(null);
-
-  const [selectedMedication, setSelectedMedication] = useState(null);
-
-  const mapMedicationItems = () => {
-    return medicationList.map((medication) => ({
-      label: medication,
-      value: medication,
-    }));
-  };
-
-  const medicationItems = mapMedicationItems();
 
   const generateTimeOptions = () => {
     const options = [];
     for (let hour = 0; hour < 24; hour++) {
       for (let minute = 0; minute < 60; minute += 30) {
         if (hour === 0 && minute === 0) {
-          // Skip 12:00 AM for a 24-hour format
           continue;
         }
         if (hour === 12 && minute === 0) {
-          // Skip 12:00 PM for a 24-hour format
           continue;
         }
 
@@ -51,7 +38,7 @@ const AddMedicationScreen = ({ navigation, route }) => {
   const timeOptions = generateTimeOptions();
 
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer}>
         <View
           style={{
@@ -75,23 +62,15 @@ const AddMedicationScreen = ({ navigation, route }) => {
         <View style={styles.inputContainer}>
           <View style={styles.textBoxRow}>
             <Text style={styles.textBoxHeader}>Medication Name</Text>
-            <DropDownPicker
-              open={medicationOpen}
-              value={medicationValue}
-              items={medicationItems}
-              setOpen={setMedicationOpen}
-              setValue={setMedicationValue}
-              placeholder="--"
-              maxHeight={100}
-              textStyle={styles.dropDownText}
-              style={styles.dropDownBoxContainer}
-              dropDownContainerStyle={styles.dropDownBox}
-            />
+            <InputBox placeholder="Pana" width="100%" />
           </View>
 
           <View style={styles.textBoxRow}>
-            <Text style={styles.textBoxHeader}>Dosage</Text>
-            <InputBox placeholder="Medication Name" width="100%" />
+            <Text style={styles.textBoxHeader}>Dosage Level</Text>
+            <InputBox
+              placeholder="Input your dosage levels in mg"
+              width="100%"
+            />
           </View>
 
           <View style={styles.textBoxRow}>
@@ -112,6 +91,8 @@ const AddMedicationScreen = ({ navigation, route }) => {
 
           <View></View>
         </View>
+
+        <View></View>
 
         <TextButton maybeButtonWidth={100} text="Confirm" />
 
@@ -180,7 +161,6 @@ const styles = StyleSheet.create({
   textBoxRow: {
     width: "90%",
     justifyContent: "center",
-    zIndex: 1,
   },
   dropDownText: {
     color: "#3B83D1",
@@ -193,17 +173,15 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderTopWidth: 0,
     borderWidth: 3,
-    width: "80%",
+    width: "100%",
     backgroundColor: "#F8F9FB",
-    zIndex: 3,
   },
   dropDownBoxContainer: {
     borderColor: "#3B83D1",
     borderRadius: 16,
     borderWidth: 3,
-    width: "80%",
+    width: "100%",
     height: 48,
     backgroundColor: "#F8F9FB",
-    zIndex: 2,
   },
 });

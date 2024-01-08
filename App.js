@@ -15,7 +15,7 @@ import AddMedicationScreen from "./screens/AddMedicationScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <AddMedicationScreen />;
+  return <StackNavigator />;
 }
 
 const styles = StyleSheet.create({
