@@ -12,10 +12,11 @@ import BloodGlucoseChartScreen from "./screens/bloodGlucose/BloodGlucoseChartScr
 import AnalysisScreen from "./screens/AnalysisScreen";
 import MedicationScreen from "./screens/MedicationScreen";
 import AddMedicationScreen from "./screens/AddMedicationScreen";
+import HealthcareProviderScreen from "./screens/HealthcareProviderScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <StackNavigator />;
+  return <HealthcareProviderScreen />;
 }
 
 const styles = StyleSheet.create({
