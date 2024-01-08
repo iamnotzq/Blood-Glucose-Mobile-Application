@@ -9,10 +9,11 @@ import {
 } from "react-native";
 import CommonLayout from "../CommonLayout";
 import Header from "../../navigation/Header";
+import { bloodGlucoseChartTexts } from "../../data";
 
 const BloodGlucoseChartScreen = ({ navigation, route }) => {
   const { id } = route.params;
-  console.log(`User id: ${id}`);
+
   const highlightedColor = "#3B83D1";
   const unhighlightedColor = "#9CC0E8";
 
@@ -24,9 +25,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     setSelectedData(dayBarData);
-    setSelectedText(
-      "Blood glucose levels indicate potential Hypoglycaemia. Click here for detailed analysis"
-    );
+    setSelectedText(bloodGlucoseChartTexts[0]);
   }, []);
 
   const handleBarPress = (index) => {
@@ -37,21 +36,15 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     switch (header) {
       case "Week":
         setSelectedData(weekBarData);
-        setSelectedText(
-          "Blood glucose levels indicate potential Hyperglycaemia. Click here for detailed analysis"
-        );
+        setSelectedText(bloodGlucoseChartTexts[1]);
         break;
       case "Month":
         setSelectedData(monthBarData);
-        setSelectedText(
-          "Blood glucose levels are within the Acceptable range. Click here for detailed analysis"
-        );
+        setSelectedText(bloodGlucoseChartTexts[2]);
         break;
       default:
         setSelectedData(dayBarData);
-        setSelectedText(
-          "Blood glucose levels indicate potential Hypoglycaemia. Click here for detailed analysis"
-        );
+        setSelectedText(bloodGlucoseChartTexts[0]);
     }
   };
 

@@ -21,3 +21,14 @@ export type GetAnalysisAssetsResponseBody = {
   caloricRangeIndex: number;
   bloodGlucoseRangeIndex: number;
 };
+
+export type BloodGlucoseChartData = {
+  dayString: string;
+  glucoseLevel: number;
+};
+
+export type GetBloodGlucoseChartDataResponseBody = {
+  daily: BloodGlucoseChartData[];
+  weekly: BloodGlucoseChartData[];
+  monthly: BloodGlucoseChartData[];
+};

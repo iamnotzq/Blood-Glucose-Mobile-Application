@@ -11,3 +11,10 @@ export const bloodGlucoseTexts = [
   "Well done! Your blood glucose levels are within the ideal range, supporting stable energy levels and overall health. Keep maintaining this balance to support your well-being.",
   "It appears your blood glucose levels are higher than ideal. Be cautious, as consistently elevated levels may impact your health. Consider adjustments to your diet to keep your blood glucose within the target range for better overall health.",
 ];
+
+export const bloodGlucoseChartTexts = [
+  "Record your blood glucose levels for the day. Monitoring regularly helps in managing your health effectively.",
+  "Caution: Your blood glucose levels appear to be low. Consider consuming a snack or seeking medical advice if symptoms persist.",
+  "Your blood glucose levels are within the acceptable range. Keep up the good work in managing your health!",
+  "Warning: Your blood glucose levels seem elevated. It's recommended to review your diet and consult with a healthcare professional for guidance.",
+];
