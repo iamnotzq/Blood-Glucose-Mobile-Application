@@ -1,14 +1,14 @@
 import BloodGlucoseEntry, {
   BloodGlucoseEntryDocument,
 } from "../repositories/models/bloodGlucoseEntry";
-
 import { AddBloodGlucoseEntryRequestBody } from "../routes/models/requests/requestBodies";
-
 import {
   BloodGlucoseChartData,
   GetBloodGlucoseChartDataResponseBody,
   BloodGlucoseChartAssets,
+  GetUserGlucoseLevelsResponseBody,
 } from "../routes/models/responses/responseBodies";
+import { getUserGlucoseRange } from "./userService";
 
 export const addBloodGlucoseEntry = async (
   requestBody: AddBloodGlucoseEntryRequestBody
@@ -35,7 +35,8 @@ const getDatesInRange = (start: Date, end: Date): Date[] => {
 };
 
 const fetchDailyBloodGlucoseData = async (
-  id: string
+  id: string,
+  glucoseRange: GetUserGlucoseLevelsResponseBody
 ): Promise<BloodGlucoseChartAssets> => {
   const query = {
     userId: id,
@@ -81,9 +82,16 @@ const fetchDailyBloodGlucoseData = async (
         0
       ) / filteredChartDataArray.length;
 
+    const index =
+      average >= glucoseRange.lowerLevel && average <= glucoseRange.upperLevel
+        ? 1
+        : average > glucoseRange.upperLevel
+        ? 3
+        : 2;
+
     return {
       array: updatedChartDataArray,
-      average: average,
+      index: index,
     };
   } catch (error: any) {
     throw new Error(`Error in fetchDailyBloodGlucoseData ${error}`);
@@ -93,7 +101,8 @@ const fetchDailyBloodGlucoseData = async (
 const fetchWeeklyBloodGlucoseData = async (
   id: string,
   startingTimestamp: Date,
-  endingTimestamp: Date
+  endingTimestamp: Date,
+  glucoseRange: GetUserGlucoseLevelsResponseBody
 ): Promise<BloodGlucoseChartAssets> => {
   const query = {
     userId: id,
@@ -154,9 +163,16 @@ const fetchWeeklyBloodGlucoseData = async (
         0
       ) / filteredChartDataArray.length;
 
+    const index =
+      average >= glucoseRange.lowerLevel && average <= glucoseRange.upperLevel
+        ? 1
+        : average > glucoseRange.upperLevel
+        ? 3
+        : 2;
+
     return {
       array: updatedChartDataArray,
-      average: average,
+      index: index,
     };
   } catch (error: any) {
     throw new Error(`Error in fetchWeeklyBloodGlucoseData ${error}`);
@@ -166,7 +182,8 @@ const fetchWeeklyBloodGlucoseData = async (
 const fetchMonthlyBloodGlucoseData = async (
   id: string,
   startingTimestamp: Date,
-  endingTimestamp: Date
+  endingTimestamp: Date,
+  glucoseRange: GetUserGlucoseLevelsResponseBody
 ): Promise<BloodGlucoseChartAssets> => {
   const query = {
     userId: id,
@@ -240,9 +257,16 @@ const fetchMonthlyBloodGlucoseData = async (
         0
       ) / filteredChartDataArray.length;
 
+    const index =
+      average >= glucoseRange.lowerLevel && average <= glucoseRange.upperLevel
+        ? 1
+        : average > glucoseRange.upperLevel
+        ? 3
+        : 2;
+
     return {
       array: updatedChartDataArray,
-      average: average,
+      index: index,
     };
   } catch (error: any) {
     throw new Error(`Error in fetchMonthlyBloodGlucoseData ${error}`);
@@ -253,19 +277,21 @@ export const getBloodGlucoseChartData = async (
   id: string
 ): Promise<GetBloodGlucoseChartDataResponseBody> => {
   const currentTimestamp = new Date();
+  const glucoseRange = await getUserGlucoseRange(id);
 
   try {
     const dailyStartingTimestamp = new Date(currentTimestamp);
     dailyStartingTimestamp.setHours(0, 0, 0, 0);
     dailyStartingTimestamp.setDate(dailyStartingTimestamp.getDate() - 4);
-    const dailyData = await fetchDailyBloodGlucoseData(id);
+    const dailyData = await fetchDailyBloodGlucoseData(id, glucoseRange);
 
     const weeklyStartingTimestamp = new Date(currentTimestamp);
     weeklyStartingTimestamp.setDate(weeklyStartingTimestamp.getDate() - 4);
     const weeklyData = await fetchWeeklyBloodGlucoseData(
       id,
       weeklyStartingTimestamp,
-      currentTimestamp
+      currentTimestamp,
+      glucoseRange
     );
 
     const monthlyStartingTimestamp = new Date(currentTimestamp);
@@ -273,7 +299,8 @@ export const getBloodGlucoseChartData = async (
     const monthlyData = await fetchMonthlyBloodGlucoseData(
       id,
       monthlyStartingTimestamp,
-      currentTimestamp
+      currentTimestamp,
+      glucoseRange
     );
 
     return {

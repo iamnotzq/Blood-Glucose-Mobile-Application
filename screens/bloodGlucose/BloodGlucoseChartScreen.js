@@ -45,6 +45,10 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     };
   }, [navigation, fetchData]);
 
+  const dayIndex = assets?.daily.index || 0;
+  const weekIndex = assets?.weekly.index || 0;
+  const monthIndex = assets?.monthly.index || 0;
+
   useEffect(() => {
     if (assets) {
       setSelectedData(dayBarData);
@@ -61,15 +65,15 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
     switch (header) {
       case "Week":
         setSelectedData(weekBarData);
-        setSelectedText(bloodGlucoseChartTexts[1]);
+        setSelectedText(bloodGlucoseChartTexts[weekIndex]);
         break;
       case "Month":
         setSelectedData(monthBarData);
-        setSelectedText(bloodGlucoseChartTexts[2]);
+        setSelectedText(bloodGlucoseChartTexts[monthIndex]);
         break;
       default:
         setSelectedData(dayBarData);
-        setSelectedText(bloodGlucoseChartTexts[0]);
+        setSelectedText(bloodGlucoseChartTexts[dayIndex]);
     }
   };
 
@@ -87,6 +91,10 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
   const dayBarData = generateBarData(assets?.daily.array || []);
   const weekBarData = generateBarData(assets?.weekly.array || []);
   const monthBarData = generateBarData(assets?.monthly.array || []);
+
+  console.log(dayIndex);
+  console.log(weekIndex);
+  console.log(monthIndex);
 
   if (loading) {
     return <Text>Loading</Text>;

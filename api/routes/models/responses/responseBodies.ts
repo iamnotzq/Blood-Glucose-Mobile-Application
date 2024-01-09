@@ -29,7 +29,7 @@ export type BloodGlucoseChartData = {
 
 export type BloodGlucoseChartAssets = {
   array: BloodGlucoseChartData[];
-  average: number;
+  index: number;
 };
 
 export type GetBloodGlucoseChartDataResponseBody = {
