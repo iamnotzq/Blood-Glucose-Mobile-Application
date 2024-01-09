@@ -1,5 +1,11 @@
 import mongoose, { Document, Schema } from "mongoose";
 
+export interface Medication {
+  medicationName: string;
+  dosage: number;
+  time: string;
+}
+
 export interface UserDocument extends Document {
   username: string;
   email: string;
@@ -12,12 +18,14 @@ export interface UserDocument extends Document {
   weightKg: number;
   heightCm: number;
   diabetesType: string;
-  medicationList: string[];
+  medicationList: Medication[];
   caloricGoalKcal?: number;
   hyperMgDl: number;
   hypoMgDl: number;
   targetLowerMgDl: number;
   targetUpperMgDl: number;
+  getMedicationList(): Medication[];
+  medicationExists(medicationName: string): boolean;
 }
 
 const userSchema = new Schema<UserDocument>({
@@ -66,7 +74,13 @@ const userSchema = new Schema<UserDocument>({
     required: true,
   },
   medicationList: {
-    type: [String],
+    type: [
+      {
+        medicationName: String,
+        dosage: Number,
+        time: String,
+      },
+    ],
     required: true,
   },
   caloricGoalKcal: {
@@ -89,6 +103,16 @@ const userSchema = new Schema<UserDocument>({
     required: true,
   },
 });
+
+userSchema.methods.medicationExists = function (medicationName: string) {
+  return this.medicationList.some(
+    (medication: Medication) => medication.medicationName === medicationName
+  );
+};
+
+userSchema.methods.getMedicationList = function () {
+  return this.medicationList;
+};
 
 const User = mongoose.model<UserDocument>("User", userSchema);
 

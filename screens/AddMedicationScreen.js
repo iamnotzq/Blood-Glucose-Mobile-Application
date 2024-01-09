@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, StyleSheet, View, ScrollView } from "react-native";
+import { SafeAreaView, Text, StyleSheet, View, Alert } from "react-native";
 import CommonLayout from "./CommonLayout";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import TextButton from "../components/touchable/textButton";
@@ -11,6 +11,8 @@ const AddMedicationScreen = ({ navigation, route }) => {
 
   const [timeOpen, setTimeOpen] = useState(false);
   const [timeValue, setTimeValue] = useState(null);
+  const [medicationName, setMedicationName] = useState("");
+  const [dosageLevel, setDosageLevel] = useState("");
 
   const generateTimeOptions = () => {
     const options = [];
@@ -35,6 +37,38 @@ const AddMedicationScreen = ({ navigation, route }) => {
   };
 
   const timeOptions = generateTimeOptions();
+
+  const handleConfirmClick = async () => {
+    if (!medicationName || !dosageLevel || !timeValue) {
+      Alert.alert("Please fill in all fields");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/medication/update-medication-list/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            medicationName,
+            dosageLevel,
+            timeValue,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        console.log(`Input valid`);
+        Alert.alert("Medication added successfully!");
+        navigation.navigate("Medication", { id: id });
+      }
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
+  };
 
   return (
     <CommonLayout navigation={navigation} id={id}>
@@ -61,7 +95,12 @@ const AddMedicationScreen = ({ navigation, route }) => {
         <View style={styles.inputContainer}>
           <View style={styles.textBoxRow}>
             <Text style={styles.textBoxHeader}>Medication Name</Text>
-            <InputBox placeholder="Pana" width="100%" />
+            <InputBox
+              placeholder="Input the medication name"
+              width="100%"
+              maybeOnChangeText={(text) => setMedicationName(text)}
+              maybeValue={medicationName}
+            />
           </View>
 
           <View style={styles.textBoxRow}>
@@ -69,6 +108,8 @@ const AddMedicationScreen = ({ navigation, route }) => {
             <InputBox
               placeholder="Input your dosage levels in mg"
               width="100%"
+              maybeOnChangeText={(text) => setDosageLevel(text)}
+              maybeValue={dosageLevel}
             />
           </View>
 
@@ -93,7 +134,11 @@ const AddMedicationScreen = ({ navigation, route }) => {
 
         <View></View>
 
-        <TextButton maybeButtonWidth={100} text="Confirm" />
+        <TextButton
+          maybeButtonWidth={100}
+          text="Confirm"
+          onPress={handleConfirmClick}
+        />
 
         <View></View>
       </SafeAreaView>
