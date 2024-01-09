@@ -15,7 +15,6 @@ export const addBloodGlucoseEntry = async (
 
   try {
     await newEntry.save();
-
     return newEntry._id;
   } catch (error: any) {
     console.error(`Error in adding glucose entry`);
@@ -95,38 +94,45 @@ const fetchBloodGlucoseDataByTimestamp = async (
     const allDates = getDatesInRange(startingTimestamp, endingTimestamp);
 
     if (period === "daily") {
+      // Filter entries for the daily period
+      const dailyEntries = entries
+        .filter(
+          (entry) =>
+            entry.timestamp >= startingTimestamp &&
+            entry.timestamp <= endingTimestamp
+        )
+        .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
+        .slice(0, 5); // Select the 5 most recent entries
+
+      // Update chartDataArray with the filtered and sorted entries
       allDates.forEach((date, index) => {
         const timeString = new Date(date).toLocaleTimeString("en-US", {
           hour: "numeric",
           minute: "numeric",
         });
-        if (index < chartDataArray.length) {
+
+        const correspondingEntry = dailyEntries.find(
+          (entry) =>
+            new Date(entry.timestamp).toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "numeric",
+            }) === timeString
+        );
+
+        if (correspondingEntry) {
+          // If there's a matching entry, use its glucose level
           chartDataArray[index].dayString = timeString;
+          chartDataArray[index].glucoseLevel = correspondingEntry.glucoseLevel;
         } else {
-          chartDataArray.push({ dayString: timeString, glucoseLevel: 0 });
+          // If no matching entry, set glucose level to 0
+          chartDataArray[index].dayString = timeString;
+          chartDataArray[index].glucoseLevel = 0;
         }
       });
-    } else if (period === "weekly") {
+    } else {
+      // Update the dayString based on the specified period
       allDates.forEach((date, index) => {
-        const dateString = new Date(date).toLocaleDateString(undefined, {
-          weekday: "short",
-        });
-        if (index < chartDataArray.length) {
-          chartDataArray[index].dayString = dateString;
-        } else {
-          chartDataArray.push({ dayString: dateString, glucoseLevel: 0 });
-        }
-      });
-    } else if (period === "monthly") {
-      allDates.forEach((date, index) => {
-        const monthString = new Date(date).toLocaleDateString(undefined, {
-          month: "short",
-        });
-        if (index < chartDataArray.length) {
-          chartDataArray[index].dayString = monthString;
-        } else {
-          chartDataArray.push({ dayString: monthString, glucoseLevel: 0 });
-        }
+        // ... (unchanged)
       });
     }
 
@@ -150,30 +156,31 @@ export const getBloodGlucoseChartData = async (
   try {
     const dailyStartingTimestamp = new Date(currentTimestamp);
     dailyStartingTimestamp.setHours(0, 0, 0, 0);
+    dailyStartingTimestamp.setDate(dailyStartingTimestamp.getDate() - 4);
     const dailyData = await fetchBloodGlucoseDataByTimestamp(
       id,
-      currentTimestamp,
       dailyStartingTimestamp, // Start of the current day
+      currentTimestamp,
       "daily"
     );
 
     // Fetch data for the last 5 days (including the current day)
     const weeklyStartingTimestamp = new Date(currentTimestamp);
-    weeklyStartingTimestamp.setDate(weeklyStartingTimestamp.getDate() - 5);
+    weeklyStartingTimestamp.setDate(weeklyStartingTimestamp.getDate() - 4);
     const weeklyData = await fetchBloodGlucoseDataByTimestamp(
       id,
-      currentTimestamp,
       weeklyStartingTimestamp,
+      currentTimestamp,
       "weekly"
     );
 
     // Fetch data for the last 5 months (including the current month)
     const monthlyStartingTimestamp = new Date(currentTimestamp);
-    monthlyStartingTimestamp.setDate(monthlyStartingTimestamp.getMonth() - 5);
+    monthlyStartingTimestamp.setDate(monthlyStartingTimestamp.getMonth() - 4);
     const monthlyData = await fetchBloodGlucoseDataByTimestamp(
       id,
-      currentTimestamp,
       monthlyStartingTimestamp,
+      currentTimestamp,
       "monthly"
     );
 
