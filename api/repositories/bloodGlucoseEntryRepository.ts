@@ -61,9 +61,9 @@ export const getUserRecentGlucoseSummary = async (
 ): Promise<BloodGlucoseSummary> => {
   try {
     const startOfDay = new Date(currentTimestamp);
-    startOfDay.setUTCHours(0, 0, 0, 0);
+    startOfDay.setHours(0, 0, 0, 0);
     const endOfDay = new Date(currentTimestamp);
-    endOfDay.setUTCHours(23, 59, 59, 999);
+    endOfDay.setHours(23, 59, 59, 999);
 
     const query = {
       userId: userId,
@@ -114,8 +114,8 @@ export const getUserBloodGlucoseHistory = async (
   currentTimestamp: Date
 ): Promise<DailyBloodGlucoseInformation[]> => {
   const fiveDaysAgoTimestamp = new Date(currentTimestamp);
-  fiveDaysAgoTimestamp.setUTCDate(currentTimestamp.getUTCDate() - 5);
-  fiveDaysAgoTimestamp.setUTCHours(0, 0, 0, 0);
+  fiveDaysAgoTimestamp.setDate(currentTimestamp.getDate() - 5);
+  fiveDaysAgoTimestamp.setHours(0, 0, 0, 0);
 
   const query = {
     userId: userId,

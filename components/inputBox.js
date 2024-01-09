@@ -39,6 +39,8 @@ const InputBox = ({
           backgroundColor: "#F8F9FB",
           paddingHorizontal: paddingHorizontal,
           marginBottom: marginBottom,
+          color: "#3B83D1",
+          fontWeight: "700",
         }}
         secureTextEntry={secureTextEntry}
         onChangeText={onChangeText}
