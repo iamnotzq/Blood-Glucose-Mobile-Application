@@ -6,6 +6,8 @@ import profileRoutes from "./routes/profileRoutes";
 import bloodGlucoseRoutes from "./routes/bloodGlucoseRoutes";
 import foodDiaryRoutes from "./routes/foodDiaryRoutes";
 import analysisRoutes from "./routes/analysisRoutes";
+import medicationRoutes from "./routes/medicationRoutes";
+
 import { connectToDatabase } from "./repositories/database";
 
 const app = express();
@@ -28,6 +30,7 @@ app.use("", profileRoutes);
 app.use("", bloodGlucoseRoutes);
 app.use("", foodDiaryRoutes);
 app.use("", analysisRoutes);
+app.use("", medicationRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello world");
