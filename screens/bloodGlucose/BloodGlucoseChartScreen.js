@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   },
   analysisContainer: {
     width: 300,
-    height: 100,
+    height: 150,
     backgroundColor: "#ffffff",
     borderRadius: 16,
     borderWidth: 2,
