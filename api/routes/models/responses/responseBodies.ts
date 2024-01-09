@@ -27,8 +27,19 @@ export type BloodGlucoseChartData = {
   glucoseLevel: number;
 };
 
-export type GetBloodGlucoseChartDataResponseBody = {
-  daily: BloodGlucoseChartData[];
-  weekly: BloodGlucoseChartData[];
-  monthly: BloodGlucoseChartData[];
+export type BloodGlucoseChartAssets = {
+  array: BloodGlucoseChartData[];
+  average: number;
 };
+
+export type GetBloodGlucoseChartDataResponseBody = {
+  daily: BloodGlucoseChartAssets;
+  weekly: BloodGlucoseChartAssets;
+  monthly: BloodGlucoseChartAssets;
+};
+
+// export type GetBloodGlucoseChartDataResponseBody = {
+//   daily: BloodGlucoseChartData[];
+//   weekly: BloodGlucoseChartData[];
+//   monthly: BloodGlucoseChartData[];
+// };

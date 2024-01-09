@@ -7,6 +7,7 @@ import { AddBloodGlucoseEntryRequestBody } from "../routes/models/requests/reque
 import {
   BloodGlucoseChartData,
   GetBloodGlucoseChartDataResponseBody,
+  BloodGlucoseChartAssets,
 } from "../routes/models/responses/responseBodies";
 
 export const addBloodGlucoseEntry = async (
@@ -35,7 +36,7 @@ const getDatesInRange = (start: Date, end: Date): Date[] => {
 
 const fetchDailyBloodGlucoseData = async (
   id: string
-): Promise<BloodGlucoseChartData[]> => {
+): Promise<BloodGlucoseChartAssets> => {
   const query = {
     userId: id,
   };
@@ -70,7 +71,20 @@ const fetchDailyBloodGlucoseData = async (
       return timeA.getTime() - timeB.getTime();
     });
 
-    return updatedChartDataArray;
+    const filteredChartDataArray = updatedChartDataArray.filter(
+      (data) => data.glucoseLevel !== 0
+    );
+
+    const average =
+      filteredChartDataArray.reduce(
+        (sum, entry) => sum + entry.glucoseLevel,
+        0
+      ) / filteredChartDataArray.length;
+
+    return {
+      array: updatedChartDataArray,
+      average: average,
+    };
   } catch (error: any) {
     throw new Error(`Error in fetchDailyBloodGlucoseData ${error}`);
   }
@@ -80,7 +94,7 @@ const fetchWeeklyBloodGlucoseData = async (
   id: string,
   startingTimestamp: Date,
   endingTimestamp: Date
-): Promise<BloodGlucoseChartData[]> => {
+): Promise<BloodGlucoseChartAssets> => {
   const query = {
     userId: id,
     timestamp: {
@@ -130,7 +144,20 @@ const fetchWeeklyBloodGlucoseData = async (
         new Date(a.dayString).getTime() - new Date(b.dayString).getTime()
     );
 
-    return updatedChartDataArray;
+    const filteredChartDataArray = updatedChartDataArray.filter(
+      (data) => data.glucoseLevel !== 0
+    );
+
+    const average =
+      filteredChartDataArray.reduce(
+        (sum, entry) => sum + entry.glucoseLevel,
+        0
+      ) / filteredChartDataArray.length;
+
+    return {
+      array: updatedChartDataArray,
+      average: average,
+    };
   } catch (error: any) {
     throw new Error(`Error in fetchWeeklyBloodGlucoseData ${error}`);
   }
@@ -140,7 +167,7 @@ const fetchMonthlyBloodGlucoseData = async (
   id: string,
   startingTimestamp: Date,
   endingTimestamp: Date
-): Promise<BloodGlucoseChartData[]> => {
+): Promise<BloodGlucoseChartAssets> => {
   const query = {
     userId: id,
     timestamp: {
@@ -201,7 +228,22 @@ const fetchMonthlyBloodGlucoseData = async (
         new Date(a.dayString).getTime() - new Date(b.dayString).getTime()
     );
 
-    return updatedChartDataArray.reverse();
+    updatedChartDataArray.reverse();
+
+    const filteredChartDataArray = updatedChartDataArray.filter(
+      (data) => data.glucoseLevel !== 0
+    );
+
+    const average =
+      filteredChartDataArray.reduce(
+        (sum, entry) => sum + entry.glucoseLevel,
+        0
+      ) / filteredChartDataArray.length;
+
+    return {
+      array: updatedChartDataArray,
+      average: average,
+    };
   } catch (error: any) {
     throw new Error(`Error in fetchMonthlyBloodGlucoseData ${error}`);
   }
