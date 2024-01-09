@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { BarChart } from "react-native-gifted-charts";
 import {
   SafeAreaView,
@@ -9,210 +9,96 @@ import {
 } from "react-native";
 import CommonLayout from "../CommonLayout";
 import Header from "../../navigation/Header";
+import { bloodGlucoseChartTexts } from "../../data";
 
 const BloodGlucoseChartScreen = ({ navigation, route }) => {
   const { id } = route.params;
-  console.log(`User id: ${id}`);
   const highlightedColor = "#3B83D1";
-  const unhighlightedColor = "#9CC0E8";
-
-  const [selectedBarIndex, setSelectedBarIndex] = useState(4);
+  const [assets, setAssets] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [selectedData, setSelectedData] = useState(dayBarData);
   const [selectedText, setSelectedText] = useState(
     "Blood glucose levels indicate potential Hypoglycaemia. Click here for detailed analysis"
   );
 
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/glucose/get-chart-data/${id}`
+      );
+      const data = await response.json();
+      setAssets(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching analysis assets:", error);
+      setLoading(false);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    const focusListener = navigation.addListener("focus", () => {
+      fetchData();
+    });
+
+    return () => {
+      focusListener();
+    };
+  }, [navigation, fetchData]);
+
+  const dayIndex = assets?.daily.index || 0;
+  const weekIndex = assets?.weekly.index || 0;
+  const monthIndex = assets?.monthly.index || 0;
+
+  useEffect(() => {
+    if (assets) {
+      setSelectedData(dayBarData);
+      setSelectedText(bloodGlucoseChartTexts[0]);
+    }
+  }, [assets]);
+
   useEffect(() => {
     setSelectedData(dayBarData);
-    setSelectedText(
-      "Blood glucose levels indicate potential Hypoglycaemia. Click here for detailed analysis"
-    );
+    setSelectedText(bloodGlucoseChartTexts[0]);
   }, []);
-
-  const handleBarPress = (index) => {
-    setSelectedBarIndex(index);
-  };
 
   const handleHeaderPress = (header) => {
     switch (header) {
       case "Week":
         setSelectedData(weekBarData);
-        setSelectedText(
-          "Blood glucose levels indicate potential Hyperglycaemia. Click here for detailed analysis"
-        );
+        setSelectedText(bloodGlucoseChartTexts[weekIndex]);
         break;
       case "Month":
         setSelectedData(monthBarData);
-        setSelectedText(
-          "Blood glucose levels are within the Acceptable range. Click here for detailed analysis"
-        );
+        setSelectedText(bloodGlucoseChartTexts[monthIndex]);
         break;
       default:
         setSelectedData(dayBarData);
-        setSelectedText(
-          "Blood glucose levels indicate potential Hypoglycaemia. Click here for detailed analysis"
-        );
+        setSelectedText(bloodGlucoseChartTexts[dayIndex]);
     }
   };
 
-  const dayBarData = [
-    {
-      index: 0,
-      value: 100,
+  const generateBarData = (data) => {
+    return data.map((item, index) => ({
+      index,
+      value: item.glucoseLevel,
       spacing: 40,
-      label: "7am",
-      frontColor:
-        selectedBarIndex === 0 ? highlightedColor : unhighlightedColor,
+      label: item.dayString,
+      frontColor: highlightedColor,
       labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 1,
-      value: 97,
-      spacing: 40,
-      label: "9am",
-      frontColor:
-        selectedBarIndex === 1 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 2,
-      value: 105,
-      spacing: 40,
-      label: "12pm",
-      frontColor:
-        selectedBarIndex === 2 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 3,
-      value: 108,
-      spacing: 40,
-      label: "3am",
-      frontColor:
-        selectedBarIndex === 3 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 4,
-      value: 98,
-      spacing: 40,
-      label: "Now",
-      frontColor:
-        selectedBarIndex === 4 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-  ];
+    }));
+  };
 
-  const weekBarData = [
-    {
-      index: 0,
-      value: 140,
-      spacing: 40,
-      label: "M",
-      frontColor:
-        selectedBarIndex === 0 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 1,
-      value: 138,
-      spacing: 40,
-      label: "T",
-      frontColor:
-        selectedBarIndex === 1 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 2,
-      value: 128,
-      spacing: 40,
-      label: "W",
-      frontColor:
-        selectedBarIndex === 2 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 3,
-      value: 143,
-      spacing: 40,
-      label: "T",
-      frontColor:
-        selectedBarIndex === 3 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 4,
-      value: 133,
-      spacing: 40,
-      label: "Now",
-      frontColor:
-        selectedBarIndex === 4 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-  ];
+  const dayBarData = generateBarData(assets?.daily.array || []);
+  const weekBarData = generateBarData(assets?.weekly.array || []);
+  const monthBarData = generateBarData(assets?.monthly.array || []);
 
-  const monthBarData = [
-    {
-      index: 0,
-      value: 130,
-      spacing: 40,
-      label: "Jan",
-      frontColor:
-        selectedBarIndex === 0 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 1,
-      value: 125,
-      spacing: 40,
-      label: "Feb",
-      frontColor:
-        selectedBarIndex === 1 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 2,
-      value: 122,
-      spacing: 40,
-      label: "Mar",
-      frontColor:
-        selectedBarIndex === 2 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 3,
-      value: 117,
-      spacing: 40,
-      label: "Apr",
-      frontColor:
-        selectedBarIndex === 3 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-    {
-      index: 4,
-      value: 133,
-      spacing: 40,
-      label: "Now",
-      frontColor:
-        selectedBarIndex === 4 ? highlightedColor : unhighlightedColor,
-      labelTextStyle: { color: "#3B83D1", fontWeight: 700 },
-      onPress: handleBarPress,
-    },
-  ];
+  console.log(dayIndex);
+  console.log(weekIndex);
+  console.log(monthIndex);
+
+  if (loading) {
+    return <Text>Loading</Text>;
+  }
 
   return (
     <CommonLayout navigation={navigation} id={id}>

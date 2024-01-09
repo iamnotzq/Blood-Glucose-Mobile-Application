@@ -1,7 +1,11 @@
 import express, { Request, Response } from "express";
 import { config } from "dotenv";
 import { AddBloodGlucoseEntryRequestBody } from "./models/requests/requestBodies";
-import { addBloodGlucoseEntry } from "../services/bloodGlucoseService";
+import {
+  addBloodGlucoseEntry,
+  getBloodGlucoseChartData,
+} from "../services/bloodGlucoseService";
+import { GetBloodGlucoseChartDataResponseBody } from "./models/responses/responseBodies";
 
 config();
 
@@ -19,5 +23,22 @@ router.post("/api/glucose/new-entry", async (req: Request, res: Response) => {
     throw new Error(`Error ${error.message}`);
   }
 });
+
+router.get(
+  "/api/glucose/get-chart-data/:user_id",
+  async (req: Request, res: Response) => {
+    const userId = req.params.user_id;
+    try {
+      const chartData: GetBloodGlucoseChartDataResponseBody =
+        await getBloodGlucoseChartData(userId);
+
+      console.log(`Blood glucose chart data: ${chartData}`);
+      res.status(200).json(chartData);
+    } catch (error: any) {
+      console.error(`Error in retrieving chart data for: ${userId}`);
+      throw new Error(`Error ${error.message}`);
+    }
+  }
+);
 
 export default router;

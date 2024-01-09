@@ -11,7 +11,7 @@ const AnalysisScreen = ({ navigation, route }) => {
   const [assets, setAssets] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  console.log(`Retrieving AnalysisAssets from ${id}`);
+  console.log(`Retrieving AnalysisAssets ofr ${id}`);
 
   const fetchData = useCallback(async () => {
     try {
