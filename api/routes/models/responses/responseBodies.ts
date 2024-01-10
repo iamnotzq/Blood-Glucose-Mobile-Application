@@ -38,8 +38,3 @@ export type GetBloodGlucoseChartDataResponseBody = {
   monthly: BloodGlucoseChartAssets;
 };
 
-// export type GetBloodGlucoseChartDataResponseBody = {
-//   daily: BloodGlucoseChartData[];
-//   weekly: BloodGlucoseChartData[];
-//   monthly: BloodGlucoseChartData[];
-// };

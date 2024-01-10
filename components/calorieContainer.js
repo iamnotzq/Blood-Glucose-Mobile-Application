@@ -13,8 +13,8 @@ const CalorieContainer = ({ data }) => {
   const consumptionHistory = data.consumptionHistory;
 
   const pieData = [
-    { value: currentProgress, color: "#F8F9FB" }, //current progress
-    { value: progressLeft, color: "#9CC0E8" }, //progress left
+    { value: currentProgress, color: "#F8F9FB" },
+    { value: progressLeft, color: "#9CC0E8" },
   ];
 
   const stackData = Array.from({ length: 5 }).map((_, index) => {
@@ -26,56 +26,42 @@ const CalorieContainer = ({ data }) => {
 
     return {
       stacks: [
-        { value: calConsumed, color: "#3B83D1" }, // calLeft
-        { value: calLeft, color: "#9CC0E8" }, // calEaten
+        { value: calConsumed, color: "#3B83D1" },
+        { value: calLeft, color: "#9CC0E8" },
       ],
-      label: historyItem.dayOfWeek, // Assuming you have a function to get the day label
+      label: historyItem.dayOfWeek,
     };
   });
 
   return (
-    <View>
-      {/* Top container */}
-      <View style={styles.topCalorieContainer}>
-        <Text style={styles.containerText}>Calories</Text>
-        <View style={styles.chartContainer}>
-          <CalorieText text="Eaten" calories={calEaten} />
-          <PieChart
-            donut
-            radius={55}
-            backgroundColor="#3B83D1"
-            innerRadius={40}
-            data={pieData}
-            centerLabelComponent={() => {
-              return (
-                /* Replace hardcoded info with implementation */
-                <Text
-                  style={{
-                    fontSize: 24,
-                    fontWeight: 400,
-                    color: "#F8F9FB",
-                  }}
-                >
-                  {currentProgressPercent}%
-                </Text>
-              );
-            }}
-          />
-          <CalorieText text="Left" calories={calLeft} />
-        </View>
+    <View style={styles.topCalorieContainer}>
+      <Text style={styles.containerText}>Calories</Text>
+      <View style={styles.chartContainer}>
+        <CalorieText text="Eaten" calories={calEaten} />
+        <PieChart
+          donut
+          radius={55}
+          backgroundColor="#3B83D1"
+          innerRadius={40}
+          data={pieData}
+          centerLabelComponent={() => {
+            return (
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: 400,
+                  color: "#F8F9FB",
+                }}
+              >
+                {currentProgressPercent}%
+              </Text>
+            );
+          }}
+        />
+        <CalorieText text="Left" calories={calLeft} />
       </View>
 
-      {/* Bottom container */}
-      {/* <View style={styles.bottomCalorieContainer}>
-        <BarChart
-          width={340}
-          height={80}
-          barWidth={30}
-          hideAxesAndRules
-          noOfSections={2}
-          stackData={stackData}
-        />
-      </View> */}
+      <View></View>
     </View>
   );
 };
@@ -89,25 +75,13 @@ const styles = StyleSheet.create({
     width: 350,
     backgroundColor: "#3B83D1",
     borderRadius: 16,
-    // borderTopLeftRadius: 16,
-    // borderTopRightRadius: 16,
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignContent: "center",
-  },
-  bottomCalorieContainer: {
-    height: 150,
-    width: 350,
-    padding: 16,
-    backgroundColor: "#F8F9FB",
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
-    justifyContent: "center",
-    alignItems: "center",
   },
   containerText: {
     color: "#F8F9FB",
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: 32,
+    fontWeight: "700",
   },
   chartContainer: {
     flexDirection: "row",

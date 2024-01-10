@@ -1,17 +1,52 @@
-import {
-  SafeAreaView,
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, Text, View, StyleSheet } from "react-native";
 import { Fontisto, Ionicons } from "@expo/vector-icons";
 import CommonLayout from "./CommonLayout";
 import MedicationContainer from "../components/medicationContainer";
 import TextButton from "../components/touchable/textButton";
+import { getMedicationList } from "../hooks/apiHooks";
 
 const MedicationScreen = ({ navigation, route }) => {
   const { id } = route.params;
+  const { medicationList, loading, error } = getMedicationList(id, navigation);
+  const timestamp = new Date();
+
+  console.log(`Retrieving medication list for: ${id} ${timestamp}`);
+
+  const displayMedicationList = (medicationList) => {
+    if (medicationList.length === 0) {
+      return (
+        <View style={styles.emptyMedicationListContainer}>
+          <Text style={styles.emptyMedicationListText}>
+            You currently have no medications in your list.
+          </Text>
+
+          <Text></Text>
+
+          <Text style={styles.emptyMedicationListText}>
+            Please add a new one by clicking the button below.
+          </Text>
+        </View>
+      );
+    }
+
+    return medicationList?.map(({ medicationName, dosage, time }) => (
+      <MedicationContainer
+        key={medicationName}
+        medicationName={medicationName}
+        consumptionPeriod={time}
+        dosage={dosage}
+        navigation={navigation}
+        id={id}
+      />
+    ));
+  };
+
+  if (loading) {
+    return <Text>Loading</Text>;
+  }
+
+  console.log(medicationList);
 
   return (
     <CommonLayout navigation={navigation} id={id}>
@@ -34,25 +69,7 @@ const MedicationScreen = ({ navigation, route }) => {
           </View>
         </View>
 
-        <MedicationContainer
-          medicationName="Sulfonylurea"
-          consumptionPeriod="Before Breakfast"
-        />
-
-        <MedicationContainer
-          medicationName="Meglitinides"
-          consumptionPeriod="Before Lunch"
-        />
-
-        <MedicationContainer
-          medicationName="Insulin"
-          consumptionPeriod="Before Diner"
-        />
-
-        <MedicationContainer
-          medicationName="Metformin"
-          consumptionPeriod="After Diner"
-        />
+        {displayMedicationList(medicationList)}
 
         <TextButton
           text="Add Medication"
@@ -101,5 +118,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#3B83D1",
     borderWidth: 4,
+  },
+  emptyMedicationListContainer: {
+    height: "30%",
+    width: "80%",
+    backgroundColor: "#ffffff",
+    borderColor: "#3B83D1",
+    borderWidth: 3,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+  },
+  emptyMedicationListText: {
+    color: "#3B83D1",
+    fontSize: 24,
+    fontWeight: "600",
+    textAlign: "center",
   },
 });
