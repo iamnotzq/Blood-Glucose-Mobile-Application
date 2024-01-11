@@ -44,14 +44,13 @@ const DashboardScreen = ({ route, navigation }) => {
         <View style={styles.mainHeaderContainer}>
           <Text style={styles.mainHeaderText}>Dashboard</Text>
         </View>
+        {displayGlucoseReminder()}
 
         <TouchableOpacity style={styles.component}>
           {calorieDisplayAssets && (
             <CalorieContainer data={calorieDisplayAssets} />
           )}
         </TouchableOpacity>
-
-        {displayGlucoseReminder()}
 
         <TouchableOpacity
           style={styles.component}
