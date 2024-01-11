@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import TextButton from "../components/touchable/textButton";
 import InputBox from "../components/inputBox";
 import DropDownPicker from "react-native-dropdown-picker";
+import { update } from "../hooks/apiHooks";
 
 const AddMedicationScreen = ({ navigation, route }) => {
   const { id } = route.params;
@@ -16,6 +17,7 @@ const AddMedicationScreen = ({ navigation, route }) => {
 
   const generateTimeOptions = () => {
     const options = [];
+
     for (let hour = 0; hour < 24; hour++) {
       for (let minute = 0; minute < 60; minute += 30) {
         if (hour === 0 && minute === 0) {
@@ -25,7 +27,7 @@ const AddMedicationScreen = ({ navigation, route }) => {
           continue;
         }
 
-        const formattedHour = (hour % 12 || 12).toString().padStart(2, "0");
+        const formattedHour = (hour % 12 || 12).toString();
         const formattedMinute = minute.toString().padStart(2, "0");
         const period = hour < 12 ? "AM" : "PM";
         const label = `${formattedHour}:${formattedMinute} ${period}`;
@@ -33,41 +35,19 @@ const AddMedicationScreen = ({ navigation, route }) => {
         options.push({ label, value });
       }
     }
+
     return options;
   };
 
   const timeOptions = generateTimeOptions();
 
   const handleConfirmClick = async () => {
-    if (!medicationName || !dosageLevel || !timeValue) {
-      Alert.alert("Please fill in all fields");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/medication/update-medication-list/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            medicationName,
-            dosageLevel,
-            timeValue,
-          }),
-        }
-      );
-
-      if (response.ok) {
-        console.log(`Input valid`);
-        Alert.alert("Medication added successfully!");
-        navigation.navigate("Medication", { id: id });
-      }
-    } catch (error) {
-      console.error(`Error: ${error}`);
-    }
+    const medicationData = {
+      medicationName: medicationName,
+      dosageLevel: dosageLevel,
+      timeValue: timeValue,
+    };
+    addMedication(id, medicationData, navigation);
   };
 
   return (

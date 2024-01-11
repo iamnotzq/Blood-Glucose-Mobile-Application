@@ -45,8 +45,15 @@ export type AddFoodDiaryEntryRequestBody = {
   mealDescription: string;
 };
 
-export type UpdateMedicationListRequestBody = {
+export type AddMedicationRequestBody = {
   medicationName: string;
   dosage: number;
   time: string;
+};
+
+export type UpdateMedicationDetailsRequestBody = {
+  originalMedicationName: string;
+  editedMedicationName: string;
+  editedDosage: number;
+  editedTime: string;
 };

@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "#F8F9FB",
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: 28,
+    fontWeight: "800",
   },
   calorieContainer: {
     flexDirection: "row",
@@ -32,12 +32,12 @@ const styles = StyleSheet.create({
   },
   caloriesText: {
     color: "#F8F9FB",
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "900",
   },
   kcalText: {
     color: "#F8F9FB",
-    fontSize: 8,
-    fontWeight: "500",
+    fontSize: 22,
+    fontWeight: "400",
   },
 });

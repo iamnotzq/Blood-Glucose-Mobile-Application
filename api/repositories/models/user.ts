@@ -24,8 +24,15 @@ export interface UserDocument extends Document {
   hypoMgDl: number;
   targetLowerMgDl: number;
   targetUpperMgDl: number;
-  getMedicationList(): Medication[];
   medicationExists(medicationName: string): boolean;
+  getMedicationDetails(medicationName: string): Medication;
+  updateMedicationDetails(
+    originalMedicationName: string,
+    medicationName: string,
+    dosage: number,
+    time: string
+  ): boolean;
+  getMedicationList(): Medication[];
 }
 
 const userSchema = new Schema<UserDocument>({
@@ -104,10 +111,54 @@ const userSchema = new Schema<UserDocument>({
   },
 });
 
-userSchema.methods.medicationExists = function (medicationName: string) {
+userSchema.methods.medicationExists = function (
+  medicationName: string
+): boolean {
   return this.medicationList.some(
     (medication: Medication) => medication.medicationName === medicationName
   );
+};
+
+userSchema.methods.getMedicationDetails = function (
+  medicationName: string
+): Medication | null {
+  return (
+    this.medicationList.find(
+      (medication: Medication) => medication.medicationName === medicationName
+    ) || null
+  );
+};
+
+userSchema.methods.updateMedicationDetails = function (
+  originalMedicationName: string,
+  medicationName: string,
+  dosage: number,
+  time: string
+): boolean {
+  const medicationIndex = this.medicationList.findIndex(
+    (medication: Medication) =>
+      medication.medicationName === originalMedicationName
+  );
+
+  if (medicationIndex !== -1) {
+    const medication = this.medicationList[medicationIndex];
+    medication.medicationName = medicationName;
+    medication.dosage = dosage;
+    medication.time = time;
+
+    this.markModified("medicationList");
+
+    return this.save()
+      .then(() => true)
+      .catch((error: any) => {
+        console.error(`Error saving updated medication details: ${error}`);
+        throw error;
+      });
+  } else {
+    throw new Error(
+      `Medication: ${originalMedicationName} not found in user${this._id} medication list`
+    );
+  }
 };
 
 userSchema.methods.getMedicationList = function () {
