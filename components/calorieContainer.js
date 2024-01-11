@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     color: "#F8F9FB",
     fontSize: 32,
     fontWeight: "700",
+
   },
   chartContainer: {
     flexDirection: "row",

@@ -37,7 +37,7 @@ export const getMedicationList = (id, navigation) => {
   return { medicationList, loading, error, refresh: fetchData };
 };
 
-export const updateMedicationList = async (id, medicationData, navigation) => {
+export const addMedication = async (id, medicationData, navigation) => {
   const { medicationName, dosageLevel, timeValue } = medicationData;
 
   if (!medicationName || !dosageLevel || !timeValue) {
@@ -47,7 +47,7 @@ export const updateMedicationList = async (id, medicationData, navigation) => {
 
   try {
     const response = await fetch(
-      `http://localhost:8000/api/medication/update-medication-list/${id}`,
+      `http://localhost:8000/api/medication/add-medication/${id}`,
       {
         method: "PUT",
         headers: {
@@ -65,6 +65,46 @@ export const updateMedicationList = async (id, medicationData, navigation) => {
       console.log(`Input valid`);
       Alert.alert("Medication added successfully!");
       await navigation.navigate("Medication", { id });
+    }
+  } catch (error) {
+    console.error(`Error: ${error}`);
+  }
+};
+
+export const updateMedicationDetails = async (
+  id,
+  medicationDetails,
+  navigation
+) => {
+  const {
+    originalMedicationName,
+    editedMedicationName,
+    editedDosage,
+    editedTime,
+  } = medicationDetails;
+
+  try {
+    const response = await fetch(
+      `http://localhost:8000/api/medication/update-medication-details/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          originalMedicationName: originalMedicationName,
+          editedMedicationName: editedMedicationName,
+          editedDosage: editedDosage,
+          editedTime: editedTime,
+        }),
+      }
+    );
+
+    if (response.ok) {
+      console.log(`Add update medication input valid`);
+      await navigation.navigate("Medication", { id });
+      
+      Alert.alert(`Medication details updated!`);
     }
   } catch (error) {
     console.error(`Error: ${error}`);

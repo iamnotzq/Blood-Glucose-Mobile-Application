@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, Text, StyleSheet, View } from "react-native";
 import CommonLayout from "./CommonLayout";
+import TextButton from "../components/touchable/textButton";
 
 const ProfileScreen = ({ navigation, route }) => {
   const { id } = route.params;
@@ -96,6 +97,12 @@ const ProfileScreen = ({ navigation, route }) => {
             </View>
           </View>
         </View>
+
+        <TextButton
+          text="Logout"
+          maybeButtonWidth="50%"
+          onPress={() => navigation.navigate("Welcome")}
+        />
       </SafeAreaView>
     </CommonLayout>
   );
@@ -115,8 +122,8 @@ const styles = StyleSheet.create({
   componentsContainer: {
     width: "100%",
     paddingHorizontal: 10,
+    justifyContent: "center",
   },
-
   topTextContainer: {
     marginVertical: 24,
     justifyContent: "center",
@@ -130,12 +137,13 @@ const styles = StyleSheet.create({
   },
   diabetesText: {
     color: "#3B83D1",
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: "400",
     textAlign: "center",
+    opacity: 0.8,
   },
   userInfoContainer: {
-    height: 250,
+    height: "70%",
     width: "100%",
     backgroundColor: "#3B83D1",
     borderRadius: 16,
@@ -157,6 +165,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   userInfoHeaderText: {
+    fontSize: 24,
     marginTop: 8,
     marginLeft: 5,
     color: "#ffffff",
@@ -172,17 +181,17 @@ const styles = StyleSheet.create({
   },
   userInfoComponentHeader: {
     color: "#ffffff",
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: "800",
     textAlign: "center",
   },
   userInfoComponentText: {
     marginTop: 4,
     color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "400",
+    fontSize: 20,
+    fontWeight: "600",
     textAlign: "center",
-    opacity: 0.8,
+    opacity: 0.6,
   },
   divider: {
     height: 3,

@@ -1,5 +1,8 @@
 import User, { Medication } from "../repositories/models/user";
-import { UpdateMedicationListRequestBody } from "../routes/models/requests/requestBodies";
+import {
+  AddMedicationRequestBody,
+  UpdateMedicationDetailsRequestBody,
+} from "../routes/models/requests/requestBodies";
 
 export const getMedicationList = async (id: string): Promise<Medication[]> => {
   try {
@@ -11,8 +14,34 @@ export const getMedicationList = async (id: string): Promise<Medication[]> => {
   }
 };
 
-export const updateMedicationList = async (
-  requestBody: UpdateMedicationListRequestBody,
+export const updateMedicationDetails = async (
+  id: string,
+  requestBody: UpdateMedicationDetailsRequestBody
+): Promise<boolean> => {
+  try {
+    const {
+      originalMedicationName,
+      editedMedicationName,
+      editedDosage,
+      editedTime,
+    } = requestBody;
+
+    const user = await User.findById(id);
+    const medicationDetailsUpdated = user.updateMedicationDetails(
+      originalMedicationName,
+      editedMedicationName,
+      editedDosage,
+      editedTime
+    );
+
+    return medicationDetailsUpdated;
+  } catch (error: any) {
+    throw new Error(`Error in updateMedicationDetails: ${error}`);
+  }
+};
+
+export const addMedication = async (
+  requestBody: AddMedicationRequestBody,
   id: string
 ): Promise<string> => {
   const medication: Medication = {

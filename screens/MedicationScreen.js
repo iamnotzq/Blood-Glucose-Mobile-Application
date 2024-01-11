@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, Text, View, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { Fontisto, Ionicons } from "@expo/vector-icons";
 import CommonLayout from "./CommonLayout";
 import MedicationContainer from "../components/medicationContainer";
@@ -8,10 +14,13 @@ import { getMedicationList } from "../hooks/apiHooks";
 
 const MedicationScreen = ({ navigation, route }) => {
   const { id } = route.params;
-  const { medicationList, loading, error } = getMedicationList(id, navigation);
-  const timestamp = new Date();
 
   console.log(`Retrieving medication list for: ${id} ${timestamp}`);
+  const { medicationList, loading, error, refresh } = getMedicationList(
+    id,
+    navigation
+  );
+  const timestamp = new Date();
 
   const displayMedicationList = (medicationList) => {
     if (medicationList.length === 0) {
@@ -64,9 +73,9 @@ const MedicationScreen = ({ navigation, route }) => {
 
           <View style={{ marginVertical: 10 }}></View>
 
-          <View style={styles.pillContainer}>
+          <TouchableOpacity style={styles.pillContainer} onPress={refresh}>
             <Fontisto name="pills" size={80} color="#3B83D1" />
-          </View>
+          </TouchableOpacity>
         </View>
 
         {displayMedicationList(medicationList)}

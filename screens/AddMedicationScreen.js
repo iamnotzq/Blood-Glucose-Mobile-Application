@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import TextButton from "../components/touchable/textButton";
 import InputBox from "../components/inputBox";
 import DropDownPicker from "react-native-dropdown-picker";
-import { updateMedicationList } from "../hooks/apiHooks";
+import { update } from "../hooks/apiHooks";
 
 const AddMedicationScreen = ({ navigation, route }) => {
   const { id } = route.params;
@@ -47,7 +47,7 @@ const AddMedicationScreen = ({ navigation, route }) => {
       dosageLevel: dosageLevel,
       timeValue: timeValue,
     };
-    updateMedicationList(id, medicationData, navigation);
+    addMedication(id, medicationData, navigation);
   };
 
   return (

@@ -13,7 +13,7 @@ import {
   EvilIcons,
   Ionicons,
 } from "@expo/vector-icons";
-import { updateMedicationList } from "../hooks/apiHooks";
+import { updateMedicationDetails, getMedicationList } from "../hooks/apiHooks";
 
 const MedicationContainer = ({
   medicationName,
@@ -64,17 +64,16 @@ const MedicationContainer = ({
       editedMinutes.length === 1 ? `0${editedMinutes}` : `${editedMinutes}`;
     const timeString = `${formattedHours}:${formattedMinutes} ${selectedButton}`;
 
-    const medicationData = {
-      medicationName: medicationName,
-      dosageLevel: editedDosage,
-      timeValue: timeString,
+    const medicationDetails = {
+      originalMedicationName: medicationName,
+      editedMedicationName: editedMedicationName,
+      editedDosage: editedDosage,
+      editedTime: timeString,
     };
 
-    await updateMedicationList(id, medicationData, navigation);
+    await updateMedicationDetails(id, medicationDetails, navigation);
 
     setModalVisible(false);
-
-    console.log(medicationData);
   };
 
   return (
