@@ -4,16 +4,20 @@ import {
   Text,
   StyleSheet,
   View,
-  TextInput,
   TouchableOpacity,
 } from "react-native";
 import CommonLayout from "../CommonLayout";
 import InputBox from "../../components/inputBox";
 import { FontAwesome5 } from "@expo/vector-icons";
+import {
+  calculateNutritionalDetails,
+  renderMedicationRecommendation,
+} from "../../hooks/foodDiaryHooks";
+import MedicationRecommendation from "../../components/medicationRecommendation";
 
 const FoodEntrySummaryScreen = ({ navigation, route }) => {
   const { id } = route.params;
-  const [servingSize, setServingSize] = useState("");
+  const [servingSize, setServingSize] = useState(0);
   const [foodDetails, setFoodDetails] = useState(null);
   const foodName = "Fried Kway Teow";
 
@@ -42,11 +46,21 @@ const FoodEntrySummaryScreen = ({ navigation, route }) => {
   const sodium = foodDetails?.sodium || 0;
   const fiber = foodDetails?.fiber || 0;
 
-  const calculatedCalories = calories * servingSize || calories;
-  const calculatedCarbs = carbs * servingSize || carbs;
-  const calculatedFat = fat * servingSize || fat;
-  const calculatedProtein = sodium * servingSize || sodium;
-  const calculatedFibre = fiber * servingSize || fiber;
+  const {
+    calculatedCalories,
+    calculatedCarbs,
+    calculatedFat,
+    calculatedProtein,
+    calculatedFibre,
+    units,
+  } = calculateNutritionalDetails(
+    servingSize,
+    calories,
+    carbs,
+    fat,
+    sodium,
+    fiber
+  );
 
   const timestamp = new Date();
   const hours = timestamp.getHours();
@@ -104,6 +118,7 @@ const FoodEntrySummaryScreen = ({ navigation, route }) => {
         >
           <Text style={styles.mainHeaderText}>Summary</Text>
         </View>
+
         <View style={styles.componentsContainer}>
           <View style={styles.componentContainer}>
             <View style={styles.rowContainer}>
@@ -118,7 +133,7 @@ const FoodEntrySummaryScreen = ({ navigation, route }) => {
                   secureTextEntry={false}
                   width="20%"
                   maybeHeight={28}
-                  maybeOnChangeText={(text) => setServingSize(text)}
+                  maybeOnChangeText={(text) => setServingSize(parseFloat(text))}
                   maybeValue={servingSize}
                 />
               </View>
@@ -163,6 +178,13 @@ const FoodEntrySummaryScreen = ({ navigation, route }) => {
               </View>
             </View>
           </View>
+
+          {renderMedicationRecommendation(
+            "Fast Acting Insulin",
+            servingSize,
+            "10:30 AM",
+            units
+          )}
         </View>
       </SafeAreaView>
     </CommonLayout>
