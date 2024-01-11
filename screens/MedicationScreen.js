@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   Text,
@@ -6,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { Fontisto, Ionicons } from "@expo/vector-icons";
+import { Fontisto } from "@expo/vector-icons";
 import CommonLayout from "./CommonLayout";
 import MedicationContainer from "../components/medicationContainer";
 import TextButton from "../components/touchable/textButton";
