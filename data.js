@@ -18,3 +18,20 @@ export const bloodGlucoseChartTexts = [
   "Your blood glucose levels are within the acceptable range. Keep up the good work in managing your health!",
   "Warning: Your blood glucose levels seem elevated. It's recommended to review your diet and consult with a healthcare professional for guidance.",
 ];
+
+export const foodTips = [
+  "You can eat your favorite foods, but eat smaller portions or enjoy them less often.",
+  "Non-starchy vegetable options include broccoli, carrots, greens, peppers, and tomatoes.",
+  "Starchy vegetable options include potatoes, corn, and green peas.",
+  "Fruit options include oranges, melon, berries, apples, banana, and grapes.",
+  "Half of your grain intake for the day should be whole grains.",
+  "Grain options include wheat, rice, oats, cornmeal, barley, and quinoa. Some examples are bread, pasta, cereal, and tortillas.",
+  "Protein options include lean meat, chicken, fish, eggs, nuts, dried beans, and meat substitutes.",
+  "Dairy options include nonfat or low-fat milk, yogurt, and cheese.",
+  "Eat foods that contain healthy fats, such as canola and olive oil, nuts and seeds, healthy fish like salmon, tuna, and mackerel, and avocado.",
+  "Use oils when cooking food instead of butter, cream, shortening, lard, or margarine.",
+  "Try to limit fried foods that are high in saturated fat and trans fat, foods high in salt, sweets, and beverages with added sugars.",
+  "Drink water instead of sweetened beverages, or use sugar substitutes in your drinks.",
+  "Drink alcohol moderately, no more than one drink for ladies and two drinks for men.",
+  "Alcohol can make your blood glucose level drop very low. It is recommended to eat some food before drinking alcohol.",
+];
