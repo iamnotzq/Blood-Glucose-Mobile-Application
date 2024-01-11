@@ -50,8 +50,6 @@ const GlucoseContainer = ({ data }) => {
         </Text>
       </View>
 
-      {/* <View style={styles.divider}></View> */}
-
       <View style={styles.lastAndAverageContainer}>
         <View style={styles.textAndCircleContainer}>
           <Text style={styles.topCircleText}>Last Scan</Text>
@@ -89,7 +87,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     padding: 16,
     height: 360,
-    width: 350,
+    width: "100%",
     backgroundColor: "#F8F9FB",
     borderRadius: 16,
     justifyContent: "space-between",
