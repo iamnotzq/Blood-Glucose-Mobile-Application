@@ -1,6 +1,7 @@
 import { ScrollView, View, Text } from "react-native";
 import { foodDiaryStyles } from "../styles/foodDiaryStyles";
 import FoodEntryComponent from "../components/foodEntryComponent";
+import MedicationRecommendation from "../components/medicationRecommendation";
 
 export const displayFoodEntries = (foodEntries) => {
   return foodEntries.map((entry, index) => {
@@ -29,4 +30,50 @@ export const renderFoodEntrySection = (foodEntries) => {
       </Text>
     </View>
   );
+};
+
+export const calculateNutritionalDetails = (
+  servingSize,
+  calories,
+  carbs,
+  fat,
+  sodium,
+  fiber
+) => {
+  const calculatedCalories = calories * servingSize || calories;
+  const calculatedCarbs = carbs * servingSize || carbs;
+  const calculatedFat = fat * servingSize || fat;
+  const calculatedProtein = sodium * servingSize || sodium;
+  const calculatedFibre = fiber * servingSize || fiber;
+
+  const units = parseFloat(calculatedCarbs / 15);
+  return {
+    calculatedCalories,
+    calculatedCarbs,
+    calculatedFat,
+    calculatedProtein,
+    calculatedFibre,
+    units,
+  };
+};
+
+export const renderMedicationRecommendation = (
+  medicationName,
+  servingSize,
+  consumptionPeriod,
+  units
+) => {
+  const numServingSize = parseInt(servingSize);
+
+  if (numServingSize > 0) {
+    return (
+      <MedicationRecommendation
+        medicationName={medicationName}
+        consumptionPeriod={consumptionPeriod}
+        units={units}
+      />
+    );
+  }
+
+  return;
 };

@@ -13,7 +13,7 @@ import {
   EvilIcons,
   Ionicons,
 } from "@expo/vector-icons";
-import { updateMedicationDetails, getMedicationList } from "../hooks/apiHooks";
+import { updateMedicationDetails } from "../hooks/apiHooks";
 
 const MedicationContainer = ({
   medicationName,
