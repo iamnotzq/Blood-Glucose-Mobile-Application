@@ -9,35 +9,11 @@ import {
 import CalorieContainer from "../components/calorieContainer";
 import GlucoseContainer from "../components/glucoseContainer";
 import CommonLayout from "./CommonLayout";
+import { getDashboardAssets } from "../hooks/apiHooks";
 
 const DashboardScreen = ({ route, navigation }) => {
   const { id } = route.params;
-  const [dashboardData, setDashboardData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  console.log(`Retrieving DashboardAssets for ${id}`);
-
-  const fetchData = useCallback(async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/dashboard/${id}`);
-      const data = await response.json();
-      setDashboardData(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching dashboard data:", error);
-      setLoading(false);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    const focusListener = navigation.addListener("focus", () => {
-      fetchData();
-    });
-
-    return () => {
-      focusListener();
-    };
-  }, [navigation, fetchData]);
+  const { dashboardData, loading } = getDashboardAssets(id, navigation);
 
   if (loading) {
     return <Text>Loading</Text>;
@@ -46,43 +22,47 @@ const DashboardScreen = ({ route, navigation }) => {
   const calorieDisplayAssets = dashboardData?.calorieDisplayAssets || {};
   const bloodGlucoseDisplayAssets =
     dashboardData?.bloodGlucoseDisplayAssets || {};
+  const currentBloodGlucoseLevel = bloodGlucoseDisplayAssets.latestMeasurement;
 
-  console.log(bloodGlucoseDisplayAssets);
+  const displayGlucoseReminder = () => {
+    if (currentBloodGlucoseLevel === 0) {
+      return (
+        <View style={styles.reminderContainer}>
+          <Text style={styles.reminderText}>
+            Remember to take your initial blood glucose measurement!
+          </Text>
+        </View>
+      );
+    }
+
+    return;
+  };
 
   return (
     <CommonLayout navigation={navigation} id={id}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          width: "90%",
-        }}
-      >
-        <Text style={styles.mainHeaderText}>Dashboard</Text>
-      </View>
       <SafeAreaView style={styles.mainContainer}>
-        <View style={styles.componentsContainer}>
-          <View>
-            <TouchableOpacity style={styles.component}>
-              {calorieDisplayAssets && (
-                <CalorieContainer data={calorieDisplayAssets} />
-              )}
-            </TouchableOpacity>
-
-            <View style={{ margin: 20 }}></View>
-
-            <TouchableOpacity
-              style={styles.component}
-              onPress={() =>
-                navigation.navigate("BloodGlucoseChart", { id: id })
-              }
-            >
-              {bloodGlucoseDisplayAssets && (
-                <GlucoseContainer data={bloodGlucoseDisplayAssets} />
-              )}
-            </TouchableOpacity>
-          </View>
+        <View style={styles.mainHeaderContainer}>
+          <Text style={styles.mainHeaderText}>Dashboard</Text>
         </View>
+
+        <TouchableOpacity style={styles.component}>
+          {calorieDisplayAssets && (
+            <CalorieContainer data={calorieDisplayAssets} />
+          )}
+        </TouchableOpacity>
+
+        {displayGlucoseReminder()}
+
+        <TouchableOpacity
+          style={styles.component}
+          onPress={() => navigation.navigate("BloodGlucoseChart", { id: id })}
+        >
+          {bloodGlucoseDisplayAssets && (
+            <GlucoseContainer data={bloodGlucoseDisplayAssets} />
+          )}
+        </TouchableOpacity>
+
+        <View></View>
       </SafeAreaView>
     </CommonLayout>
   );
@@ -96,10 +76,16 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "900",
   },
+  mainHeaderContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "90%",
+  },
   mainContainer: {
     height: "100%",
     width: "100%",
     backgroundColor: "#E8EBF2",
+    justifyContent: "space-between",
     alignItems: "center",
     flex: 1,
     flexGrow: 1,
@@ -111,13 +97,24 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "500",
   },
-  componentsContainer: {
-    paddingHorizontal: 48,
-    justifyContent: "space-evenly",
+  reminderContainer: {
+    padding: 16,
+    width: "90%",
+    justifyContent: "center",
     alignItems: "center",
-    flexGrow: 1,
+    backgroundColor: "#FDE74C",
+    borderColor: "#F9CA24",
+    borderWidth: 3,
+    borderRadius: 16,
+  },
+  reminderText: {
+    color: "#3B83D1",
+    fontSize: 20,
+    fontWeight: "700",
+    textAlign: "center",
   },
   component: {
+    width: "90%",
     shadowColor: "black",
     shadowOpacity: 0.4,
     shadowOffset: { width: 0, height: 4 },

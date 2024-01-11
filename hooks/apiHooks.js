@@ -1,6 +1,37 @@
 import { useState, useEffect, useCallback } from "react";
 import { Alert } from "react-native";
 
+export const getDashboardAssets = (id, navigation) => {
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/dashboard/${id}`);
+      const data = await response.json();
+      setDashboardData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+      setError(error);
+      setLoading(false);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    const focusListener = navigation.addListener("focus", () => {
+      fetchData();
+    });
+
+    return () => {
+      focusListener();
+    };
+  }, [navigation, fetchData]);
+
+  return { dashboardData, loading, error, refresh: fetchData };
+};
+
 export const getMedicationList = (id, navigation) => {
   const [medicationList, setMedicationList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -103,7 +134,7 @@ export const updateMedicationDetails = async (
     if (response.ok) {
       console.log(`Add update medication input valid`);
       await navigation.navigate("Medication", { id });
-      
+
       Alert.alert(`Medication details updated!`);
     }
   } catch (error) {

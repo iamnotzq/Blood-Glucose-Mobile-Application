@@ -17,24 +17,8 @@ const CalorieContainer = ({ data }) => {
     { value: progressLeft, color: "#9CC0E8" },
   ];
 
-  const stackData = Array.from({ length: 5 }).map((_, index) => {
-    const historyItem = consumptionHistory[index] || {
-      totalCaloriesConsumed: 0,
-    };
-    const calConsumed = historyItem.totalCaloriesConsumed;
-    const calLeft = calGoal - calConsumed < 0 ? calGoal : calGoal - calConsumed;
-
-    return {
-      stacks: [
-        { value: calConsumed, color: "#3B83D1" },
-        { value: calLeft, color: "#9CC0E8" },
-      ],
-      label: historyItem.dayOfWeek,
-    };
-  });
-
   return (
-    <View style={styles.topCalorieContainer}>
+    <View style={styles.mainContainer}>
       <Text style={styles.containerText}>Calories</Text>
       <View style={styles.chartContainer}>
         <CalorieText text="Eaten" calories={calEaten} />
@@ -69,10 +53,10 @@ const CalorieContainer = ({ data }) => {
 export default CalorieContainer;
 
 const styles = StyleSheet.create({
-  topCalorieContainer: {
+  mainContainer: {
     paddingHorizontal: 16,
-    height: 250,
-    width: 350,
+    height: 200,
+    width: "100%",
     backgroundColor: "#3B83D1",
     borderRadius: 16,
     justifyContent: "space-evenly",
@@ -82,7 +66,6 @@ const styles = StyleSheet.create({
     color: "#F8F9FB",
     fontSize: 32,
     fontWeight: "700",
-
   },
   chartContainer: {
     flexDirection: "row",
