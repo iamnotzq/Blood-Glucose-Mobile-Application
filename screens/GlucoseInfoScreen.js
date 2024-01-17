@@ -154,7 +154,8 @@ const Hypoglycemia = () => {
   );
 };
 
-const GlucoseInfoScreen = ({ navigation }) => {
+const GlucoseInfoScreen = ({ navigation, route }) => {
+  const { id } = route.params;
   const [selectedHeader, setSelectedHeader] = useState("Hypoglycemia");
   const headers = ["Hypoglycemia", "Hyperglycemia"];
 
@@ -171,7 +172,7 @@ const GlucoseInfoScreen = ({ navigation }) => {
   };
 
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.mainHeaderContainer}>
           <Text style={styles.mainHeaderText}>Blood Glucose Information</Text>

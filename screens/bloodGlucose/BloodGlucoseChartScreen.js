@@ -13,6 +13,7 @@ import { bloodGlucoseChartTexts } from "../../data";
 
 const BloodGlucoseChartScreen = ({ navigation, route }) => {
   const { id } = route.params;
+  const headers = ["Day", "Week", "Month"];
   const highlightedColor = "#3B83D1";
   const [assets, setAssets] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -103,7 +104,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
   return (
     <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer}>
-        <Header handleHeaderPress={handleHeaderPress} />
+        <Header handleHeaderPress={handleHeaderPress} headers={headers} />
         <BarChart
           height={300}
           barWidth={28}
