@@ -22,6 +22,7 @@ import AnalysisScreen from "../screens/AnalysisScreen";
 import MedicationScreen from "../screens/MedicationScreen";
 import AddMedicationScreen from "../screens/AddMedicationScreen";
 import HealthcareProviderScreen from "../screens/HealthcareProviderScreen";
+import GlucoseInfoScreen from "../screens/GlucoseInfoScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -122,6 +123,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="HealthcareProvider"
           component={HealthcareProviderScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="GlucoseInfo"
+          component={GlucoseInfoScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

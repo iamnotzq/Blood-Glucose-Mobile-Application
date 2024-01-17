@@ -7,10 +7,8 @@ import {
   View,
 } from "react-native";
 
-const Header = ({ handleHeaderPress }) => {
-  const [selectedHeader, setSelectedHeader] = useState("Day");
-
-  const headers = ["Day", "Week", "Month"];
+const Header = ({ handleHeaderPress, headers }) => {
+  const [selectedHeader, setSelectedHeader] = useState(headers[0]);
 
   return (
     <View style={styles.container}>

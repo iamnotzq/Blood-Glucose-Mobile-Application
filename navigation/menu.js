@@ -4,7 +4,7 @@ import {
   MaterialCommunityIcons,
   Fontisto,
   Entypo,
-  FontAwesome5,
+  Octicons,
 } from "@expo/vector-icons";
 import React from "react";
 
@@ -91,6 +91,18 @@ const Menu = ({ isVisible, onClose, navigation, id }) => {
             <MaterialCommunityIcons name="doctor" size={80} color="#3B83D1" />
             <Text style={styles.iconText}>Healthcare Info</Text>
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={styles.box}
+            onPress={() => navigateAndClose("GlucoseInfo")}
+          >
+            <Octicons name="info" size={80} color="#3B83D1" />
+            <Text style={styles.iconText}>Glucose Info</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.box}></TouchableOpacity>
         </View>
       </View>
     </Modal>
