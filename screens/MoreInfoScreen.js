@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { View, Text, SafeAreaView, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import CommonLayout from "./CommonLayout";
 import Header from "../navigation/Header";
 
@@ -154,28 +161,149 @@ const Hypoglycemia = () => {
   );
 };
 
-const GlucoseInfoScreen = ({ navigation, route }) => {
+const FoodPortioning = () => {
+  return (
+    <View style={styles.scrollStyle}>
+      <ScrollView>
+        <Text style={styles.paragraphHeader}>
+          Introduction to Food Portioning
+        </Text>
+        <View style={styles.divider}></View>
+        <Text style={styles.paragraphText}>
+          Proper food portioning is a fundamental aspect of maintaining a
+          healthy diet and supporting overall well-being. It involves the
+          mindful control of serving sizes and the selection of nutrient-rich
+          foods. Here's an overview of the key principles of food portioning:
+        </Text>
+
+        <Text></Text>
+
+        <Text style={styles.paragraphHeader}>Balanced Plate</Text>
+        <View style={styles.divider}></View>
+        <Text style={styles.paragraphText}>
+          Creating a balanced plate is essential. Include a variety of food
+          groups, such as vegetables, lean proteins, whole grains, and healthy
+          fats. This ensures a diverse range of nutrients for optimal health.
+        </Text>
+
+        <Text></Text>
+
+        <Text style={styles.paragraphHeader}>Portion Control</Text>
+        <View style={styles.divider}></View>
+        <Text style={styles.paragraphText}>
+          Practice portion control to avoid overeating. Using smaller plates and
+          being mindful of serving sizes can help prevent excessive calorie
+          intake and support weight management.
+        </Text>
+
+        <Text></Text>
+
+        <Text style={styles.paragraphHeader}>Carbohydrate Distribution</Text>
+        <View style={styles.divider}></View>
+        <Text style={styles.paragraphText}>
+          Distribute carbohydrate intake throughout the day. This approach helps
+          regulate blood sugar levels and provides sustained energy. Be mindful
+          of the type and quality of carbohydrates consumed.
+        </Text>
+
+        <Text></Text>
+
+        <Text style={styles.paragraphHeader}>Fiber-Rich Choices</Text>
+        <View style={styles.divider}></View>
+        <Text style={styles.paragraphText}>
+          Incorporate fiber-rich foods like fruits, vegetables, and whole grains
+          into your meals. Fiber aids digestion, promotes satiety, and supports
+          overall gut health.
+        </Text>
+
+        <Text></Text>
+
+        <Text style={styles.paragraphHeader}>Lean Protein Sources</Text>
+        <View style={styles.divider}></View>
+        <Text style={styles.paragraphText}>
+          Choose lean protein sources, such as poultry, fish, beans, and tofu.
+          Protein is crucial for muscle health, and incorporating it into meals
+          helps control hunger and promotes a feeling of fullness.
+        </Text>
+      </ScrollView>
+    </View>
+  );
+};
+
+const EventsComponent = ({ header, dateTime, description }) => {
+  return (
+    <TouchableOpacity style={styles.eventsComponent}>
+      <Text style={[styles.paragraphHeader, { color: "#ffffff" }]}>
+        {header}
+      </Text>
+
+      <Text style={styles.dateText}>{dateTime}</Text>
+
+      <Text style={[styles.paragraphText, { color: "#ffffff" }]}>
+        {description}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
+const Events = () => {
+  return (
+    <View style={styles.eventsContainer}>
+      <EventsComponent
+        header="Healthy Cooking Workshop"
+        dateTime="February 15, 2024, 4:00 PM - 6:00 PM"
+        description="Learn nutritious and delicious recipes at our interactive Healthy Cooking Workshop. Expert chefs will share practical tips for a balanced diet."
+      />
+
+      <EventsComponent
+        header="Fitness Challenge - Fun Run"
+        dateTime="March 5, 2024, 8:00 AM - 10:00 AM"
+        description="Join our Fun Run for all fitness levels. Lace up and enjoy a scenic run, fostering a healthy and active lifestyle."
+      />
+
+      <EventsComponent
+        header="Mindfulness Meditation Session"
+        dateTime="April 20, 2024, 6:30 PM - 7:30 PM"
+        description="Find inner peace at our Mindfulness Meditation Session. Experience relaxation techniques and stress reduction led by experienced instructors."
+      />
+    </View>
+  );
+};
+
+const MoreInfoScreen = ({ navigation, route }) => {
   const { id } = route.params;
   const [selectedHeader, setSelectedHeader] = useState("Hypoglycemia");
-  const headers = ["Hypoglycemia", "Hyperglycemia"];
+  const headers = [
+    "Hypoglycemia",
+    "Hyperglycemia",
+    "Food Portioning",
+    "Events",
+  ];
 
   const handleHeaderPress = (header) => {
     setSelectedHeader(header);
   };
 
   const renderSelectedInfo = () => {
-    return selectedHeader === "Hypoglycemia" ? (
-      <Hypoglycemia />
-    ) : (
-      <Hyperglycemia />
-    );
+    switch (selectedHeader) {
+      case "Hypoglycemia":
+        return <Hypoglycemia />;
+      case "Hyperglycemia":
+        return <Hyperglycemia />;
+      case "Food Portioning":
+        return <FoodPortioning />;
+      case "Events":
+        return <Events />;
+      default:
+        return <Hypoglycemia />;
+    }
   };
 
   return (
     <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.mainHeaderContainer}>
-          <Text style={styles.mainHeaderText}>Blood Glucose Information</Text>
+          <Text style={styles.mainHeaderText}>More Information</Text>
         </View>
 
         <Header handleHeaderPress={handleHeaderPress} headers={headers} />
@@ -188,7 +316,7 @@ const GlucoseInfoScreen = ({ navigation, route }) => {
   );
 };
 
-export default GlucoseInfoScreen;
+export default MoreInfoScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -223,13 +351,19 @@ const styles = StyleSheet.create({
   paragraphHeader: {
     fontSize: 20,
     fontWeight: "800",
-
     color: "#3B83D1",
   },
   paragraphText: {
     fontSize: 16,
     fontWeight: "600",
     color: "#3B83D1",
+  },
+  dateText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#ffffff",
+    marginBottom: 8,
+    opacity: 0.7,
   },
   divider: {
     height: 2,
@@ -238,5 +372,20 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     backgroundColor: "#3B83D1",
     marginBottom: 8,
+  },
+  eventsContainer: {
+    height: "80%",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    width: "90%",
+    padding: 12,
+    borderRadius: 16,
+    backgroundColor: "#ffffff",
+  },
+  eventsComponent: {
+    width: "90%",
+    padding: 12,
+    borderRadius: 16,
+    backgroundColor: "#3B83D1",
   },
 });
