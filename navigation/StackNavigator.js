@@ -22,8 +22,9 @@ import AnalysisScreen from "../screens/AnalysisScreen";
 import MedicationScreen from "../screens/MedicationScreen";
 import AddMedicationScreen from "../screens/AddMedicationScreen";
 import HealthcareProviderScreen from "../screens/HealthcareProviderScreen";
-import GlucoseInfoScreen from "../screens/GlucoseInfoScreen";
+import GlucoseInfoScreen from "../screens/MoreInfoScreen";
 import NutritionalDetailsChartScreen from "../screens/NutritionalDetailsChartScreen";
+import MoreInfoScreen from "../screens/MoreInfoScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -132,8 +133,8 @@ const StackNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="GlucoseInfo"
-          component={GlucoseInfoScreen}
+          name="MoreInfo"
+          component={MoreInfoScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
