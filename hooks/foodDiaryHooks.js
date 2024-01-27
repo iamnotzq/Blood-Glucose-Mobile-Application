@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { ScrollView, View, Text } from "react-native";
 import { foodDiaryStyles } from "../styles/foodDiaryStyles";
 import FoodEntryComponent from "../components/foodEntryComponent";
@@ -76,4 +77,25 @@ export const renderMedicationRecommendation = (
   }
 
   return;
+};
+
+export const useNutritionalDetailsChartData = (initialData) => {
+  const [selectedPeriod, setSelectedPeriod] = useState("Day");
+
+  const handleHeaderPress = (period) => {
+    setSelectedPeriod(period);
+  };
+
+  const getChartData = () => {
+    switch (selectedPeriod) {
+      case "Week":
+        return initialData.weekData;
+      case "Month":
+        return initialData.monthData;
+      default:
+        return initialData.dayData;
+    }
+  };
+
+  return { selectedPeriod, handleHeaderPress, getChartData };
 };

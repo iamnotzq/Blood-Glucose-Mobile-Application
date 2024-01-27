@@ -13,6 +13,7 @@ import AnalysisScreen from "./screens/AnalysisScreen";
 import MedicationScreen from "./screens/MedicationScreen";
 import AddMedicationScreen from "./screens/AddMedicationScreen";
 import HealthcareProviderScreen from "./screens/HealthcareProviderScreen";
+import NutritionalDetailsChartScreen from "./screens/NutritionalDetailsChartScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
