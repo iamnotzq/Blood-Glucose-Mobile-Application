@@ -23,6 +23,7 @@ import MedicationScreen from "../screens/MedicationScreen";
 import AddMedicationScreen from "../screens/AddMedicationScreen";
 import HealthcareProviderScreen from "../screens/HealthcareProviderScreen";
 import GlucoseInfoScreen from "../screens/GlucoseInfoScreen";
+import NutritionalDetailsChartScreen from "../screens/NutritionalDetailsChartScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -68,6 +69,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Dashboard"
           component={DashboardScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="NutritionalDetailsChart"
+          component={NutritionalDetailsChartScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

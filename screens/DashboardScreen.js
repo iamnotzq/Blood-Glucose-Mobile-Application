@@ -46,7 +46,12 @@ const DashboardScreen = ({ route, navigation }) => {
         </View>
         {displayGlucoseReminder()}
 
-        <TouchableOpacity style={styles.component}>
+        <TouchableOpacity
+          style={styles.component}
+          onPress={() =>
+            navigation.navigate("NutritionalDetailsChart", { id: id })
+          }
+        >
           {calorieDisplayAssets && (
             <CalorieContainer data={calorieDisplayAssets} />
           )}
