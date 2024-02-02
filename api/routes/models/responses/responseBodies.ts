@@ -38,3 +38,12 @@ export type GetBloodGlucoseChartDataResponseBody = {
   monthly: BloodGlucoseChartAssets;
 };
 
+export type BloodGlucoseRecord = {
+  id: string;
+  glucoseLevel: number;
+  timeString: string;
+}
+
+export type GetTodayGlucoseRecordsResponseBody = {
+  records: BloodGlucoseRecord[]
+};

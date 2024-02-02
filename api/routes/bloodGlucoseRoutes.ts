@@ -4,8 +4,12 @@ import { AddBloodGlucoseEntryRequestBody } from "./models/requests/requestBodies
 import {
   addBloodGlucoseEntry,
   getBloodGlucoseChartData,
+  getTodayGlucoseRecords,
 } from "../services/bloodGlucoseService";
-import { GetBloodGlucoseChartDataResponseBody } from "./models/responses/responseBodies";
+import {
+  GetBloodGlucoseChartDataResponseBody,
+  GetTodayGlucoseRecordsResponseBody,
+} from "./models/responses/responseBodies";
 
 config();
 
@@ -36,6 +40,23 @@ router.get(
       res.status(200).json(chartData);
     } catch (error: any) {
       console.error(`Error in retrieving chart data for: ${userId}`);
+      throw new Error(`Error ${error.message}`);
+    }
+  }
+);
+
+router.get(
+  "/api/glucose/get-todays-records/:user_id",
+  async (req: Request, res: Response) => {
+    const userId = req.params.user_id;
+    try {
+      const records: GetTodayGlucoseRecordsResponseBody =
+        await getTodayGlucoseRecords(userId);
+
+      console.log(`Todays glucose records: ${records}`);
+      res.status(200).json(records);
+    } catch (error: any) {
+      console.error(`Error in retrieving Todays glucose records for: ${userId}`);
       throw new Error(`Error ${error.message}`);
     }
   }
