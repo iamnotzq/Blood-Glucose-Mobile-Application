@@ -21,7 +21,7 @@ export const renderFoodEntrySection = (foodEntries) => {
       </ScrollView>
     );
   }
-
+  
   return (
     <View style={foodDiaryStyles.textBoxContainer}>
       <Text style={foodDiaryStyles.textBoxText}>No food logs for today</Text>

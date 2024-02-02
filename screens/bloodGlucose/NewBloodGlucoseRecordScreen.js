@@ -10,9 +10,12 @@ import CommonLayout from "../CommonLayout";
 import { useDateTime } from "../../components/hooks/commonHooks";
 import InputBox from "../../components/inputBox";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { renderMedicationRecommendation } from "../../hooks/bloodGlucoseHooks";
 
 const NewBloodGlucoseRecordScreen = ({ navigation, route }) => {
   const [glucoseLevel, setGlucoseLevel] = useState("");
+
+  const upperLimit = 130;
 
   const { id } = route.params;
   const timestamp = new Date();
@@ -109,6 +112,8 @@ const NewBloodGlucoseRecordScreen = ({ navigation, route }) => {
             <FontAwesome5 name="check-circle" size={44} color="#3DD17B" />
           </TouchableOpacity>
         </View>
+
+        {renderMedicationRecommendation(timeString, glucoseLevel, upperLimit)}
 
         <View></View>
       </SafeAreaView>
