@@ -12,32 +12,15 @@ import {
   renderBloodGlucoseRecords,
   displayCurrentDate,
 } from "../../hooks/bloodGlucoseHooks";
+import { fetchTodaysBloodGlucoseRecords } from "../../hooks/apiHooks";
 
 const BloodGlucoseRecordsScreen = ({ navigation, route }) => {
   const { id } = route.params;
-  const bloodGlucoseRecords = [
-    {
-      id: 1,
-      glucoseLevel: 140,
-      timeString: "6:41 pm",
-    },
-    {
-      id: 2,
-      glucoseLevel: 127,
-      timeString: "4:30 pm",
-    },
-    {
-      id: 3,
-      glucoseLevel: 130,
-      timeString: "11:27 am",
-    },
-    {
-      id: 4,
-      glucoseLevel: 118,
-      timeString: "9:32 am",
-    },
-  ];
+  const { records, loading } = fetchTodaysBloodGlucoseRecords(id, navigation);
+
   const date = displayCurrentDate();
+
+  if (loading) return <Text>Loading</Text>;
 
   return (
     <CommonLayout navigation={navigation} id={id}>
@@ -77,7 +60,7 @@ const BloodGlucoseRecordsScreen = ({ navigation, route }) => {
             alignItems: "center",
           }}
         >
-          {renderBloodGlucoseRecords(bloodGlucoseRecords)}
+          {renderBloodGlucoseRecords(records)}
         </View>
 
         <TouchableOpacity
