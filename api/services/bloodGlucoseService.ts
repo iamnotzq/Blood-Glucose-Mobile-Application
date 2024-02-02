@@ -7,6 +7,8 @@ import {
   GetBloodGlucoseChartDataResponseBody,
   BloodGlucoseChartAssets,
   GetUserGlucoseLevelsResponseBody,
+  GetTodayGlucoseRecordsResponseBody,
+  BloodGlucoseRecord,
 } from "../routes/models/responses/responseBodies";
 import { getUserGlucoseRange } from "./userService";
 
@@ -310,5 +312,58 @@ export const getBloodGlucoseChartData = async (
     };
   } catch (error: any) {
     throw new Error(`Error in getBloodGlucoseChartData ${error}`);
+  }
+};
+
+const convertTimestampToTimeString = (timestamp: Date) => {
+  const unformattedHours = timestamp.getHours();
+  const minutes = timestamp.getMinutes();
+
+  const period = unformattedHours >= 12 ? "PM" : "AM";
+  const formattedHours = unformattedHours % 12 || 12;
+
+  const timeString = `${formattedHours}:${String(minutes).padStart(
+    2,
+    "0"
+  )} ${period}`;
+
+  return timeString;
+};
+
+export const getTodayGlucoseRecords = async (
+  id: string
+): Promise<GetTodayGlucoseRecordsResponseBody> => {
+  const currentTimestamp = new Date();
+  const startingTimestamp = new Date();
+  startingTimestamp.setHours(0, 0, 0, 0);
+
+  const query = {
+    userId: id,
+    timestamp: {
+      $gte: startingTimestamp,
+      $lte: currentTimestamp,
+    },
+  };
+
+  try {
+    const entries: BloodGlucoseEntryDocument[] = await BloodGlucoseEntry.find(
+      query
+    );
+
+    if (entries.length < 1) return { records: [] };
+
+    entries.sort((a, b) => (b.timestamp as any) - (a.timestamp as any));
+
+    const records: BloodGlucoseRecord[] = entries.map((entry) => ({
+      id: entry._id,
+      glucoseLevel: entry.glucoseLevel,
+      timeString: convertTimestampToTimeString(entry.timestamp),
+    }));
+
+    return {
+      records: records,
+    };
+  } catch (error: any) {
+    throw new Error(`Error in getTodayGlucoseRecords ${error}`);
   }
 };

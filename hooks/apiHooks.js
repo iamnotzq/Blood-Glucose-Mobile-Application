@@ -141,3 +141,40 @@ export const updateMedicationDetails = async (
     console.error(`Error: ${error}`);
   }
 };
+
+export const fetchTodaysBloodGlucoseRecords = (id, navigation) => {
+  const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/glucose/get-todays-records/${id}`
+      );
+
+      const data = await response.json();
+      const records = data.records;
+      setRecords(records);
+    } catch (error) {
+      console.error("Error fetching medication list: ", error);
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  useEffect(() => {
+    const focusListener = navigation.addListener("focus", fetchData);
+
+    return () => {
+      focusListener();
+    };
+  }, [navigation, fetchData]);
+
+  return { records, loading, error, refresh: fetchData };
+};
