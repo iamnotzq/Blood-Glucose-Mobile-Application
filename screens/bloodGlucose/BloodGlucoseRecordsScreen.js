@@ -8,59 +8,36 @@ import {
 import CommonLayout from "../CommonLayout";
 import ClickableText from "../../components/touchable/clickableText";
 import { FontAwesome } from "@expo/vector-icons";
+import {
+  renderBloodGlucoseRecords,
+  displayCurrentDate,
+} from "../../hooks/bloodGlucoseHooks";
 
 const BloodGlucoseRecordsScreen = ({ navigation, route }) => {
   const { id } = route.params;
   const bloodGlucoseRecords = [
-    // {
-    //   glucoseLevel: 140,
-    //   time: "6:41 pm",
-    // },
-    // {
-    //   glucoseLevel: 127,
-    //   time: "4:30 pm",
-    // },
-    // {
-    //   glucoseLevel: 130,
-    //   time: "11:27 am",
-    // },
-    // {
-    //   glucoseLevel: 118,
-    //   time: "9:32 am",
-    // },
+    {
+      id: 1,
+      glucoseLevel: 140,
+      timeString: "6:41 pm",
+    },
+    {
+      id: 2,
+      glucoseLevel: 127,
+      timeString: "4:30 pm",
+    },
+    {
+      id: 3,
+      glucoseLevel: 130,
+      timeString: "11:27 am",
+    },
+    {
+      id: 4,
+      glucoseLevel: 118,
+      timeString: "9:32 am",
+    },
   ];
-  const date = "11 December 2023";
-
-  const displayRecords = (records) => {
-    return records.length === 0 ? (
-      <View>
-        <Text style={styles.noEntriesText}>No records for today</Text>
-      </View>
-    ) : (
-      <View style={{ width: "100%" }}>
-        <View style={styles.recordRowContainer}>
-          <View style={styles.glucoseTextContainer}>
-            <Text style={styles.mainText}>Level</Text>
-          </View>
-          <View style={styles.glucoseTextContainer}>
-            <Text style={styles.mainText}>Time</Text>
-          </View>
-        </View>
-        {records.map((record) => {
-          return (
-            <View style={styles.recordRowContainer}>
-              <View style={styles.glucoseTextContainer}>
-                <Text style={styles.mainText}>{record.glucoseLevel} mg/dl</Text>
-              </View>
-              <View style={styles.glucoseTextContainer}>
-                <Text style={styles.mainText}>{record.time}</Text>
-              </View>
-            </View>
-          );
-        })}
-      </View>
-    );
-  };
+  const date = displayCurrentDate();
 
   return (
     <CommonLayout navigation={navigation} id={id}>
@@ -94,24 +71,15 @@ const BloodGlucoseRecordsScreen = ({ navigation, route }) => {
 
         <View
           style={{
+            height: "70%",
             width: "90%",
-            height: "50%",
             justifyContent: "center",
-            alignContent: "center",
-            backgroundColor: "#ffffff",
-            borderRadius: 16,
-            borderWidth: 3,
-            borderColor: "#3B83D1",
-            shadowColor: "black",
-            shadowOffset: {
-              height: 3,
-              width: 0,
-            },
-            shadowOpacity: 0.3,
+            alignItems: "center",
           }}
         >
-          <View>{displayRecords(bloodGlucoseRecords)}</View>
+          {renderBloodGlucoseRecords(bloodGlucoseRecords)}
         </View>
+
         <TouchableOpacity
           style={styles.button}
           onPress={() =>

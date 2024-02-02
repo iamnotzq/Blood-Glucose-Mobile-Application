@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  ScrollView,
 } from "react-native";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { displayFoodTip } from "../../hooks/commonHooks";
