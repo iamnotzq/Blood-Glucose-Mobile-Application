@@ -10,6 +10,7 @@ import {
 import CommonLayout from "../CommonLayout";
 import Header from "../../navigation/Header";
 import { bloodGlucoseChartTexts } from "../../data";
+import Spinner from "../../components/spinner";
 
 const BloodGlucoseChartScreen = ({ navigation, route }) => {
   const { id } = route.params;
@@ -98,7 +99,7 @@ const BloodGlucoseChartScreen = ({ navigation, route }) => {
   console.log(monthIndex);
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Spinner />;
   }
 
   return (

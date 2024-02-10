@@ -5,7 +5,6 @@ import {
   View,
   TouchableOpacity,
   Text,
-  ActivityIndicator,
 } from "react-native";
 import CalorieContainer from "../components/calorieContainer";
 import GlucoseContainer from "../components/glucoseContainer";

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { SafeAreaView, Text, StyleSheet, View } from "react-native";
 import CommonLayout from "./CommonLayout";
 import TextButton from "../components/touchable/textButton";
+import Spinner from "../components/spinner";
 
 const ProfileScreen = ({ navigation, route }) => {
   const { id } = route.params;
@@ -27,7 +28,7 @@ const ProfileScreen = ({ navigation, route }) => {
   }, []);
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Spinner />;
   }
 
   const firstName = assets?.firstName;

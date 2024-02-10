@@ -10,6 +10,7 @@ import CommonLayout from "./CommonLayout";
 import MedicationContainer from "../components/medicationContainer";
 import TextButton from "../components/touchable/textButton";
 import { getMedicationList } from "../hooks/apiHooks";
+import Spinner from "../components/spinner";
 
 const MedicationScreen = ({ navigation, route }) => {
   const { id } = route.params;
@@ -51,7 +52,7 @@ const MedicationScreen = ({ navigation, route }) => {
   };
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Spinner />;
   }
 
   console.log(medicationList);

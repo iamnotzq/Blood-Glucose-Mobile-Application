@@ -13,6 +13,7 @@ import {
   displayCurrentDate,
 } from "../../hooks/bloodGlucoseHooks";
 import { fetchTodaysBloodGlucoseRecords } from "../../hooks/apiHooks";
+import Spinner from "../../components/spinner";
 
 const BloodGlucoseRecordsScreen = ({ navigation, route }) => {
   const { id } = route.params;
@@ -20,7 +21,7 @@ const BloodGlucoseRecordsScreen = ({ navigation, route }) => {
 
   const date = displayCurrentDate();
 
-  if (loading) return <Text>Loading</Text>;
+  if (loading) return <Spinner />;
 
   return (
     <CommonLayout navigation={navigation} id={id}>

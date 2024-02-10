@@ -5,6 +5,7 @@ import AnalysisContainer from "../components/analysisContainer";
 import { caloricProgressTexts } from "../data";
 import { bloodGlucoseTexts } from "../data";
 import TextButton from "../components/touchable/textButton";
+import Spinner from "../components/spinner";
 
 const AnalysisScreen = ({ navigation, route }) => {
   const { id } = route.params;
@@ -36,7 +37,7 @@ const AnalysisScreen = ({ navigation, route }) => {
   }, [navigation, fetchData]);
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Spinner />;
   }
 
   const calorieRangeIndex = assets?.caloricRangeIndex;
