@@ -5,18 +5,20 @@ import {
   View,
   TouchableOpacity,
   Text,
+  ActivityIndicator,
 } from "react-native";
 import CalorieContainer from "../components/calorieContainer";
 import GlucoseContainer from "../components/glucoseContainer";
 import CommonLayout from "./CommonLayout";
 import { getDashboardAssets } from "../hooks/apiHooks";
+import Spinner from "../components/spinner";
 
 const DashboardScreen = ({ route, navigation }) => {
   const { id } = route.params;
   const { dashboardData, loading } = getDashboardAssets(id, navigation);
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Spinner />;
   }
 
   const calorieDisplayAssets = dashboardData?.calorieDisplayAssets || {};
