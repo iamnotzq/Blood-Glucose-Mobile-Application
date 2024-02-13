@@ -98,12 +98,6 @@ const ProfileScreen = ({ navigation, route }) => {
             </View>
           </View>
         </View>
-
-        <TextButton
-          text="Logout"
-          maybeButtonWidth="50%"
-          onPress={() => navigation.navigate("Welcome")}
-        />
       </SafeAreaView>
     </CommonLayout>
   );
