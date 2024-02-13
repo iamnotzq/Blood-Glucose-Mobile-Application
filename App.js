@@ -14,10 +14,11 @@ import MedicationScreen from "./screens/MedicationScreen";
 import AddMedicationScreen from "./screens/AddMedicationScreen";
 import HealthcareProviderScreen from "./screens/HealthcareProviderScreen";
 import NutritionalDetailsChartScreen from "./screens/NutritionalDetailsChartScreen";
+import SettingsScreen from "./screens/SettingsScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <StackNavigator />;
+  return <SettingsScreen />;
 }
 
 const styles = StyleSheet.create({
