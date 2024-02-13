@@ -102,7 +102,13 @@ const Menu = ({ isVisible, onClose, navigation, id }) => {
             <Text style={styles.iconText}>Glucose Info</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.box}></TouchableOpacity>
+          <TouchableOpacity
+            style={styles.box}
+            onPress={() => navigateAndClose("Settings")}
+          >
+            <Octicons name="gear" size={80} color="#3B83D1" />
+            <Text style={styles.iconText}>Settings</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>
