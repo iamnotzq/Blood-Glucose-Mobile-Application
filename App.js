@@ -16,6 +16,7 @@ import HealthcareProviderScreen from "./screens/HealthcareProviderScreen";
 import NutritionalDetailsChartScreen from "./screens/NutritionalDetailsChartScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import Menu from "./navigation/menu";
+import ProfileEditScreen from "./screens/ProfileEditScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {

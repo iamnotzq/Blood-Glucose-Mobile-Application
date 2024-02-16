@@ -1,4 +1,9 @@
-import { StyleSheet, KeyboardAvoidingView, TextInput } from "react-native";
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  TextInput,
+  View,
+} from "react-native";
 import React from "react";
 
 const InputBox = ({
@@ -23,8 +28,6 @@ const InputBox = ({
     <KeyboardAvoidingView
       style={{
         width: width,
-        justifyContent: "center",
-        alignItems: "center",
       }}
     >
       <TextInput
