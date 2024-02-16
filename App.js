@@ -23,7 +23,7 @@ import EmergencyContacEditScreen from "./screens/EmergencyContactEditScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <EmergencyContacEditScreen />;
+  return <StackNavigator />;
 }
 
 const styles = StyleSheet.create({
