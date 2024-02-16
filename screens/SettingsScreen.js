@@ -8,9 +8,9 @@ import {
 import CommonLayout from "./CommonLayout";
 
 const SettingsScreen = ({ navigation, route }) => {
-  const { id } = route.params;
+  // const { id } = route.params;
   return (
-    <CommonLayout navigation={navigation} id={id}>
+    <CommonLayout navigation={navigation}>
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.row}>
           <Text style={styles.mainHeaderText}>Settings</Text>
@@ -30,17 +30,24 @@ const SettingsScreen = ({ navigation, route }) => {
           <TouchableOpacity
             style={[styles.clickable, { borderBottomWidth: 0 }]}
           >
-            <Text style={styles.clickableText}>Nutritional Settings</Text>
+            <Text style={styles.clickableText}>Nutritional Details</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.clickable, { borderBottomWidth: 0 }]}
           >
-            <Text style={styles.clickableText}>Glucose Settings</Text>
+            <Text style={styles.clickableText}>Blood Glucose Details</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.clickable, { borderBottomWidth: 0 }]}
+          >
+            <Text style={styles.clickableText}>Emergency Contact Details</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.clickable, { borderBottomWidth: 0 }]}
+            onPress={() => navigation.navigate("Welcome")}
           >
             <Text style={styles.clickableText}>Logout</Text>
           </TouchableOpacity>

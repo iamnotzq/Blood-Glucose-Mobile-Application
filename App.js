@@ -22,7 +22,7 @@ import NutritionEditScreen from "./screens/NutritionEditScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <NutritionEditScreen />;
+  return <SettingsScreen />;
 }
 
 const styles = StyleSheet.create({
