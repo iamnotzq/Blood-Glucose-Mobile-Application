@@ -19,10 +19,11 @@ import Menu from "./navigation/menu";
 import ProfileEditScreen from "./screens/ProfileEditScreen";
 import GlucoseEditScreen from "./screens/GlucoseEditScreen";
 import NutritionEditScreen from "./screens/NutritionEditScreen";
+import EmergencyContacEditScreen from "./screens/EmergencyContactEditScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <SettingsScreen />;
+  return <EmergencyContacEditScreen />;
 }
 
 const styles = StyleSheet.create({

@@ -4,71 +4,79 @@ import { commonStyles } from "../styles/commonStyles";
 import InputBox from "../components/inputBox";
 import TextButton from "../components/touchable/textButton";
 
-const NutritionEditScreen = ({ navigation, route }) => {
-  const nutritionalDetails = {
-    calorieGoalKcal: 2000,
-    proteinPct: 40,
-    fatPct: 30,
-    carbsPct: 30,
+const EmergencyContactEditScreen = ({ navigation, route }) => {
+  // const { id } = route.params;
+
+  const emergencyContactDetails = {
+    firstName: "Jane",
+    lastName: "Doe",
+    email: "janedoe@email.com",
+    contact: "12345678",
   };
 
   const handleClick = () => {};
 
   return (
-    <CommonLayout>
+    <CommonLayout navigation={navigation}>
       <SafeAreaView style={commonStyles.mainContainer}>
         <View style={commonStyles.mainHeaderContainer}>
           <Text style={commonStyles.mainHeaderText}>
-            Edit Nutritional Details
+            Edit Emergency Contact
           </Text>
         </View>
-        
+
         <View style={styles.mainComponent}>
           <View style={styles.componentRow}>
             <View></View>
-            <Text style={styles.inputHeader}>Calorie Goal</Text>
+            <Text style={[styles.inputHeader, { width: "30%" }]}>
+              First Name
+            </Text>
 
             <InputBox
-              placeholder={nutritionalDetails.calorieGoalKcal.toString()}
+              placeholder={emergencyContactDetails.firstName.toString()}
               secureTextEntry={false}
               maybeHeight={40}
-              width="45%"
+              width="65%"
             />
           </View>
 
           <View style={styles.componentRow}>
             <View></View>
-            <Text style={styles.inputHeader}>Fat (%)</Text>
+            <Text style={[styles.inputHeader, { width: "30%" }]}>
+              Last Name
+            </Text>
 
             <InputBox
-              placeholder={nutritionalDetails.fatPct.toString()}
+              placeholder={emergencyContactDetails.lastName.toString()}
               secureTextEntry={false}
               maybeHeight={40}
-              width="45%"
+              width="65%"
             />
           </View>
 
           <View style={styles.componentRow}>
             <View></View>
-            <Text style={styles.inputHeader}>Carbs (%)</Text>
+            <Text style={[styles.inputHeader, { width: "30%" }]}>Email</Text>
 
             <InputBox
-              placeholder={nutritionalDetails.carbsPct.toString()}
+              placeholder={emergencyContactDetails.email.toString()}
               secureTextEntry={false}
               maybeHeight={40}
-              width="45%"
+              width="65%"
             />
           </View>
 
           <View style={styles.componentRow}>
             <View></View>
-            <Text style={styles.inputHeader}>Protein (%)</Text>
+            <Text style={[styles.inputHeader, { width: "30%" }]}>
+              Contact Number
+            </Text>
 
             <InputBox
-              placeholder={nutritionalDetails.proteinPct.toString()}
+              placeholder={emergencyContactDetails.contact.toString()}
               secureTextEntry={false}
               maybeHeight={40}
-              width="45%"
+              width="65%"
             />
           </View>
 
@@ -85,7 +93,7 @@ const NutritionEditScreen = ({ navigation, route }) => {
   );
 };
 
-export default NutritionEditScreen;
+export default EmergencyContactEditScreen;
 
 export const styles = StyleSheet.create({
   mainComponent: {
