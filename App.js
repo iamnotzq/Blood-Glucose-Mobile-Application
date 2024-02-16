@@ -17,6 +17,7 @@ import NutritionalDetailsChartScreen from "./screens/NutritionalDetailsChartScre
 import SettingsScreen from "./screens/SettingsScreen";
 import Menu from "./navigation/menu";
 import ProfileEditScreen from "./screens/ProfileEditScreen";
+import GlucoseEditScreen from "./screens/GlucoseEditScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
