@@ -28,6 +28,7 @@ import MoreInfoScreen from "../screens/MoreInfoScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import ProfileEditScreen from "../screens/ProfileEditScreen";
 import GlucoseEditScreen from "../screens/GlucoseEditScreen";
+import NutritionEditScreen from "../screens/NutritionEditScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -143,6 +144,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="EditProfile"
           component={ProfileEditScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EditNutrition"
+          component={NutritionEditScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
