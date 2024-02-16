@@ -18,10 +18,11 @@ import SettingsScreen from "./screens/SettingsScreen";
 import Menu from "./navigation/menu";
 import ProfileEditScreen from "./screens/ProfileEditScreen";
 import GlucoseEditScreen from "./screens/GlucoseEditScreen";
+import NutritionEditScreen from "./screens/NutritionEditScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {
-  return <StackNavigator />;
+  return <NutritionEditScreen />;
 }
 
 const styles = StyleSheet.create({
