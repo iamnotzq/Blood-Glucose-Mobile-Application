@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { foodDiaryStyles } from "../styles/foodDiaryStyles";
+import { commonStyles } from "../styles/commonStyles";
 
 const FoodEntryComponent = ({ index, entry }) => {
   return (
