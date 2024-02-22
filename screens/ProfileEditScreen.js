@@ -11,23 +11,38 @@ import InputBox from "../components/inputBox";
 import TextButton from "../components/touchable/textButton";
 
 const ProfileEditScreen = ({ navigation, route }) => {
-  //   const { id } = route.params;
+  const { id } = route.params;
+  const [profileDetails, setProfileDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const profileDetails = {
-    firstName: "John",
-    lastName: "Doe",
-    age: "25",
-    gender: "M",
-    heightCm: "170",
-    weightKg: "65",
-  };
+  console.log(`Retrieving ProfileAssets for: ${id}`);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/profile/${id}`);
+        const assets = await response.json();
+        setLoading(false);
+        setAssets(assets);
+      } catch (error) {
+        console.error("Error fetching profile assets: ", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   const handleClick = () => {
     navigation.navigate("Settings");
   };
 
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={commonStyles.mainContainer}>
         <View style={commonStyles.mainHeaderContainer}>
           <Text style={commonStyles.mainHeaderText}>Edit Profile</Text>

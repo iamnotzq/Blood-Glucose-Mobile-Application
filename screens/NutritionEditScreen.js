@@ -5,6 +5,7 @@ import InputBox from "../components/inputBox";
 import TextButton from "../components/touchable/textButton";
 
 const NutritionEditScreen = ({ navigation, route }) => {
+  const { id } = route.params;
   const nutritionalDetails = {
     calorieGoalKcal: 2000,
     proteinPct: 40,
@@ -15,14 +16,14 @@ const NutritionEditScreen = ({ navigation, route }) => {
   const handleClick = () => {};
 
   return (
-    <CommonLayout>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={commonStyles.mainContainer}>
         <View style={commonStyles.mainHeaderContainer}>
           <Text style={commonStyles.mainHeaderText}>
             Edit Nutritional Details
           </Text>
         </View>
-        
+
         <View style={styles.mainComponent}>
           <View style={styles.componentRow}>
             <View></View>

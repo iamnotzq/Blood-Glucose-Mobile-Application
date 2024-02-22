@@ -8,9 +8,9 @@ import {
 import CommonLayout from "./CommonLayout";
 
 const SettingsScreen = ({ navigation, route }) => {
-  // const { id } = route.params;
+  const { id } = route.params;
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer}>
         <View style={styles.row}>
           <Text style={styles.mainHeaderText}>Settings</Text>

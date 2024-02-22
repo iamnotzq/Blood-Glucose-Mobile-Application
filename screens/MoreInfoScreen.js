@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import CommonLayout from "./CommonLayout";
 import Header from "../navigation/Header";
@@ -270,6 +271,44 @@ const Events = () => {
   );
 };
 
+const Products = () => {
+  return (
+    <View style={styles.productsContainer}>
+      <View
+        style={{
+          height: "30%",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={styles.imageHeader}>One Touch</Text>
+        <Image
+          source={require("../assets/onetouch.jpeg")}
+          style={styles.imageStyle}
+          resizeMode="contain"
+        />
+      </View>
+
+      <View
+        style={{
+          height: "30%",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={styles.imageHeader}>Farmer's Yoghurt</Text>
+        <Image
+          source={require("../assets/farmersYoghurt.jpeg")}
+          style={styles.imageStyle}
+          resizeMode="contain"
+        />
+      </View>
+    </View>
+  );
+};
+
 const MoreInfoScreen = ({ navigation, route }) => {
   const { id } = route.params;
   const [selectedHeader, setSelectedHeader] = useState("Hypoglycemia");
@@ -278,6 +317,7 @@ const MoreInfoScreen = ({ navigation, route }) => {
     "Hyperglycemia",
     "Food Portioning",
     "Events",
+    "Products",
   ];
 
   const handleHeaderPress = (header) => {
@@ -294,6 +334,8 @@ const MoreInfoScreen = ({ navigation, route }) => {
         return <FoodPortioning />;
       case "Events":
         return <Events />;
+      case "Products":
+        return <Products />;
       default:
         return <Hypoglycemia />;
     }
@@ -387,5 +429,22 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 16,
     backgroundColor: "#3B83D1",
+  },
+  productsContainer: {
+    height: "80%",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    width: "90%",
+    padding: 12,
+    borderRadius: 16,
+    backgroundColor: "#ffffff",
+  },
+  imageStyle: {
+    height: "100%",
+  },
+  imageHeader: {
+    color: "#3B83D1",
+    fontSize: 24,
+    fontWeight: "600",
   },
 });

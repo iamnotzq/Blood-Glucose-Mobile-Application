@@ -5,7 +5,7 @@ import InputBox from "../components/inputBox";
 import TextButton from "../components/touchable/textButton";
 
 const EmergencyContactEditScreen = ({ navigation, route }) => {
-  // const { id } = route.params;
+  const { id } = route.params;
 
   const emergencyContactDetails = {
     firstName: "Jane",
@@ -17,7 +17,7 @@ const EmergencyContactEditScreen = ({ navigation, route }) => {
   const handleClick = () => {};
 
   return (
-    <CommonLayout navigation={navigation}>
+    <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={commonStyles.mainContainer}>
         <View style={commonStyles.mainHeaderContainer}>
           <Text style={commonStyles.mainHeaderText}>
