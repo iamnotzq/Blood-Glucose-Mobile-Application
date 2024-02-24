@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import InputBox from "../../components/inputBox";
 import RightArrowButton from "../../components/touchable/rightArrowButton";
 import ClickableText from "../../components/touchable/clickableText";
+import { calculateCalories } from "../../hooks/commonHooks";
 
 const UserGlucoseLevelsScreen = ({ route, navigation }) => {
   const {
@@ -18,13 +19,23 @@ const UserGlucoseLevelsScreen = ({ route, navigation }) => {
     weight,
     height,
     diabetesType,
+    activityLevel,
   } = route.params;
 
-  const [hyperMgDl, setHyperMgDl] = useState("");
-  const [hypoMgDl, setHypoMgDl] = useState("");
-  const [targetLowerMgDl, setTargetLowerMgDl] = useState("");
-  const [targetUpperMgDl, setTargetUpperMgDl] = useState("");
-  const [caloricGoalKcal, setCaloricGoalKcal] = useState("");
+  const caloricGoal = calculateCalories(
+    height,
+    weight,
+    gender,
+    age,
+    activityLevel
+  );
+
+  const [targetLowerMgDl, setTargetLowerMgDl] = useState(0);
+  const [targetUpperMgDl, setTargetUpperMgDl] = useState(0);
+  const [caloricGoalKcal, setCaloricGoalKcal] = useState(caloricGoal);
+
+  const hyperMgDl = targetUpperMgDl * 1.2;
+  const hypoMgDl = targetLowerMgDl * 0.8;
 
   const handleCreateAccount = async () => {
     const userData = {
@@ -82,31 +93,6 @@ const UserGlucoseLevelsScreen = ({ route, navigation }) => {
         <View style={styles.textInputContainer}>
           <View style={styles.textInputRow}>
             <InputBox
-              placeholder="Hyperglycemia Level"
-              width={275}
-              maybeOnChangeText={(text) => setHyperMgDl(text)}
-              maybeValue={hyperMgDl}
-            />
-            <View style={styles.sideTextContainer}>
-              <Text style={styles.sideText}>mg/dl</Text>
-            </View>
-          </View>
-
-          <View style={styles.textInputRow}>
-            <InputBox
-              placeholder="Hypoglycemia Level"
-              width={275}
-              maybeOnChangeText={(text) => setHypoMgDl(text)}
-              maybeValue={hypoMgDl}
-            />
-
-            <View style={styles.sideTextContainer}>
-              <Text style={styles.sideText}>mg/dl</Text>
-            </View>
-          </View>
-
-          <View style={styles.textInputRow}>
-            <InputBox
               placeholder="Target Lower Level"
               width={275}
               maybeOnChangeText={(text) => setTargetLowerMgDl(text)}
@@ -133,7 +119,7 @@ const UserGlucoseLevelsScreen = ({ route, navigation }) => {
 
           <View style={styles.textInputRow}>
             <InputBox
-              placeholder="Caloric Goal"
+              placeholder={`Recommended Caloric Goal: ${caloricGoal}`}
               width={275}
               maybeOnChangeText={(text) => setCaloricGoalKcal(text)}
               maybeValue={caloricGoalKcal}

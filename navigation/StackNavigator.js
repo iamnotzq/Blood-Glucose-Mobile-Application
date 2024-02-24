@@ -30,6 +30,7 @@ import ProfileEditScreen from "../screens/ProfileEditScreen";
 import GlucoseEditScreen from "../screens/GlucoseEditScreen";
 import NutritionEditScreen from "../screens/NutritionEditScreen";
 import EmergencyContactEditScreen from "../screens/EmergencyContactEditScreen";
+import UserActivityLevelScreen from "../screens/onboarding/UserActivityLevelScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -60,6 +61,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="UserDiabetes"
           component={UserDiabetesScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="UserActivityLevel"
+          component={UserActivityLevelScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
