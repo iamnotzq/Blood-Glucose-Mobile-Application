@@ -6,6 +6,7 @@ import TextButton from "../components/touchable/textButton";
 import InputBox from "../components/inputBox";
 import DropDownPicker from "react-native-dropdown-picker";
 import { update } from "../hooks/apiHooks";
+import { addMedication } from "../hooks/apiHooks"
 
 const AddMedicationScreen = ({ navigation, route }) => {
   const { id } = route.params;
