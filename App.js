@@ -20,6 +20,7 @@ import ProfileEditScreen from "./screens/ProfileEditScreen";
 import GlucoseEditScreen from "./screens/GlucoseEditScreen";
 import NutritionEditScreen from "./screens/NutritionEditScreen";
 import EmergencyContacEditScreen from "./screens/EmergencyContactEditScreen";
+import UserActivityLevelScreen from "./screens/onboarding/UserActivityLevelScreen";
 // import { DashboardAssets } from "./api/routes/models/responses/dashboardAssets"
 
 export default function App() {

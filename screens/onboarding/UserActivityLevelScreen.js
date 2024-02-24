@@ -4,7 +4,7 @@ import RightArrowButton from "../../components/touchable/rightArrowButton";
 import ClickableText from "../../components/touchable/clickableText";
 import TextButton from "../../components/touchable/textButton";
 
-const UserDiabetesScreen = ({ route, navigation }) => {
+const UserActivityLevelScreen = ({ route, navigation }) => {
   const {
     username,
     email,
@@ -17,9 +17,10 @@ const UserDiabetesScreen = ({ route, navigation }) => {
     gender,
     weight,
     height,
+    diabetesType,
   } = route.params;
 
-  const [diabetesType, setDiabetesType] = useState("");
+  const [activityLevel, setActivityLevel] = useState("");
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -28,37 +29,44 @@ const UserDiabetesScreen = ({ route, navigation }) => {
       <View style={styles.componentsContainer}>
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerText}>What is Your</Text>
-          <Text style={styles.headerText}>Diabetes Type?</Text>
+          <Text style={styles.headerText}>Activity Level?</Text>
         </View>
 
         <View style={styles.textInputContainer}>
           <TextButton
-            text="Type 1"
+            text="Sedentary"
             maybeBackgroundColor="#F8F9FB"
             maybeTextColor="#3B83D1"
             maybeFontWeight="400"
-            onPress={() => setDiabetesType("Type 1")}
+            onPress={() => setActivityLevel("Sedentary")}
           />
           <TextButton
-            text="Type 2"
+            text="Lightly Active"
             maybeBackgroundColor="#F8F9FB"
             maybeTextColor="#3B83D1"
             maybeFontWeight="400"
-            onPress={() => setDiabetesType("Type 2")}
+            onPress={() => setActivityLevel("Lightly")}
           />
           <TextButton
-            text="Gestational"
+            text="Moderately Active"
             maybeBackgroundColor="#F8F9FB"
             maybeTextColor="#3B83D1"
             maybeFontWeight="400"
-            onPress={() => setDiabetesType("Gestational")}
+            onPress={() => setActivityLevel("Moderately")}
           />
           <TextButton
-            text="Others"
+            text="Very Active"
             maybeBackgroundColor="#F8F9FB"
             maybeTextColor="#3B83D1"
             maybeFontWeight="400"
-            onPress={() => setDiabetesType("Others")}
+            onPress={() => setActivityLevel("Very")}
+          />
+          <TextButton
+            text="Extra Active"
+            maybeBackgroundColor="#F8F9FB"
+            maybeTextColor="#3B83D1"
+            maybeFontWeight="400"
+            onPress={() => setActivityLevel("Extra")}
           />
         </View>
 
@@ -77,7 +85,7 @@ const UserDiabetesScreen = ({ route, navigation }) => {
             <RightArrowButton
               size={32}
               onPress={() => {
-                navigation.navigate("UserActivityLevel", {
+                navigation.navigate("UserGlucoseLevels", {
                   username,
                   email,
                   password,
@@ -90,6 +98,7 @@ const UserDiabetesScreen = ({ route, navigation }) => {
                   weight,
                   height,
                   diabetesType,
+                  activityLevel,
                 });
               }}
               width={48}
@@ -101,7 +110,7 @@ const UserDiabetesScreen = ({ route, navigation }) => {
   );
 };
 
-export default UserDiabetesScreen;
+export default UserActivityLevelScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
