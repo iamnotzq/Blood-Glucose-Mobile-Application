@@ -21,7 +21,7 @@ export const renderFoodEntrySection = (foodEntries) => {
       </ScrollView>
     );
   }
-  
+
   return (
     <View style={foodDiaryStyles.textBoxContainer}>
       <Text style={foodDiaryStyles.textBoxText}>No food logs for today</Text>
@@ -56,6 +56,30 @@ export const calculateNutritionalDetails = (
     calculatedFibre,
     units,
   };
+};
+
+export const renderBloodGlucosePrediction = (
+  previousGlucoseLevel,
+  currentCarbs,
+  currentCalories,
+  handleClick
+) => {
+  const glucoseCoefficient = 0.6;
+  const carbsCoefficient = 0.5;
+  const calorieCoefficient = 0.1;
+
+  const predictedGlucoseLevel =
+    glucoseCoefficient * previousGlucoseLevel +
+    carbsCoefficient * currentCarbs +
+    calorieCoefficient * currentCalories;
+
+  return (
+    <MedicationRecommendation
+      medicationName="Glucose Prediction"
+      units={predictedGlucoseLevel}
+      handleCirclePress={handleClick}
+    />
+  );
 };
 
 export const renderMedicationRecommendation = (

@@ -367,3 +367,20 @@ export const getTodayGlucoseRecords = async (
     throw new Error(`Error in getTodayGlucoseRecords ${error}`);
   }
 };
+
+export const getRecentRecord = async (id: string): Promise<number> => {
+  try {
+    const response: GetTodayGlucoseRecordsResponseBody =
+      await getTodayGlucoseRecords(id);
+    const records = response.records;
+
+    if (records.length < 1 || records === null) {
+      return 0;
+    }
+
+    const recentRecord = records[0];
+    return recentRecord.glucoseLevel;
+  } catch (error: any) {
+    throw new Error(`Error in getRecentRecord ${error}`);
+  }
+};
