@@ -68,10 +68,13 @@ export const renderBloodGlucosePrediction = (
   const carbsCoefficient = 0.5;
   const calorieCoefficient = 0.1;
 
-  const predictedGlucoseLevel =
-    glucoseCoefficient * previousGlucoseLevel +
-    carbsCoefficient * currentCarbs +
-    calorieCoefficient * currentCalories;
+  const predictedGlucoseLevel = parseInt(
+    Math.round(
+      glucoseCoefficient * previousGlucoseLevel +
+        carbsCoefficient * currentCarbs +
+        calorieCoefficient * currentCalories
+    )
+  );
 
   return (
     <MedicationRecommendation

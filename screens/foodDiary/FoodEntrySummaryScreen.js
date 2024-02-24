@@ -16,12 +16,12 @@ import {
 import { getDashboardAssets } from "../../hooks/apiHooks";
 
 const FoodEntrySummaryScreen = ({ navigation, route }) => {
-  const { id } = route.params;
+  const { id, selectedFood } = route.params;
 
   const [previousGlucoseLevel, setPreviousGlucoseLevel] = useState(0);
   const [servingSize, setServingSize] = useState(0);
   const [foodDetails, setFoodDetails] = useState(null);
-  const foodName = "Fried Kway Teow";
+  const foodName = selectedFood;
 
   useEffect(() => {
     const fetchPreviousGlucoseLevel = async () => {
@@ -48,8 +48,9 @@ const FoodEntrySummaryScreen = ({ navigation, route }) => {
   useEffect(() => {
     const fetchNutritionalContent = async () => {
       try {
+        const encodedFoodName = encodeURIComponent(foodName);
         const response = await fetch(
-          `http://localhost:8000/api/food/nutritional-content/Fried%20Kway%20Teow`
+          `http://localhost:8000/api/food/nutritional-content/${encodedFoodName}`
         );
 
         const content = await response.json();
