@@ -4,12 +4,14 @@ import { AddBloodGlucoseEntryRequestBody } from "./models/requests/requestBodies
 import {
   addBloodGlucoseEntry,
   getBloodGlucoseChartData,
+  getRecentRecord,
   getTodayGlucoseRecords,
 } from "../services/bloodGlucoseService";
 import {
   GetBloodGlucoseChartDataResponseBody,
   GetTodayGlucoseRecordsResponseBody,
 } from "./models/responses/responseBodies";
+import { idText } from "typescript";
 
 config();
 
@@ -56,7 +58,27 @@ router.get(
       console.log(`Todays glucose records: ${records}`);
       res.status(200).json(records);
     } catch (error: any) {
-      console.error(`Error in retrieving Todays glucose records for: ${userId}`);
+      console.error(
+        `Error in retrieving Todays glucose records for: ${userId}`
+      );
+      throw new Error(`Error ${error.message}`);
+    }
+  }
+);
+
+router.get(
+  "/api/glucose/get-recent-record/:user_id",
+  async (req: Request, res: Response) => {
+    const userId = req.params.user_id;
+    try {
+      const previousRecord = await getRecentRecord(userId);
+
+      console.log(`Recent record: ${previousRecord}`);
+      res.status(200).json(previousRecord);
+    } catch (error: any) {
+      console.error(
+        `Error in retrieving Todays glucose record for: ${userId}`
+      );
       throw new Error(`Error ${error.message}`);
     }
   }

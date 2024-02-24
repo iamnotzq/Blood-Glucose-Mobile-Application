@@ -4,19 +4,31 @@ import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 
 const MedicationRecommendation = ({
   medicationName,
-  consumptionPeriod,
+  maybeConsumptionPeriod,
   units,
+  maybeHeaderText,
+  handleCirclePress,
 }) => {
-  const handleCheckCirclePress = () => {
-    setMedicationLogged(true);
-  };
+  const headerText = maybeHeaderText ? maybeHeaderText : "Recommendation";
+  const currentTimeStamp = new Date();
+  const shortTimestamp = currentTimeStamp.toLocaleString("en-US", {
+    day: "numeric",
+    month: "short",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+
+  const consumptionPeriod = maybeConsumptionPeriod
+    ? maybeConsumptionPeriod
+    : shortTimestamp;
 
   return (
     <View style={styles.mainContainer}>
       <MaterialCommunityIcons name="pill" size={50} color="#3B83D1" />
 
       <View style={styles.textContainer}>
-        <Text style={styles.mainHeaderText}>Recommendation</Text>
+        <Text style={styles.mainHeaderText}>{headerText}</Text>
         <View>
           <Text style={styles.medication}>{medicationName}</Text>
           <Text style={styles.period}>{units} units</Text>
@@ -26,7 +38,7 @@ const MedicationRecommendation = ({
       </View>
 
       <View style={styles.lastColumnContainer}>
-        <TouchableOpacity onPress={handleCheckCirclePress}>
+        <TouchableOpacity onPress={handleCirclePress}>
           <Ionicons name="checkmark-circle-outline" size={30} color="#29af61" />
         </TouchableOpacity>
       </View>

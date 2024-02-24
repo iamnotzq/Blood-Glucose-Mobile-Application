@@ -11,15 +11,39 @@ import InputBox from "../../components/inputBox";
 import { FontAwesome5 } from "@expo/vector-icons";
 import {
   calculateNutritionalDetails,
-  renderMedicationRecommendation,
+  renderBloodGlucosePrediction,
 } from "../../hooks/foodDiaryHooks";
-import MedicationRecommendation from "../../components/medicationRecommendation";
+import { getDashboardAssets } from "../../hooks/apiHooks";
 
 const FoodEntrySummaryScreen = ({ navigation, route }) => {
   const { id } = route.params;
+
+  const [previousGlucoseLevel, setPreviousGlucoseLevel] = useState(0);
   const [servingSize, setServingSize] = useState(0);
   const [foodDetails, setFoodDetails] = useState(null);
   const foodName = "Fried Kway Teow";
+
+  useEffect(() => {
+    const fetchPreviousGlucoseLevel = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/glucose/get-recent-record/${id}`
+        );
+
+        const content = await response.json();
+
+        console.log(content);
+        setPreviousGlucoseLevel(content);
+      } catch (error) {
+        console.error(
+          "Error fetching previous glucose details:",
+          error.message
+        );
+      }
+    };
+
+    fetchPreviousGlucoseLevel();
+  }, []);
 
   useEffect(() => {
     const fetchNutritionalContent = async () => {
@@ -106,6 +130,13 @@ const FoodEntrySummaryScreen = ({ navigation, route }) => {
     }
   };
 
+  const handlePredictionClick = () => {
+    navigation.navigate("NewBloodGlucoseRecord", {
+      id: id,
+      previousGlucoseLevel: previousGlucoseLevel,
+    });
+  };
+
   return (
     <CommonLayout navigation={navigation} id={id}>
       <SafeAreaView style={styles.mainContainer} key="food-entry-summary">
@@ -179,11 +210,11 @@ const FoodEntrySummaryScreen = ({ navigation, route }) => {
             </View>
           </View>
 
-          {renderMedicationRecommendation(
-            "Fast Acting Insulin",
-            servingSize,
-            "10:30 AM",
-            units
+          {renderBloodGlucosePrediction(
+            previousGlucoseLevel,
+            calculatedCarbs,
+            calculatedCalories,
+            handlePredictionClick
           )}
         </View>
       </SafeAreaView>

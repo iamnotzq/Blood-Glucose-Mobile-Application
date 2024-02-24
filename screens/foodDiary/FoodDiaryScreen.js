@@ -11,7 +11,7 @@ import { displayFoodTip } from "../../hooks/commonHooks";
 import { renderFoodEntrySection } from "../../hooks/foodDiaryHooks";
 
 const FoodDiaryScreen = ({ navigation, route }) => {
-  const { id } = route.params;
+  const { id, previousGlucoseLevel } = route.params;
   const foodEntries = [
     // {
     //   foodName: "Chicken",
@@ -48,7 +48,11 @@ const FoodDiaryScreen = ({ navigation, route }) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.foodEntrybutton}
-            onPress={() => navigation.navigate("NewFoodEntry", { id: id })}
+            onPress={() =>
+              navigation.navigate("NewFoodEntry", {
+                id: id,
+              })
+            }
           >
             <FontAwesome name="pencil-square-o" size={60} color="#ffffff" />
             <Text style={styles.buttonText}>New</Text>
