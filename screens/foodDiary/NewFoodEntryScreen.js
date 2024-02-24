@@ -15,7 +15,56 @@ const NewFoodEntryScreen = ({ navigation, route }) => {
   const [userInput, setUserInput] = useState("");
   const [matchedFoods, setMatchedFoods] = useState([]);
   const [showList, setShowList] = useState(false);
-  const allFoods = ["Fried chicken", "Fried Kway Teow", "Fried Rice"];
+  const allFoods = [
+    "Fried chicken",
+    "Fried Kway Teow",
+    "Fried Rice",
+    "Chicken Nuggets, McDonalds",
+    "Coca Cola Coke",
+    "Fish Ball Noodles",
+    "Nasi Lemak with Chicken Wing",
+    "Nasi Lemak with Egg",
+    "Nasi Lemak, rice only",
+    "Hokkien Mee",
+    "Lor Mee",
+    "Laksa",
+    "Braised Duck with Yam Rice",
+    "Char Siew Rice",
+    "Braised Duck Rice",
+    "Chicken Rice with Roasted Chicken",
+    "Chicken Rice with Skin Removed",
+    "Chicken Rice with Steamed Chicken",
+    "Claypot Rice with Salted Fish, Chicken & Chinese Sausages",
+    "Duck Rice with Skin Removed",
+    "Fried Rice with Egg",
+    "Char Siew Fried Rice",
+    "Pineapple Fried Rice",
+    "Roasted Duck Rice",
+    "Seafood Fried Rice",
+    "Thai Basil Beef with Rice",
+    "Thai Basil Pork with Rice",
+    "Thunder Tea Rice with Soup",
+    "Burger, Big Mac, McDonalds",
+    "Cheeseburger, McDonalds",
+    "Fillet-o-fish, McDonalds",
+    "French Fries, Large, McDonalds",
+    "French Fries, Medium, McDonalds",
+    "French Fries, Small, McDonalds",
+    "Kimchi Pancake",
+    "Korean Kimchi Soup",
+    "McChicken, McDonalds",
+    "McFlurry with Oreo Cookies, McDonalds",
+    "McSpicy, McDonalds",
+    "McWings, McDonalds",
+    "Green Tea Drink",
+    "Ice Lemon Tea",
+    "Green Tea (no sugar)",
+    "Black tea (no Sugar)",
+    "Brewed Coffee",
+    "Kopi C",
+    "Teh",
+    "Teh C kosong",
+  ];
   const handleInputChange = (text) => {
     setUserInput(text);
   };
@@ -45,7 +94,7 @@ const NewFoodEntryScreen = ({ navigation, route }) => {
     setUserInput(food);
     setShowList(false);
     setMatchedFoods([]);
-    navigation.navigate("FoodEntrySummary", { id: id });
+    navigation.navigate("FoodEntrySummary", { id: id, selectedFood: food });
   };
 
   return (
